@@ -6,8 +6,8 @@
 test(test_check):-
 	true.
 
-test(simple):-
-	list::member(3,[1,3,4]).
+test(simple,all(X == [1,3,4])):-
+	list::member(X,[1,3,4]).
 
 :- end_tests(lgt).
 
