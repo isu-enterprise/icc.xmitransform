@@ -52,7 +52,14 @@
                     triple/3,
                     rdf_assert/3,
                     process/1,
-                    top_xmi_element/1
+                    top_xmi_element/1,
+                    top_subject/1,
+                    process_attrs_def/5,
+                    process_attrs_rest/2,
+                    process_attr/3,
+                    process_attrs_type/3,
+                    process/2,
+                    atom_starts_with/3
                 ]).
 
 :- dynamic([
@@ -62,6 +69,7 @@
                   debug/0,       % debug at all.
                   debug/1,       % debug(<what>), e.g. debug(basic_checks).
                   filename_/1,   % Name of file loaded. It corresponds to NS nil.
+                  top_subject/1, % References to a top subject of the Package/Profile.
                   graph_/1       % The Graph name to store triples, defaults to name attribute of uml:Model attribute.
               ]).
 
@@ -69,6 +77,7 @@ debug.
 %debug(xmi_headers).
 %debug(xmlns).
 %debug(xml_locations).
+debug(processing).
 
 load_file(FileName):-
 	load_file(FileName, []).
@@ -115,9 +124,64 @@ rdf(Subject, Predicate, Object):-
     ::graph(Graph),
     rdf_db::rdf(Subject, Predicate, Object, Graph).
 
+% ----------------- Main processing recursion -----------------------------------
+
 process:-
     ::dom(DOM),
     ::process(DOM).
+
+process(element(Atom, Attrs, Elements)):-
+    ::process(Atom, Attrs),
+    ::process(Elements).
+process([X]):-
+    % ::debugf("ELS:%w",[X]),
+    ::process(X).
+process([X|T]):-
+    ::process(X),
+    % ::debugf("ELS:|%w",[T]),
+    ::process(T).
+process(X):-
+    ::debugf("Text?:",[X]).
+
+process(packagedElement, Attrs):-!,
+    % ::debugf("PKG:%w",[Attrs]),
+    ::process_attrs_def(Attrs, Id, _Type, _Name, RestAttrs),
+    ::process_attrs_rest(Id, RestAttrs).
+
+process(Atom, Attrs):-
+    ::atom_starts_with(Atom, 'uml:', _Type),!,
+    ::process_attrs_def(Attrs, Id, Atom, _Name, RestAttrs), % NOTE: Atom is defined already.
+    % ::debugf("PKG:%w=%w",[Atom,Attrs]),
+    ::process_attrs_rest(Id, RestAttrs).
+
+process(Atom, Attrs):-
+    ::debugf(processing, 'NO PROCESS FOR: %w(%w)',[Atom, Attrs]).
+
+process_attrs_type(Attrs, Type, Attrs):-
+    nonvar(Type),!.
+process_attrs_type(Attrs, Type, RestAttrs):-
+    ::process_attr(Attrs, 'xmi:type'(Type), RestAttrs).
+
+process_attrs_def(Attrs, Id, Type, Name, RestAttrs):-
+    ::process_attr(Attrs, 'xmi:id'(Id), R1),
+    ::process_attrs_type(R1, Type,R2),
+    ::debugf('ADDING <%w, rdf:typeOf, %w>',[Id, Type]),
+    ::process_attr(R2, name(Name), RestAttrs),
+    ::debugf('ADDING <%w, rdfs:label, %w>',[Id, Name]).
+
+process_attrs_rest(_,[]).
+process_attrs_rest(Id, [A=B|T]):-
+    ::debugf(processing, "ADDING <%w,%w,%w>", [Id, A, B]),
+    ::process_attrs_rest(Id, T).
+
+process_attr(Attrs, Struct, RestAttrs):-
+    swi_option::select_option(Struct, Attrs, RestAttrs).
+
+atom_starts_with(Atom, Sub, Rest):-
+    sub_atom(Atom, 0, L, A, Sub),
+    sub_atom(Atom, L, A, 0, Rest).
+
+% ----------------- END OF Main processing recursion ----------------------------
 
 process_namespaces:-
     ::dom([element(_, Attrs, _)]),
