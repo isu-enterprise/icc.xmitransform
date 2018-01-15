@@ -33,7 +33,7 @@ fails(package_try_dom):-
     package::dom([_]).
 
 test(package_load_again):-
-	package::load_file('../tests/input/xmitransofmtest.xmi'),
+    package::load_file('../tests/input/xmitransofmtest.xmi'),
     package::dom([_]).
 
 test(package_NS_ok):-
@@ -44,5 +44,8 @@ test(package_locations_ok):-
 
 test(package_NS_with_locations):-
     package::namespace(_, _, _).
+
+test(package_graph_name):-
+    package::graph('xmitransofmtest').
 
 :- end_object.

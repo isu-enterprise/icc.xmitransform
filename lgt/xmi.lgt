@@ -4,6 +4,7 @@
 :- use_module(library(xpath)).
 :- use_module(library(writef)).
 :- use_module(library(option)).
+:- use_module([library(semweb/rdf_db)]).
 
 :- object(metaclass, instantiates(metaclass)).
 :- end_object.
@@ -18,11 +19,14 @@
 	  	         load_file/2,
 		         dom/1,
 		         clear/0,
-                 xpath/3,
+                 xpath/2,
                  write/0,
                  location/2,
                  namespace/2,
-                 namespace/3
+                 namespace/3,
+                 set_graph/1,
+                 graph/1,
+                 triple/4
 		     ]).
 :- private([dom_/1,
             process_namespaces/0,
@@ -30,7 +34,8 @@
             location_/2,
             namespace_/2,
             debug/0,
-            debug/1
+            debug/1,
+            model_name_to_graph/0
            ]).
 
 :- protected([
@@ -38,7 +43,8 @@
                     debugf/3,
                     writef/2,
                     base_check/1,
-                    xmlns/2
+                    xmlns/2,
+                    graph_/1
                 ]).
 
 :- dynamic([
@@ -46,13 +52,14 @@
                   namespace_/2,  % name -> URL
                   location_/2,   % URL -> URL | FIle
                   debug/0,       % debug at all.
-                  debug/1        % debug(<what>), e.g. debug(basic_checks).
+                  debug/1,       % debug(<what>), e.g. debug(basic_checks).
+                  graph_/1       % The Graph name to store triples, defaults to name attribute of uml:Model attribute.
               ]).
 
-%debug.
+debug.
 %debug(xmi_headers).
-debug(xmlns).
-debug(xml_locations).
+%debug(xmlns).
+%debug(xml_locations).
 
 load_file(FileName):-
 	load_file(FileName, []).
@@ -63,8 +70,9 @@ load_file(FileName, Options):-
     ::base_check(DOM),
 	::assert(dom_(DOM)),
 	close(I),
-    process_ns_locations,
-    process_namespaces.
+    ::process_ns_locations,
+    ::process_namespaces,
+    ::model_name_to_graph.
 
 dom(X) :-
 	::dom_(X).
@@ -78,9 +86,19 @@ xpath(Spec, Content):-
     ::dom(DOM),
     xpath::xpath(DOM, Spec,  Content).
 
+set_graph(X):-
+    nonvar(X),!,
+    ::retractall(graph_(X)),
+    ::assert(graph_(X)).
+
+graph(X):-
+    ::graph_(X).
+
+
 process_namespaces:-
-    ::dom([element(Root, Attrs, _)]),
-    ::debugf(xmi_headers,"Root:%w",[Root]),
+    ::dom([element(_, Attrs, _)]),
+    % ::dom([element(Root, Attrs, _)]),
+    % ::debugf(xmi_headers,"Root:%w",[Root]),
     p_ns(Attrs).
 
 p_ns(Key=Val):-
@@ -129,6 +147,12 @@ xmlns(Key, NS):-
     B1 is B+1,
     sub_atom(Key,B1,A,0,NS).
 
+model_name_to_graph:-
+    ::xpath(//'xmi:XMI'/'uml:Model', element(_,Attrs,_)),
+    ::debugf(xmi_headers, "Mdel--> %w",[Attrs]),
+    swi_option::option(name(Name), Attrs),!,
+    ::set_graph(Name).
+model_name_to_graph.
 
 % Auxiliary predicates used for debugging.
 
