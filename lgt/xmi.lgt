@@ -51,14 +51,15 @@
                     graph_/1,
                     triple/3,
                     rdf_assert/3,
-                    process/1,
                     top_xmi_element/1,
                     top_subject/1,
                     process_attrs_def/5,
                     process_attrs_rest/2,
                     process_attr/3,
                     process_attrs_type/3,
-                    process/2,
+                    process_elements/2,
+                    process/3,
+                    process_atom/4,
                     atom_starts_with/3
                 ]).
 
@@ -127,35 +128,37 @@ rdf(Subject, Predicate, Object):-
 % ----------------- Main processing recursion -----------------------------------
 
 process:-
-    ::dom(DOM),
-    ::process(DOM).
+    ::dom([Root]),
+    ::process(Root, _Relation, OId),
+    ::retractall(top_subject(_)),
+    ::assert(top_subject(SubjectId)).
 
-process(element(Atom, Attrs, Elements)):-
-    ::process(Atom, Attrs),
-    ::process(Elements).
-process([X]):-
-    % ::debugf("ELS:%w",[X]),
-    ::process(X).
-process([X|T]):-
-    ::process(X),
-    % ::debugf("ELS:|%w",[T]),
-    ::process(T).
-process(X):-
-    ::debugf("Text?:",[X]).
+process(element(Atom, Attrs, Elements), Relation, OId):-
+    ::process_atom(Atom, Attrs, OId, Relation),
+    ::process_elements(Elements, OId).
 
-process(packagedElement, Attrs):-!,
-    % ::debugf("PKG:%w",[Attrs]),
+process_elements([], _).
+process_elements([element(A,B,C)|T], SId):-!,
+    ::process(element(A,B,C), Relation, OId),
+    ::debugf("ADDING <%w,%w,%w>", [SId, Relation, OId]),
+    ::process_elements(T, SId).
+process_elements([X|T], SId):-
+    ::debugf("Text?:",[X]),
+    ::process_elements(T, SId).
+
+process_atom(Atom, Attrs, Id, Atom):-
+    ::atom_starts_with(Atom, 'uml:', _Type),!,
+    ::process_attrs_def(Attrs, Id, Atom, _Name, RestAttrs), % NOTE: Atom is defined already.
+    ::process_attrs_rest(Id, RestAttrs).
+
+process_atom(XMIRelation, Attrs, Id, XMIRelation):- % 'schema:hasPart'):-!,
     ::process_attrs_def(Attrs, Id, _Type, _Name, RestAttrs),
     ::process_attrs_rest(Id, RestAttrs).
 
-process(Atom, Attrs):-
-    ::atom_starts_with(Atom, 'uml:', _Type),!,
-    ::process_attrs_def(Attrs, Id, Atom, _Name, RestAttrs), % NOTE: Atom is defined already.
-    % ::debugf("PKG:%w=%w",[Atom,Attrs]),
-    ::process_attrs_rest(Id, RestAttrs).
+process_atom(Atom, Attrs, nil, nil):-
+    ::debugf(processing, 'FAILED PROCESS: %w(%w)',[Atom, Attrs]).
 
-process(Atom, Attrs):-
-    ::debugf(processing, 'NO PROCESS FOR: %w(%w)',[Atom, Attrs]).
+
 
 process_attrs_type(Attrs, Type, Attrs):-
     nonvar(Type),!.
@@ -166,8 +169,9 @@ process_attrs_def(Attrs, Id, Type, Name, RestAttrs):-
     ::process_attr(Attrs, 'xmi:id'(Id), R1),
     ::process_attrs_type(R1, Type,R2),
     ::debugf('ADDING <%w, rdf:typeOf, %w>',[Id, Type]),
-    ::process_attr(R2, name(Name), RestAttrs),
-    ::debugf('ADDING <%w, rdfs:label, %w>',[Id, Name]).
+    true.
+    % ::process_attr(R2, name(Name), RestAttrs),
+    % ::debugf('ADDING <%w, rdfs:label, %w>',[Id, Name]).
 
 process_attrs_rest(_,[]).
 process_attrs_rest(Id, [A=B|T]):-
