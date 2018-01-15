@@ -1,4 +1,4 @@
-:- object(list).
+:- object(listtest).
 
     :- public(member/2).
     member(Head, [Head| _]).

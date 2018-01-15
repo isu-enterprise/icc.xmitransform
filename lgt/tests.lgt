@@ -1,16 +1,29 @@
+:- object(tests, extends(lgtunit)).
+   :- info([
+   	  version is 0.1,
+	  	  author is 'Evgeny Cherkashin',
+		  date is 2017/01/15,
+		  comment is 'Unit test for XMI tranforming utility'
+   ]).
 
+succeeds(test_test) :-
+    true.
 
-:- begin_tests(lgt).
-:- logtalk_load('test.lgt').
+succeeds(test_list) :-
+    findall(X, listtest::member(X,[1,3,4]), L),
+    L == [1,3,4].
 
-test(test_check):-
-	true.
+succeeds(simple_load_profile):-
+	profile::load_file('../tests/input/LocalProfile.profile.xmi').
 
-test(simple,all(X == [1,3,4])):-
-	list::member(X,[1,3,4]).
+succeeds(simple_profile_query):-
+	profile::dom([element(_,_,_)]).
 
-:- end_tests(lgt).
+fails(simple_package_query):-
+	package::dom([element(_,_,_)]).
 
-:- run_tests.
+succeeds(simple_load_package):-
+	package::load_file('../tests/input/xmitransofmtest.xmi'),
+	package::dom([_]).
 
-:- halt.
+:- end_object.
