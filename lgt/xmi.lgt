@@ -10,7 +10,12 @@
 
 :- object(xmiclass,
       specializes(class)).
-   :- public([load_file/1, load_file/2, dom/1]).
+   :- public([
+   	  load_file/1,
+	  	  load_file/2,
+		  dom/1,
+		  clear/0
+		  ]).
    :- private([dom_/1]).
    :- dynamic([dom_/1]).
 
@@ -24,7 +29,10 @@
 		close(I).
 
 	dom(X) :-
-			   ::dom_(X).
+		::dom_(X).
+
+	clear:-
+		::retractall(dom_(_)).
 
 :- end_object.
 

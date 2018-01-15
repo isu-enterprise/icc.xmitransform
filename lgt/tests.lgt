@@ -26,4 +26,10 @@ succeeds(simple_load_package):-
 	package::load_file('../tests/input/xmitransofmtest.xmi'),
 	package::dom([_]).
 
+succeeds(clear_package):-
+    package::clear.
+
+fails(package_try_dom):-
+    package::dom([_]).
+
 :- end_object.
