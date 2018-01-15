@@ -114,3 +114,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# LogTalk
+tests/input/cachedir/
+lgt/.lgt_tmp
+tmp
