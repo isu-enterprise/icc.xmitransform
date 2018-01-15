@@ -36,4 +36,13 @@ test(package_load_again):-
 	package::load_file('../tests/input/xmitransofmtest.xmi'),
     package::dom([_]).
 
+test(package_NS_ok):-
+    package::namespace(_, _).
+
+test(package_locations_ok):-
+    package::location(_, _).
+
+test(package_NS_with_locations):-
+    package::namespace(_, _, _).
+
 :- end_object.

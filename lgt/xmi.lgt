@@ -3,6 +3,7 @@
 :- use_module(library(sgml)).
 :- use_module(library(xpath)).
 :- use_module(library(writef)).
+:- use_module(library(option)).
 
 :- object(metaclass, instantiates(metaclass)).
 :- end_object.
@@ -48,9 +49,10 @@
                   debug/1        % debug(<what>), e.g. debug(basic_checks).
               ]).
 
-debug.
+%debug.
 %debug(xmi_headers).
 debug(xmlns).
+debug(xml_locations).
 
 load_file(FileName):-
 	load_file(FileName, []).
@@ -82,7 +84,7 @@ process_namespaces:-
     p_ns(Attrs).
 
 p_ns(Key=Val):-
-    ::writef("%w -> %w\n",[Key, Val]),
+    ::debugf(xmlns,"%w -> %w\n",[Key, Val]),
     xmlns(Key, NS),!,
     ::assert(namespace_(NS, Val)),
     ::debugf(xmlns, "Added %w=%w",[NS, Val]).
@@ -92,7 +94,20 @@ p_ns([X]):-
 p_ns([X|T]):-p_ns(X),p_ns(T).
 
 process_ns_locations:-
-    true.
+    ::dom([element(_,Attrs,_)]),
+    swi_option::option('xsi:schemaLocation'(Val), Attrs),!,
+    p_locs(Val).
+process_ns_locations.
+
+p_locs(Val):-
+    ::debugf(xml_locations, "Loc:%w", [Val]),
+    split_string(Val, ' ',' ', L),
+    p2_locs(L).
+
+p2_locs(URI, Location):-
+    ::assert(location_(URI, Location)).
+p2_locs([]).
+p2_locs([URI,Location|R]):-p2_locs(URI,Location), p2_locs(R).
 
 namespace(NS, URI):-
     ::namespace_(NS, URI).
@@ -107,7 +122,6 @@ namespace(NS, URI, nil):-
 
 location(URI, Location):-
     ::location_(URI, Location).
-
 
 xmlns(Key, NS):-
     sub_atom(Key, B, 1, A, ':'),
