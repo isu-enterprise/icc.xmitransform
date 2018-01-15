@@ -32,4 +32,8 @@ succeeds(clear_package):-
 fails(package_try_dom):-
     package::dom([_]).
 
+test(package_load_again):-
+	package::load_file('../tests/input/xmitransofmtest.xmi'),
+    package::dom([_]).
+
 :- end_object.
