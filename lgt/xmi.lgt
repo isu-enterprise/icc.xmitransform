@@ -26,7 +26,10 @@
                  namespace/3,
                  set_graph/1,
                  graph/1,
-                 triple/4
+                 triple/4,
+                 filename/1,
+                 process/0,
+                 rdf/3
 		     ]).
 :- private([dom_/1,
             process_namespaces/0,
@@ -35,7 +38,8 @@
             namespace_/2,
             debug/0,
             debug/1,
-            model_name_to_graph/0
+            top_name_to_graph/0,
+            filename_/1
            ]).
 
 :- protected([
@@ -44,7 +48,11 @@
                     writef/2,
                     base_check/1,
                     xmlns/2,
-                    graph_/1
+                    graph_/1,
+                    triple/3,
+                    rdf_assert/3,
+                    process/1,
+                    top_xmi_element/1
                 ]).
 
 :- dynamic([
@@ -53,6 +61,7 @@
                   location_/2,   % URL -> URL | FIle
                   debug/0,       % debug at all.
                   debug/1,       % debug(<what>), e.g. debug(basic_checks).
+                  filename_/1,   % Name of file loaded. It corresponds to NS nil.
                   graph_/1       % The Graph name to store triples, defaults to name attribute of uml:Model attribute.
               ]).
 
@@ -69,13 +78,17 @@ load_file(FileName, Options):-
 	sgml::load_xml(I, DOM, Options),
     ::base_check(DOM),
 	::assert(dom_(DOM)),
+    ::assert(filename_(FileName)),
 	close(I),
     ::process_ns_locations,
     ::process_namespaces,
-    ::model_name_to_graph.
+    ::top_name_to_graph.
 
 dom(X) :-
 	::dom_(X).
+
+filename(FileName):-
+    ::filename_(FileName).
 
 clear:-
 	::retractall(dom_(_)),
@@ -94,6 +107,17 @@ set_graph(X):-
 graph(X):-
     ::graph_(X).
 
+rdf_assert(Subject, Predicate, Object):-
+    ::graph(Graph),
+    rdf_db::rdf_assert(Subject, Predicate, Object, Graph).
+
+rdf(Subject, Predicate, Object):-
+    ::graph(Graph),
+    rdf_db::rdf(Subject, Predicate, Object, Graph).
+
+process:-
+    ::dom(DOM),
+    ::process(DOM).
 
 process_namespaces:-
     ::dom([element(_, Attrs, _)]),
@@ -127,6 +151,8 @@ p2_locs(URI, Location):-
 p2_locs([]).
 p2_locs([URI,Location|R]):-p2_locs(URI,Location), p2_locs(R).
 
+namespace(nil, FileName):-
+    ::filename_(FileName).
 namespace(NS, URI):-
     ::namespace_(NS, URI).
 
@@ -147,12 +173,10 @@ xmlns(Key, NS):-
     B1 is B+1,
     sub_atom(Key,B1,A,0,NS).
 
-model_name_to_graph:-
-    ::xpath(//'xmi:XMI'/'uml:Model', element(_,Attrs,_)),
-    ::debugf(xmi_headers, "Mdel--> %w",[Attrs]),
-    swi_option::option(name(Name), Attrs),!,
-    ::set_graph(Name).
-model_name_to_graph.
+top_name_to_graph.
+
+%triple(Subject, Predicate, Object, Graph)
+
 
 % Auxiliary predicates used for debugging.
 
@@ -186,14 +210,30 @@ base_check([_]).
 :- end_object.
 
 :- object(packageclass, specializes(xmiclass)).
+top_xmi_element('uml:Model').
 base_check([element('xmi:XMI',_,_)]).
+top_name_to_graph:-
+    ::top_xmi_element(TopElement),
+    ::xpath(//'xmi:XMI'/TopElement, element(_,Attrs,_)),
+    ::debugf(xmi_headers, "Mdel--> %w",[Attrs]),
+    swi_option::option(name(Name), Attrs),!,
+    ::set_graph(Name).
+top_name_to_graph:-
+    ^^top_name_to_graph.
 :- end_object.
 
 :- object(package, instantiates(packageclass)).
 :- end_object.
 
 :- object(profileclass, specializes(xmiclass)).
-base_check([element('uml:Profile',_,_)]).
+top_xmi_element('uml:Profile').
+base_check([element(TopElement,_,_)]):-top_xmi_element(TopElement).
+top_name_to_graph:-
+    ::top_xmi_element(TopElement),
+    ::xpath(//TopElement, element(_,Attrs,_)),
+    ::debugf(xmi_headers, "Mdel--> %w",[Attrs]),
+    swi_option::option(name(Name), Attrs),!,
+    ::set_graph(Name).
 :- end_object.
 
 :- object(profile, instantiates(profileclass)).

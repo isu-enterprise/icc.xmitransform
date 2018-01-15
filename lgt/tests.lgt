@@ -16,6 +16,9 @@ succeeds(test_list) :-
 succeeds(simple_load_profile):-
 	profile::load_file('../tests/input/LocalProfile.profile.xmi').
 
+succeeds(profile_graph_name):-
+    profile::graph('LocalProfile').
+
 succeeds(simple_profile_query):-
 	profile::dom([element(_,_,_)]).
 
@@ -47,5 +50,8 @@ test(package_NS_with_locations):-
 
 test(package_graph_name):-
     package::graph('xmitransofmtest').
+
+succeeds(package_process_xmi):-
+    package::process.
 
 :- end_object.
