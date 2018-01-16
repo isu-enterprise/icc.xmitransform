@@ -5,6 +5,7 @@
 :- use_module(library(writef)).
 :- use_module(library(option)).
 :- use_module([library(semweb/rdf_db)]).
+:- use_module([library(semweb/rdf_prefixes)]).
 
 :- object(metaclass, instantiates(metaclass)).
 :- end_object.
@@ -119,6 +120,15 @@ set_graph(X):-
 graph(X):-
     ::graph_(X).
 
+check_assert(Subject, Predicate, Object):-
+    nonvar(Subject),
+    nonvar(Predicate),
+    nonvar(Object),
+    Subject\=nil,
+    Predicate\=nil,
+    Object\=nil,!,
+    ::rdf_assert(Subject, Predicate, Object).
+
 rdf_assert(Subject, Predicate, Object):-
     ::graph(Graph),
     rdf_db::rdf_assert(Subject, Predicate, Object, Graph).
@@ -131,7 +141,7 @@ rdf(Subject, Predicate, Object):-
 
 process:-
     ::dom([Root]),
-    ::process(Root, _Relation, OId).
+    ::process(Root, _Relation, _OId).
 
 process(element(Atom, Attrs, Elements), Relation, OId):-
     ::process_atom(Atom, Attrs, OId, Relation),
@@ -147,7 +157,7 @@ process_elements([X|T], SId):-
     ::process_elements(T, SId).
 
 process_atom(Atom, Attrs, Id, Atom):-
-    ::atom_prefix_split(Atom, P,S),
+    ::atom_prefix_split(Atom, _P,_S),
     ::process_attrs_def(Attrs, Id, Atom, RestAttrs), !, % NOTE: Atom=Type is defined here.
     ::process_attrs_rest(Id, RestAttrs).
 
