@@ -29,6 +29,7 @@
                  triple/4,
                  filename/1,
                  process/0,
+                 atom_prefix_split/3,
                  rdf/3
 		     ]).
 :- private([dom_/1,
@@ -53,10 +54,11 @@
                     rdf_assert/3,
                     top_xmi_element/1,
                     top_subject/1,
-                    process_attrs_def/5,
+                    process_attrs_def/4,
                     process_attrs_rest/2,
                     process_attr/3,
-                    process_attrs_type/3,
+                    process_attr_/6,
+                    find_attr_/4,
                     process_elements/2,
                     process/3,
                     process_atom/4,
@@ -129,9 +131,7 @@ rdf(Subject, Predicate, Object):-
 
 process:-
     ::dom([Root]),
-    ::process(Root, _Relation, OId),
-    ::retractall(top_subject(_)),
-    ::assert(top_subject(SubjectId)).
+    ::process(Root, _Relation, OId).
 
 process(element(Atom, Attrs, Elements), Relation, OId):-
     ::process_atom(Atom, Attrs, OId, Relation),
@@ -140,19 +140,19 @@ process(element(Atom, Attrs, Elements), Relation, OId):-
 process_elements([], _).
 process_elements([element(A,B,C)|T], SId):-!,
     ::process(element(A,B,C), Relation, OId),
-    ::debugf("ADDING <%w,%w,%w>", [SId, Relation, OId]),
+    ::debugf("ADDING3 <%w,%w,%w>", [SId, Relation, OId]),
     ::process_elements(T, SId).
 process_elements([X|T], SId):-
     ::debugf("Text?:",[X]),
     ::process_elements(T, SId).
 
 process_atom(Atom, Attrs, Id, Atom):-
-    ::atom_starts_with(Atom, 'uml:', _Type),!,
-    ::process_attrs_def(Attrs, Id, Atom, _Name, RestAttrs), % NOTE: Atom is defined already.
+    ::atom_prefix_split(Atom, P,S),
+    ::process_attrs_def(Attrs, Id, Atom, RestAttrs), !, % NOTE: Atom=Type is defined here.
     ::process_attrs_rest(Id, RestAttrs).
 
 process_atom(XMIRelation, Attrs, Id, XMIRelation):- % 'schema:hasPart'):-!,
-    ::process_attrs_def(Attrs, Id, _Type, _Name, RestAttrs),
+    ::process_attrs_def(Attrs, Id, _Type, RestAttrs),
     ::process_attrs_rest(Id, RestAttrs).
 
 process_atom(Atom, Attrs, nil, nil):-
@@ -160,22 +160,37 @@ process_atom(Atom, Attrs, nil, nil):-
 
 
 
-process_attrs_type(Attrs, Type, Attrs):-
+find_attr_(type, Attrs, Type, Attrs):-
     nonvar(Type),!.
-process_attrs_type(Attrs, Type, RestAttrs):-
+find_attr_(type, Attrs, Type, RestAttrs):-!,
     ::process_attr(Attrs, 'xmi:type'(Type), RestAttrs).
+find_attr_(name, Attrs, Name, RestAttrs):-!,
+    ::process_attr(Attrs, name(Name), RestAttrs).
+find_attr_(id, Attrs, Id, RestAttrs):-
+    ::process_attr(Attrs, 'xmi:id'(Id), RestAttrs),!.
+find_attr_(id, Attrs, Id, RestAttrs):-
+    ::process_attr(Attrs, href(Id), RestAttrs),!.
 
-process_attrs_def(Attrs, Id, Type, Name, RestAttrs):-
-    ::process_attr(Attrs, 'xmi:id'(Id), R1),
-    ::process_attrs_type(R1, Type,R2),
-    ::debugf('ADDING <%w, rdf:typeOf, %w>',[Id, Type]),
-    true.
-    % ::process_attr(R2, name(Name), RestAttrs),
-    % ::debugf('ADDING <%w, rdfs:label, %w>',[Id, Name]).
+process_attr_(Kind, Id, Attrs, Subject, RestAttrs, Relation):-
+    find_attr_(Kind, Attrs, Subject, RestAttrs),
+    nonvar(Id),
+    Id \= nil,
+    nonvar(Relation),
+    nonvar(Subject),!,
+    ::debugf('ADDING2 <%w, %w, %w>',[Id, Relation, Subject]).
+process_attr_(_, _, Attrs, _, Attrs, _).
+
+
+process_attrs_def(Attrs, Id, Type, RestAttrs):-
+    ::find_attr_(id, Attrs, Id, R1),
+    ::debugf("DEF:Attrs:%w, for id %w", [Attrs, Id]),
+    ::process_attr_(type, Id, R1, Type, R2, 'rdf:typeOf'),
+    ::process_attr_(name, Id, R2, _Name, RestAttrs, 'rdfs:label').
 
 process_attrs_rest(_,[]).
 process_attrs_rest(Id, [A=B|T]):-
-    ::debugf(processing, "ADDING <%w,%w,%w>", [Id, A, B]),
+    Id\=nil,!,
+    ::debugf(processing, "ADDING1 <%w,%w,%w>", [Id, A, B]),
     ::process_attrs_rest(Id, T).
 
 process_attr(Attrs, Struct, RestAttrs):-
@@ -235,11 +250,14 @@ namespace(NS, URI, nil):-
 location(URI, Location):-
     ::location_(URI, Location).
 
-xmlns(Key, NS):-
-    sub_atom(Key, B, 1, A, ':'),
-    sub_atom(Key, 0, B, _, 'xmlns'),
+atom_prefix_split(Atom, Prefix, Suffix):-
+    sub_atom(Atom, B, 1, A, ':'),
+    sub_atom(Atom, 0, B, _, Prefix),
     B1 is B+1,
-    sub_atom(Key,B1,A,0,NS).
+    sub_atom(Atom, B1,A, 0, Suffix).
+
+xmlns(Key, NS):-
+    ::atom_prefix_split(Key, 'xmlns', NS).
 
 top_name_to_graph.
 

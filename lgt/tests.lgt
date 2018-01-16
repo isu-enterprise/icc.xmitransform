@@ -13,6 +13,9 @@ succeeds(test_list) :-
     findall(X, listtest::member(X,[1,3,4]), L),
     L == [1,3,4].
 
+succeeds(test_atom_split):-
+    profile::atom_prefix_split('xmi:XMI','xmi','XMI').
+
 succeeds(simple_load_profile):-
 	profile::load_file('../tests/input/LocalProfile.profile.xmi').
 
