@@ -54,6 +54,9 @@ test(package_NS_with_locations):-
 test(package_graph_name):-
     package::graph('xmitransofmtest').
 
+succeeds(package_prefixes_register):-
+    package::register_prefixes.
+
 succeeds(package_process_xmi):-
     package::process.
 

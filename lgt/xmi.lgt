@@ -31,7 +31,8 @@
                  filename/1,
                  process/0,
                  atom_prefix_split/3,
-                 rdf/3
+                 rdf/3,
+                 register_prefixes/0
 		     ]).
 :- private([dom_/1,
             process_namespaces/0,
@@ -87,14 +88,14 @@ load_file(FileName):-
 	load_file(FileName, []).
 
 load_file(FileName, Options):-
-	open(FileName, read, I),
-	sgml::load_xml(I, DOM, Options),
-    ::base_check(DOM),
-	::assert(dom_(DOM)),
-    ::assert(filename_(FileName)),
-	close(I),
-    ::process_ns_locations,
-    ::process_namespaces,
+	open(FileName, read, I),!,
+	sgml::load_xml(I, DOM, Options),!,
+    ::base_check(DOM),!,
+	::assert(dom_(DOM)),!,
+    ::assert(filename_(FileName)),!,
+	close(I),!,
+    ::process_ns_locations,!,
+    ::process_namespaces,!,
     ::top_name_to_graph.
 
 dom(X) :-
@@ -106,7 +107,9 @@ filename(FileName):-
 clear:-
 	::retractall(dom_(_)),
     ::retractall(location_(_,_)),
-    ::retractall(namespace_(_,_)).
+    % FIXME: Unregister NSs?
+    ::retractall(namespace_(_,_)),
+    ::retractall(filename_(_)).
 
 xpath(Spec, Content):-
     ::dom(DOM),
@@ -120,7 +123,8 @@ set_graph(X):-
 graph(X):-
     ::graph_(X).
 
-check_assert(Subject, Predicate, Object):-
+check_rdf_assert(Subject, Predicate, Object):-
+
     nonvar(Subject),
     nonvar(Predicate),
     nonvar(Object),
@@ -244,10 +248,19 @@ p2_locs(URI, Location):-
 p2_locs([]).
 p2_locs([URI,Location|R]):-p2_locs(URI,Location), p2_locs(R).
 
-namespace(nil, FileName):-
-    ::filename_(FileName).
+register_prefixes:-
+    ::namespace(NS, URI),
+    rdf_prefixes::rdf_register_prefix(NS, URI, [keep(true)]),
+    fail; true.
+
+
 namespace(NS, URI):-
     ::namespace_(NS, URI).
+
+namespace(Graph, URI):-
+    ::graph(Graph),
+    ::filename(FileName),
+    atom_concat('file://', FileName, URI).
 
 namespace(NS, URI, Location):-
     ::namespace(NS, URI),
