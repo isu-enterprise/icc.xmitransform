@@ -123,15 +123,18 @@ set_graph(X):-
 graph(X):-
     ::graph_(X).
 
-check_rdf_assert(Subject, Predicate, Object):-
+expand_uri(Object, EObject):-
+    atom_prefix_split(Object, NS, O),!,
+    rdf_prefixes::rdf_global_id(NS:O, EObject).
+expand_uri(Object, EObject):-
+    rdf_prefixes::rdf_global_id('_':Object, EObject).
 
-    nonvar(Subject),
-    nonvar(Predicate),
-    nonvar(Object),
-    Subject\=nil,
-    Predicate\=nil,
-    Object\=nil,!,
-    ::rdf_assert(Subject, Predicate, Object).
+check_rdf_assert(Subject, Predicate, Object):-
+    expand_uri(Subject, ESubject),
+    expand_uri(Predicate, EPredicate),
+    expand_object(Object, EObject),
+    !,
+    ::rdf_assert(ESubject, EPredicate, EObject).
 
 rdf_assert(Subject, Predicate, Object):-
     ::graph(Graph),
