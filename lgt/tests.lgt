@@ -1,3 +1,5 @@
+:- use_module([library(semweb/rdf_prefixes)]).
+
 :- object(tests, extends(lgtunit)).
 :- info([
                version is 0.1,
@@ -15,6 +17,15 @@ succeeds(test_list) :-
 
 succeeds(test_atom_split):-
     profile::atom_prefix_split('xmi:XMI','xmi','XMI').
+
+succeeds(test_uri_normalise_1):-
+    profile::uri_normalize('http://irnok.net/ontology/1.0', 'http://irnok.net/ontology/1.0#').
+
+succeeds(test_uri_normalise_2):-
+    profile::uri_normalize('http://irnok.net/ontology/1.0/', 'http://irnok.net/ontology/1.0/').
+
+succeeds(test_uri_normalise_3):-
+    profile::uri_normalize('http://irnok.net/ontology/1.0#', 'http://irnok.net/ontology/1.0#').
 
 succeeds(simple_load_profile):-
     profile::load_file('../tests/input/LocalProfile.profile.xmi').
@@ -43,7 +54,7 @@ test(package_load_again):-
     package::dom([_]).
 
 test(package_NS_ok):-
-    package::namespace(_, _).
+    package::namespace('uml', _).
 
 test(package_locations_ok):-
     package::location(_, _).
@@ -55,7 +66,8 @@ test(package_graph_name):-
     package::graph('xmitransofmtest').
 
 succeeds(package_prefixes_register):-
-    package::register_prefixes.
+    package::register_prefixes,
+    rdf_db::rdf_current_prefix('uml',_).
 
 succeeds(package_process_xmi):-
     package::process.

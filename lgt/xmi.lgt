@@ -33,6 +33,7 @@
                  process/0,
                  atom_prefix_split/3,
                  rdf/3,
+                 uri_normalize/2,
                  register_prefixes/0
 		     ]).
 :- private([dom_/1,
@@ -68,6 +69,9 @@
                     check_rdf_assert/3,
                     expand_object/2,
                     expand_uri/2,
+                    atom_last_char/2,
+                    uri_good_last_char/1,
+                    p/1,
                     atom_starts_with/3
                 ]).
 
@@ -86,11 +90,16 @@ debug.
 %debug(xmi_headers).
 %debug(xmlns).
 %debug(xml_locations).
+
 debug(processing).
 debug(assert).
+debug(p).
+
+p(X):-
+    ::debugf(p, 'P: %w',[X]).
 
 load_file(FileName):-
-	load_file(FileName, []).
+	::load_file(FileName, []).
 
 load_file(FileName, Options):-
 	open(FileName, read, I),!,
@@ -136,7 +145,8 @@ expand_uri(Object, EObject):-
     !,
     rdf_prefixes::rdf_global_id(NS:O, EObject).
 expand_uri(Object, EObject):-
-    rdf_prefixes::rdf_global_id('_':Object, EObject).
+    ::graph(NS),
+    rdf_prefixes::rdf_global_id(NS:Object, EObject).
 
 expand_object(Object, EObject):-
     ::expand_uri(Object, EObject).
@@ -148,6 +158,8 @@ check_rdf_assert(Subject, Predicate, Object):-
     ::debugf(assert, 'CA: <%w,%w,%w>', [ESubject,EPredicate,EObject]),
     !,
     ::rdf_assert(ESubject, EPredicate, EObject).
+check_rdf_assert(Subject, Predicate, Object):-
+    ::debugf(assert, "BAD ASSERT: <%w,%w,%w>", [Subject, Predicate, Object]).
 
 rdf_assert(Subject, Predicate, Object):-
     ::graph(Graph),
@@ -186,7 +198,7 @@ process_atom(XMIRelation, Attrs, Id, XMIRelation):- % 'schema:hasPart'):-!,
     ::process_attrs_rest(Id, RestAttrs).
 
 process_atom(Atom, Attrs, nil, nil):-
-    ::debugf(processing, 'FAILED PROCESS: %w(%w)',[Atom, Attrs]).
+    ::debugf('FAILED PROCESS: %w(%w)',[Atom, Attrs]).
 
 
 
@@ -231,6 +243,11 @@ atom_starts_with(Atom, Sub, Rest):-
     sub_atom(Atom, 0, L, A, Sub),
     sub_atom(Atom, L, A, 0, Rest).
 
+atom_last_char(Atom, Char):-
+    atom_length(Atom, L),!,
+    L1 is L - 1,!,
+    sub_atom(Atom, L1, 1, 0, Char).
+
 % ----------------- END OF Main processing recursion ----------------------------
 
 process_namespaces:-
@@ -239,9 +256,10 @@ process_namespaces:-
     % ::debugf(xmi_headers,"Root:%w",[Root]),
     p_ns(Attrs).
 
-p_ns(Key=Val):-
-    ::debugf(xmlns,"%w -> %w\n",[Key, Val]),
-    xmlns(Key, NS),!,
+p_ns(Key=_Val):-
+    ::debugf(xmlns,"%w -> %w\n",[Key, _Val]),
+    ::xmlns(Key, NS),!,
+    ::uri_normalize(_Val, Val),
     ::assert(namespace_(NS, Val)),
     ::debugf(xmlns, "Added %w=%w",[NS, Val]).
 p_ns(_=_).
@@ -273,14 +291,11 @@ register_prefixes:-
 namespace(NS, URI):-
     ::namespace_(NS, URI).
 
-namespace('_', URI):-
-    ::filename(FileName),
-    atom_concat('file://', FileName, _S1),
-    atom_concat(_S1, "#", URI).
-
 namespace(Graph, URI):-
     ::graph(Graph),!,
-    ::namespace('_', URI).
+    ::filename(FileName),
+    atom_concat('file://', FileName, _S1),
+    ::uri_normalize(_S1, URI).
 
 namespace(NS, URI, Location):-
     ::namespace(NS, URI),
@@ -298,6 +313,15 @@ atom_prefix_split(Atom, Prefix, Suffix):-
     sub_atom(Atom, 0, B, _, Prefix),
     B1 is B+1,
     sub_atom(Atom, B1,A, 0, Suffix).
+
+uri_good_last_char('/').
+uri_good_last_char('#').
+
+uri_normalize(NS, NS):-
+    atom_last_char(NS,C),
+    ::uri_good_last_char(C),!.
+uri_normalize(NS, NewNs):-
+    atom_concat(NS,'#',NewNs).
 
 xmlns(Key, NS):-
     ::atom_prefix_split(Key, 'xmlns', NS).
