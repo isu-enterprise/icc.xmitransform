@@ -72,4 +72,7 @@ succeeds(package_prefixes_register):-
 succeeds(package_process_xmi):-
     package::process.
 
+succeeds(package_save_turtle):-
+    package::save_turtle('../tests/output/xmitransformtest.ttl').
+
 :- end_object.

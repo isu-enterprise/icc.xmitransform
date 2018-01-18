@@ -7,6 +7,7 @@
 :- use_module(library(option)).
 :- use_module([library(semweb/rdf_db)]).
 :- use_module([library(semweb/rdf_prefixes)]).
+:- use_module([library(semweb/turtle)]).
 
 :- object(metaclass, instantiates(metaclass)).
 :- end_object.
@@ -34,6 +35,8 @@
                  atom_prefix_split/3,
                  rdf/3,
                  uri_normalize/2,
+                 save_turtle/1,
+                 save_turtle/2,
                  register_prefixes/0
 		     ]).
 :- private([dom_/1,
@@ -249,6 +252,24 @@ atom_last_char(Atom, Char):-
     sub_atom(Atom, L1, 1, 0, Char).
 
 % ----------------- END OF Main processing recursion ----------------------------
+
+save_turtle(Out, Options):-
+    ::graph(Graph),
+    turtle::rdf_save_turtle(Out, [graph(Graph) | Options]).
+
+save_turtle(Out):-
+    ::save_turtle(Out, [
+                      a(true),
+                      align_prefixes(true),
+                      canonize_numbers(true),
+                      indent(2),
+                      group(true),
+                      only_known_prefixes(true),
+                      single_line_bnodes(true),
+                      tab_distance(0),
+                      user_prefixes(true)
+                  ]).
+
 
 process_namespaces:-
     ::dom([element(_, Attrs, _)]),
