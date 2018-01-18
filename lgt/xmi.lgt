@@ -1,5 +1,6 @@
 
 
+:- use_module(library(lists)).
 :- use_module(library(sgml)).
 :- use_module(library(xpath)).
 :- use_module(library(writef)).
@@ -64,6 +65,9 @@
                     process_elements/2,
                     process/3,
                     process_atom/4,
+                    check_rdf_assert/3,
+                    expand_object/2,
+                    expand_uri/2,
                     atom_starts_with/3
                 ]).
 
@@ -71,8 +75,8 @@
                   dom_/1,
                   namespace_/2,  % name -> URL
                   location_/2,   % URL -> URL | FIle
-                  debug/0,       % debug at all.
-                  debug/1,       % debug(<what>), e.g. debug(basic_checks).
+                  % debug/0,       % debug at all.
+                  % debug/1,       % debug(<what>), e.g. debug(basic_checks).
                   filename_/1,   % Name of file loaded. It corresponds to NS nil.
                   top_subject/1, % References to a top subject of the Package/Profile.
                   graph_/1       % The Graph name to store triples, defaults to name attribute of uml:Model attribute.
@@ -83,6 +87,7 @@ debug.
 %debug(xmlns).
 %debug(xml_locations).
 debug(processing).
+debug(assert).
 
 load_file(FileName):-
 	load_file(FileName, []).
@@ -123,16 +128,24 @@ set_graph(X):-
 graph(X):-
     ::graph_(X).
 
+expand_uri(nil, _):-!, fail.
+
 expand_uri(Object, EObject):-
-    atom_prefix_split(Object, NS, O),!,
+    ::atom_prefix_split(Object, NS, O),
+    \+ lists::member(NS, ['http','https','ftp','file']),
+    !,
     rdf_prefixes::rdf_global_id(NS:O, EObject).
 expand_uri(Object, EObject):-
     rdf_prefixes::rdf_global_id('_':Object, EObject).
 
+expand_object(Object, EObject):-
+    ::expand_uri(Object, EObject).
+
 check_rdf_assert(Subject, Predicate, Object):-
-    expand_uri(Subject, ESubject),
-    expand_uri(Predicate, EPredicate),
-    expand_object(Object, EObject),
+    ::expand_uri(Subject, ESubject),
+    ::expand_uri(Predicate, EPredicate),
+    ::expand_object(Object, EObject),
+    ::debugf(assert, 'CA: <%w,%w,%w>', [ESubject,EPredicate,EObject]),
     !,
     ::rdf_assert(ESubject, EPredicate, EObject).
 
@@ -157,7 +170,7 @@ process(element(Atom, Attrs, Elements), Relation, OId):-
 process_elements([], _).
 process_elements([element(A,B,C)|T], SId):-!,
     ::process(element(A,B,C), Relation, OId),
-    ::debugf("ADDING3 <%w,%w,%w>", [SId, Relation, OId]),
+    ::check_rdf_assert(SId, Relation, OId),
     ::process_elements(T, SId).
 process_elements([X|T], SId):-
     ::debugf("Text?:",[X]),
@@ -194,7 +207,8 @@ process_attr_(Kind, Id, Attrs, Subject, RestAttrs, Relation):-
     Id \= nil,
     nonvar(Relation),
     nonvar(Subject),!,
-    ::debugf('ADDING2 <%w, %w, %w>',[Id, Relation, Subject]).
+    ::check_rdf_assert(Id, Relation, Subject).
+
 process_attr_(_, _, Attrs, _, Attrs, _).
 
 
@@ -207,7 +221,7 @@ process_attrs_def(Attrs, Id, Type, RestAttrs):-
 process_attrs_rest(_,[]).
 process_attrs_rest(Id, [A=B|T]):-
     Id\=nil,!,
-    ::debugf(processing, "ADDING1 <%w,%w,%w>", [Id, A, B]),
+    ::check_rdf_assert(Id, A, B),
     ::process_attrs_rest(Id, T).
 
 process_attr(Attrs, Struct, RestAttrs):-
@@ -256,14 +270,17 @@ register_prefixes:-
     rdf_prefixes::rdf_register_prefix(NS, URI, [keep(true)]),
     fail; true.
 
-
 namespace(NS, URI):-
     ::namespace_(NS, URI).
 
-namespace(Graph, URI):-
-    ::graph(Graph),
+namespace('_', URI):-
     ::filename(FileName),
-    atom_concat('file://', FileName, URI).
+    atom_concat('file://', FileName, _S1),
+    atom_concat(_S1, "#", URI).
+
+namespace(Graph, URI):-
+    ::graph(Graph),!,
+    ::namespace('_', URI).
 
 namespace(NS, URI, Location):-
     ::namespace(NS, URI),

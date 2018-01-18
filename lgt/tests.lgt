@@ -1,10 +1,10 @@
 :- object(tests, extends(lgtunit)).
-   :- info([
-   	  version is 0.1,
-	  	  author is 'Evgeny Cherkashin',
-		  date is 2017/01/15,
-		  comment is 'Unit test for XMI tranforming utility'
-   ]).
+:- info([
+               version is 0.1,
+               author is 'Evgeny Cherkashin',
+               date is 2017/01/15,
+               comment is 'Unit test for XMI tranforming utility'
+           ]).
 
 succeeds(test_test) :-
     true.
@@ -17,20 +17,20 @@ succeeds(test_atom_split):-
     profile::atom_prefix_split('xmi:XMI','xmi','XMI').
 
 succeeds(simple_load_profile):-
-	profile::load_file('../tests/input/LocalProfile.profile.xmi').
+    profile::load_file('../tests/input/LocalProfile.profile.xmi').
 
 succeeds(profile_graph_name):-
     profile::graph('LocalProfile').
 
 succeeds(simple_profile_query):-
-	profile::dom([element(_,_,_)]).
+    profile::dom([element(_,_,_)]).
 
 fails(simple_package_query):-
-	package::dom([element(_,_,_)]).
+    package::dom([element(_,_,_)]).
 
 succeeds(simple_load_package):-
-	package::load_file('../tests/input/xmitransofmtest.xmi'),
-	package::dom([_]).
+    package::load_file('../tests/input/xmitransofmtest.xmi'),
+    package::dom([_]).
 
 succeeds(clear_package):-
     package::clear.
