@@ -151,6 +151,7 @@ expand_uri(Object, EObject):-
     ::graph(NS),
     rdf_prefixes::rdf_global_id(NS:Object, EObject).
 
+%expand_object(true, type)
 expand_object(Object, EObject):-
     ::expand_uri(Object, EObject).
 
