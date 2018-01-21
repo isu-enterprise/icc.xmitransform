@@ -33,6 +33,7 @@
                  filename/1,
                  process/0,
                  atom_prefix_split/3,
+                 atom_prefix_split/4,
                  rdf/3,
                  uri_normalize/2,
                  save_turtle/1,
@@ -74,6 +75,7 @@
                     expand_uri/2,
                     atom_last_char/2,
                     uri_good_last_char/1,
+                    href_normalize/2,
                     p/1,
                     atom_starts_with/3
                 ]).
@@ -144,8 +146,8 @@ expand_uri(nil, _):-!, fail.
 
 expand_uri(Object, EObject):-
     ::atom_prefix_split(Object, NS, O),
-    \+ lists::member(NS, ['http','https','ftp','file']),
-    !,
+    % \+ lists::member(NS, ['http','https','ftp','file']),
+    rdf_prefixes::rdf_current_prefix(NS,_URI), !,
     rdf_prefixes::rdf_global_id(NS:O, EObject).
 expand_uri(Object, EObject):-
     ::graph(NS),
@@ -215,7 +217,22 @@ find_attr_(name, Attrs, Name, RestAttrs):-!,
 find_attr_(id, Attrs, Id, RestAttrs):-
     ::process_attr(Attrs, 'xmi:id'(Id), RestAttrs),!.
 find_attr_(id, Attrs, Id, RestAttrs):-
-    ::process_attr(Attrs, href(Id), RestAttrs),!.
+    ::process_attr(Attrs, href(_Id), RestAttrs),!,
+    ::href_normalize(_Id, Id),
+    ::debugf("---> %w -> %w", [_Id, Id])
+.
+
+href_normalize(_Id, Id):-
+    ::atom_prefix_split(_Id, Prefix, "#", Suffix),
+    atom_concat(Prefix, "#", _Prefix),
+    ::location(URI, _Prefix),
+    % ::debugf("---> Loc:%w Id: %w", [URI, _Id]),
+    ::namespace(NS, URI), !,
+    % ::debugf("---> Loc:%w NS:%w", [URI,NS]),
+    atom_concat(NS,":", _NS),
+    atom_concat(_NS, Suffix, Id).
+
+href_normalize(Id, Id).
 
 process_attr_(Kind, Id, Attrs, Subject, RestAttrs, Relation):-
     find_attr_(Kind, Attrs, Subject, RestAttrs),
@@ -272,11 +289,19 @@ save_turtle(Out):-
                   ]).
 
 
+:- private([
+                 p_ns/1,
+                 p_locs/1,
+                 p2_locs/1,
+                 p2_locs/2,
+                 p2_locs_/2
+             ]).
+
 process_namespaces:-
     ::dom([element(_, Attrs, _)]),
     % ::dom([element(Root, Attrs, _)]),
     % ::debugf(xmi_headers,"Root:%w",[Root]),
-    p_ns(Attrs).
+    ::p_ns(Attrs).
 
 p_ns(Key=_Val):-
     ::debugf(xmlns,"%w -> %w\n",[Key, _Val]),
@@ -286,22 +311,34 @@ p_ns(Key=_Val):-
     ::debugf(xmlns, "Added %w=%w",[NS, Val]).
 p_ns(_=_).
 p_ns([X]):-
-    p_ns(X).
-p_ns([X|T]):-p_ns(X),p_ns(T).
+    ::p_ns(X).
+p_ns([X|T]):-
+    ::p_ns(X),
+    ::p_ns(T).
 
 process_ns_locations:-
     ::dom([element(_,Attrs,_)]),
     swi_option::option('xsi:schemaLocation'(Val), Attrs),!,
-    p_locs(Val).
+    ::p_locs(Val).
+
 process_ns_locations.
 
 p_locs(Val):-
     ::debugf(xml_locations, "Loc:%w", [Val]),
     split_string(Val, ' ',' ', L),
-    p2_locs(L).
+    ::p2_locs(L).
+
+p2_locs_(Location, _Location):-
+    ::atom_prefix_split(Location, Prefix, '.xmi#', _Suffix),!,
+    atom_concat(Prefix,'.xmi#', _Location).
+p2_locs_(Location, Location).
 
 p2_locs(URI, Location):-
-    ::assert(location_(URI, Location)).
+    atom_string(_URI, URI),
+    atom_string(_Loc, Location),
+    p2_locs_(_Loc, _Location),
+    ::uri_normalize(_URI, _NormURI),
+    ::assert(location_(_NormURI, _Location)).
 p2_locs([]).
 p2_locs([URI,Location|R]):-p2_locs(URI,Location), p2_locs(R).
 
@@ -331,10 +368,15 @@ location(URI, Location):-
     ::location_(URI, Location).
 
 atom_prefix_split(Atom, Prefix, Suffix):-
-    sub_atom(Atom, B, 1, A, ':'),
+    ::atom_prefix_split(Atom, Prefix, ':', Suffix).
+
+atom_prefix_split(Atom, Prefix, Divider, Suffix):-
+    atom_length(Divider, DividerLength),
+    sub_atom(Atom, B, DividerLength, A, Divider),
     sub_atom(Atom, 0, B, _, Prefix),
-    B1 is B+1,
+    B1 is B+DividerLength,
     sub_atom(Atom, B1,A, 0, Suffix).
+
 
 uri_good_last_char('/').
 uri_good_last_char('#').

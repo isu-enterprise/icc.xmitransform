@@ -1,302 +1,302 @@
-<?xml version="1.0" encoding="UTF-8"?><uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:version="2.1" xmi:id="_oBGkwPhcEeerIJeQoOdRBw" name="Code" metaclassReference="_oBGk9vhcEeerIJeQoOdRBw">
-  <eAnnotations xmi:id="_oBGkwfhcEeerIJeQoOdRBw" source="Objing">
-    <contents xmi:type="uml:Property" xmi:id="_oBGkwvhcEeerIJeQoOdRBw" name="Module">
-      <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGkw_hcEeerIJeQoOdRBw" value="00000000-0000-2710-0000-000000000000"/>
+<?xml version="1.0" encoding="UTF-8"?><uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:version="2.1" xmi:id="_KSnCcP55EeeQJ-nOrlmILA" name="Code" metaclassReference="_KSnCpv55EeeQJ-nOrlmILA">
+  <eAnnotations xmi:id="_KSnCcf55EeeQJ-nOrlmILA" source="Objing">
+    <contents xmi:type="uml:Property" xmi:id="_KSnCcv55EeeQJ-nOrlmILA" name="Module">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCc_55EeeQJ-nOrlmILA" value="00000000-0000-2710-0000-000000000000"/>
     </contents>
-    <contents xmi:type="uml:Property" xmi:id="_oBGkxPhcEeerIJeQoOdRBw" name="ID">
-      <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGkxfhcEeerIJeQoOdRBw" value="00300000-0000-0032-0000-000000000000"/>
-    </contents>
-  </eAnnotations>
-  <eAnnotations xmi:id="_oBGkxvhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML">
-    <contents xmi:type="ecore:EPackage" xmi:id="_oBGkx_hcEeerIJeQoOdRBw" name="Code" nsURI="http:///schemas/Code/_n_2nkPhcEeerIJeQoOdRBw/0" nsPrefix="Code">
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oBGkyPhcEeerIJeQoOdRBw" name="StandardAssociationEnd">
-        <eAnnotations xmi:id="_oBGkyfhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oBGk9_hcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oBGkyvhcEeerIJeQoOdRBw" name="base_Element" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oBGkzPhcEeerIJeQoOdRBw" name="nocode" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oBGkzvhcEeerIJeQoOdRBw" name="type" ordered="false" upperBound="-1">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        </eStructuralFeatures>
-      </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oBGk0PhcEeerIJeQoOdRBw" name="StandardAttribute">
-        <eAnnotations xmi:id="_oBGk0fhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oBGlD_hcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oBGk0vhcEeerIJeQoOdRBw" name="base_Element" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oBGk1PhcEeerIJeQoOdRBw" name="nocode" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oBGk1vhcEeerIJeQoOdRBw" name="type" ordered="false" upperBound="-1">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        </eStructuralFeatures>
-      </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oBGk2PhcEeerIJeQoOdRBw" name="StandardGeneralClass">
-        <eAnnotations xmi:id="_oBGk2fhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oBGlJ_hcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oBGk2vhcEeerIJeQoOdRBw" name="base_Element" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oBGk3PhcEeerIJeQoOdRBw" name="nocode" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-        </eStructuralFeatures>
-      </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oBGk3vhcEeerIJeQoOdRBw" name="InfrastructureNote">
-        <eAnnotations xmi:id="_oBGk3_hcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oBGlN_hcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oBGk4PhcEeerIJeQoOdRBw" name="base_Element" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oBGk4vhcEeerIJeQoOdRBw" name="JEvaluation" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-        </eStructuralFeatures>
-      </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oBGk5PhcEeerIJeQoOdRBw" name="StandardOperation">
-        <eAnnotations xmi:id="_oBGk5fhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oBGlSPhcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oBGk5vhcEeerIJeQoOdRBw" name="base_Element" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oBGk6PhcEeerIJeQoOdRBw" name="nocode" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-        </eStructuralFeatures>
-      </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oBGk6vhcEeerIJeQoOdRBw" name="StandardPackage">
-        <eAnnotations xmi:id="_oBGk6_hcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oBGlWPhcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oBGk7PhcEeerIJeQoOdRBw" name="base_Element" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oBGk7vhcEeerIJeQoOdRBw" name="nocode" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-        </eStructuralFeatures>
-      </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oBGk8PhcEeerIJeQoOdRBw" name="StandardParameter">
-        <eAnnotations xmi:id="_oBGk8fhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oBHL1vhcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oBGk8vhcEeerIJeQoOdRBw" name="base_Element" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oBGk9PhcEeerIJeQoOdRBw" name="type" ordered="false" upperBound="-1">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        </eStructuralFeatures>
-      </eClassifiers>
+    <contents xmi:type="uml:Property" xmi:id="_KSnCdP55EeeQJ-nOrlmILA" name="ID">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCdf55EeeQJ-nOrlmILA" value="00300000-0000-0032-0000-000000000000"/>
     </contents>
   </eAnnotations>
-  <elementImport xmi:id="_oBGk9vhcEeerIJeQoOdRBw">
+  <eAnnotations xmi:id="_KSnCdv55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_KSnCd_55EeeQJ-nOrlmILA" name="Code" nsURI="http:///schemas/Code/_KSlNQP55EeeQJ-nOrlmILA/0" nsPrefix="Code">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KSnCeP55EeeQJ-nOrlmILA" name="StandardAssociationEnd">
+        <eAnnotations xmi:id="_KSnCef55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KSnCp_55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KSnCev55EeeQJ-nOrlmILA" name="base_Element" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KSnCfP55EeeQJ-nOrlmILA" name="nocode" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KSnCfv55EeeQJ-nOrlmILA" name="type" ordered="false" upperBound="-1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KSnCgP55EeeQJ-nOrlmILA" name="StandardAttribute">
+        <eAnnotations xmi:id="_KSnCgf55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KSnCv_55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KSnCgv55EeeQJ-nOrlmILA" name="base_Element" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KSnChP55EeeQJ-nOrlmILA" name="nocode" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KSnChv55EeeQJ-nOrlmILA" name="type" ordered="false" upperBound="-1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KSnCiP55EeeQJ-nOrlmILA" name="StandardGeneralClass">
+        <eAnnotations xmi:id="_KSnCif55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KSnC1_55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KSnCiv55EeeQJ-nOrlmILA" name="base_Element" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KSnCjP55EeeQJ-nOrlmILA" name="nocode" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KSnCjv55EeeQJ-nOrlmILA" name="InfrastructureNote">
+        <eAnnotations xmi:id="_KSnCj_55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KSnC5_55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KSnCkP55EeeQJ-nOrlmILA" name="base_Element" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KSnCkv55EeeQJ-nOrlmILA" name="JEvaluation" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KSnClP55EeeQJ-nOrlmILA" name="StandardOperation">
+        <eAnnotations xmi:id="_KSnClf55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KSnC-P55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KSnClv55EeeQJ-nOrlmILA" name="base_Element" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KSnCmP55EeeQJ-nOrlmILA" name="nocode" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KSnCmv55EeeQJ-nOrlmILA" name="StandardPackage">
+        <eAnnotations xmi:id="_KSnCm_55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KSnDCP55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KSnCnP55EeeQJ-nOrlmILA" name="base_Element" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KSnCnv55EeeQJ-nOrlmILA" name="nocode" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KSnCoP55EeeQJ-nOrlmILA" name="StandardParameter">
+        <eAnnotations xmi:id="_KSnCof55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KSnDGP55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KSnCov55EeeQJ-nOrlmILA" name="base_Element" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KSnCpP55EeeQJ-nOrlmILA" name="type" ordered="false" upperBound="-1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+  </eAnnotations>
+  <elementImport xmi:id="_KSnCpv55EeeQJ-nOrlmILA">
     <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
   </elementImport>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oBGk9_hcEeerIJeQoOdRBw" name="Standard.AssociationEnd">
-    <eAnnotations xmi:id="_oBGk-PhcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oBGk-fhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGk-vhcEeerIJeQoOdRBw" value="00bc2f68-0000-0f3a-0000-000000000000"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KSnCp_55EeeQJ-nOrlmILA" name="Standard.AssociationEnd">
+    <eAnnotations xmi:id="_KSnCqP55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KSnCqf55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCqv55EeeQJ-nOrlmILA" value="00bc2f68-0000-0f3a-0000-000000000000"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oBGk-_hcEeerIJeQoOdRBw" name="isReference"/>
+      <contents xmi:type="uml:Property" xmi:id="_KSnCq_55EeeQJ-nOrlmILA" name="isReference"/>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGk_PhcEeerIJeQoOdRBw" name="base_Element" association="_oBGlDfhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnCrP55EeeQJ-nOrlmILA" name="base_Element" association="_KSnCvf55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGk_fhcEeerIJeQoOdRBw" name="nocode">
-      <eAnnotations xmi:id="_oBGk_vhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oBGk__hcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlAPhcEeerIJeQoOdRBw" value="%tagtype.nocode.label"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnCrf55EeeQJ-nOrlmILA" name="nocode">
+      <eAnnotations xmi:id="_KSnCrv55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSnCr_55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCsP55EeeQJ-nOrlmILA" value="%tagtype.nocode.label"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oBGlAfhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlAvhcEeerIJeQoOdRBw" value="00000000-0000-36be-0000-000000000000"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnCsf55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCsv55EeeQJ-nOrlmILA" value="00000000-0000-36be-0000-000000000000"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Boolean"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oBGlA_hcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oBGlBPhcEeerIJeQoOdRBw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSnCs_55EeeQJ-nOrlmILA" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSnCtP55EeeQJ-nOrlmILA" value="1"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlBfhcEeerIJeQoOdRBw" name="type">
-      <eAnnotations xmi:id="_oBGlBvhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oBGlB_hcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlCPhcEeerIJeQoOdRBw" value="%tagtype.type.label"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnCtf55EeeQJ-nOrlmILA" name="type">
+      <eAnnotations xmi:id="_KSnCtv55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSnCt_55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCuP55EeeQJ-nOrlmILA" value="%tagtype.type.label"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oBGlCfhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlCvhcEeerIJeQoOdRBw" value="00000000-0000-3766-0000-000000000000"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnCuf55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCuv55EeeQJ-nOrlmILA" value="00000000-0000-3766-0000-000000000000"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oBGlC_hcEeerIJeQoOdRBw" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oBGlDPhcEeerIJeQoOdRBw"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSnCu_55EeeQJ-nOrlmILA" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSnCvP55EeeQJ-nOrlmILA"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oBGlDfhcEeerIJeQoOdRBw" name="Element_Standard.AssociationEnd" memberEnd="_oBGlDvhcEeerIJeQoOdRBw _oBGk_PhcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oBGlDvhcEeerIJeQoOdRBw" name="extension_Standard.AssociationEnd" type="_oBGk9_hcEeerIJeQoOdRBw" aggregation="composite" association="_oBGlDfhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KSnCvf55EeeQJ-nOrlmILA" name="Element_Standard.AssociationEnd" memberEnd="_KSnCvv55EeeQJ-nOrlmILA _KSnCrP55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KSnCvv55EeeQJ-nOrlmILA" name="extension_Standard.AssociationEnd" type="_KSnCp_55EeeQJ-nOrlmILA" aggregation="composite" association="_KSnCvf55EeeQJ-nOrlmILA"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oBGlD_hcEeerIJeQoOdRBw" name="Standard.Attribute">
-    <eAnnotations xmi:id="_oBGlEPhcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oBGlEfhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlEvhcEeerIJeQoOdRBw" value="00bc2f68-0000-0f44-0000-000000000000"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KSnCv_55EeeQJ-nOrlmILA" name="Standard.Attribute">
+    <eAnnotations xmi:id="_KSnCwP55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KSnCwf55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCwv55EeeQJ-nOrlmILA" value="00bc2f68-0000-0f44-0000-000000000000"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oBGlE_hcEeerIJeQoOdRBw" name="isReference"/>
+      <contents xmi:type="uml:Property" xmi:id="_KSnCw_55EeeQJ-nOrlmILA" name="isReference"/>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlFPhcEeerIJeQoOdRBw" name="base_Element" association="_oBGlJfhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnCxP55EeeQJ-nOrlmILA" name="base_Element" association="_KSnC1f55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlFfhcEeerIJeQoOdRBw" name="nocode">
-      <eAnnotations xmi:id="_oBGlFvhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oBGlF_hcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlGPhcEeerIJeQoOdRBw" value="%tagtype.nocode.label"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnCxf55EeeQJ-nOrlmILA" name="nocode">
+      <eAnnotations xmi:id="_KSnCxv55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSnCx_55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCyP55EeeQJ-nOrlmILA" value="%tagtype.nocode.label"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oBGlGfhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlGvhcEeerIJeQoOdRBw" value="00000000-0000-36bb-0000-000000000000"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnCyf55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnCyv55EeeQJ-nOrlmILA" value="00000000-0000-36bb-0000-000000000000"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Boolean"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oBGlG_hcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oBGlHPhcEeerIJeQoOdRBw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSnCy_55EeeQJ-nOrlmILA" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSnCzP55EeeQJ-nOrlmILA" value="1"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlHfhcEeerIJeQoOdRBw" name="type">
-      <eAnnotations xmi:id="_oBGlHvhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oBGlH_hcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlIPhcEeerIJeQoOdRBw" value="%tagtype.type.label"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnCzf55EeeQJ-nOrlmILA" name="type">
+      <eAnnotations xmi:id="_KSnCzv55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSnCz_55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnC0P55EeeQJ-nOrlmILA" value="%tagtype.type.label"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oBGlIfhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlIvhcEeerIJeQoOdRBw" value="00000000-0000-3765-0000-000000000000"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnC0f55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnC0v55EeeQJ-nOrlmILA" value="00000000-0000-3765-0000-000000000000"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oBGlI_hcEeerIJeQoOdRBw" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oBGlJPhcEeerIJeQoOdRBw"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSnC0_55EeeQJ-nOrlmILA" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSnC1P55EeeQJ-nOrlmILA"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oBGlJfhcEeerIJeQoOdRBw" name="Element_Standard.Attribute" memberEnd="_oBGlJvhcEeerIJeQoOdRBw _oBGlFPhcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oBGlJvhcEeerIJeQoOdRBw" name="extension_Standard.Attribute" type="_oBGlD_hcEeerIJeQoOdRBw" aggregation="composite" association="_oBGlJfhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KSnC1f55EeeQJ-nOrlmILA" name="Element_Standard.Attribute" memberEnd="_KSnC1v55EeeQJ-nOrlmILA _KSnCxP55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KSnC1v55EeeQJ-nOrlmILA" name="extension_Standard.Attribute" type="_KSnCv_55EeeQJ-nOrlmILA" aggregation="composite" association="_KSnC1f55EeeQJ-nOrlmILA"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oBGlJ_hcEeerIJeQoOdRBw" name="Standard.GeneralClass">
-    <eAnnotations xmi:id="_oBGlKPhcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oBGlKfhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlKvhcEeerIJeQoOdRBw" value="00bc2f68-0000-0f51-0000-000000000000"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KSnC1_55EeeQJ-nOrlmILA" name="Standard.GeneralClass">
+    <eAnnotations xmi:id="_KSnC2P55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KSnC2f55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnC2v55EeeQJ-nOrlmILA" value="00bc2f68-0000-0f51-0000-000000000000"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oBGlK_hcEeerIJeQoOdRBw" name="isReference"/>
+      <contents xmi:type="uml:Property" xmi:id="_KSnC2_55EeeQJ-nOrlmILA" name="isReference"/>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlLPhcEeerIJeQoOdRBw" name="base_Element" association="_oBGlNfhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnC3P55EeeQJ-nOrlmILA" name="base_Element" association="_KSnC5f55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlLfhcEeerIJeQoOdRBw" name="nocode">
-      <eAnnotations xmi:id="_oBGlLvhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oBGlL_hcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlMPhcEeerIJeQoOdRBw" value="%tagtype.nocode.label"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnC3f55EeeQJ-nOrlmILA" name="nocode">
+      <eAnnotations xmi:id="_KSnC3v55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSnC3_55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnC4P55EeeQJ-nOrlmILA" value="%tagtype.nocode.label"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oBGlMfhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlMvhcEeerIJeQoOdRBw" value="00000000-0000-36bc-0000-000000000000"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnC4f55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnC4v55EeeQJ-nOrlmILA" value="00000000-0000-36bc-0000-000000000000"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Boolean"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oBGlM_hcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oBGlNPhcEeerIJeQoOdRBw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSnC4_55EeeQJ-nOrlmILA" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSnC5P55EeeQJ-nOrlmILA" value="1"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oBGlNfhcEeerIJeQoOdRBw" name="Element_Standard.GeneralClass" memberEnd="_oBGlNvhcEeerIJeQoOdRBw _oBGlLPhcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oBGlNvhcEeerIJeQoOdRBw" name="extension_Standard.GeneralClass" type="_oBGlJ_hcEeerIJeQoOdRBw" aggregation="composite" association="_oBGlNfhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KSnC5f55EeeQJ-nOrlmILA" name="Element_Standard.GeneralClass" memberEnd="_KSnC5v55EeeQJ-nOrlmILA _KSnC3P55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KSnC5v55EeeQJ-nOrlmILA" name="extension_Standard.GeneralClass" type="_KSnC1_55EeeQJ-nOrlmILA" aggregation="composite" association="_KSnC5f55EeeQJ-nOrlmILA"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oBGlN_hcEeerIJeQoOdRBw" name="Infrastructure.Note">
-    <eAnnotations xmi:id="_oBGlOPhcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oBGlOfhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlOvhcEeerIJeQoOdRBw" value="00bc2f68-0000-0f6b-0000-000000000000"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KSnC5_55EeeQJ-nOrlmILA" name="Infrastructure.Note">
+    <eAnnotations xmi:id="_KSnC6P55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KSnC6f55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnC6v55EeeQJ-nOrlmILA" value="00bc2f68-0000-0f6b-0000-000000000000"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oBGlO_hcEeerIJeQoOdRBw" name="isReference"/>
+      <contents xmi:type="uml:Property" xmi:id="_KSnC6_55EeeQJ-nOrlmILA" name="isReference"/>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlPPhcEeerIJeQoOdRBw" name="base_Element" association="_oBGlRvhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnC7P55EeeQJ-nOrlmILA" name="base_Element" association="_KSnC9v55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlPfhcEeerIJeQoOdRBw" name="JEvaluation">
-      <eAnnotations xmi:id="_oBGlPvhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oBGlP_hcEeerIJeQoOdRBw" name="isHidden"/>
-        <contents xmi:type="uml:Property" xmi:id="_oBGlQPhcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlQfhcEeerIJeQoOdRBw" value="%tagtype.JEvaluation.label"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnC7f55EeeQJ-nOrlmILA" name="JEvaluation">
+      <eAnnotations xmi:id="_KSnC7v55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSnC7_55EeeQJ-nOrlmILA" name="isHidden"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnC8P55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnC8f55EeeQJ-nOrlmILA" value="%tagtype.JEvaluation.label"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oBGlQvhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlQ_hcEeerIJeQoOdRBw" value="00000000-0000-375b-0000-000000000000"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnC8v55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnC8_55EeeQJ-nOrlmILA" value="00000000-0000-375b-0000-000000000000"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Boolean"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oBGlRPhcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oBGlRfhcEeerIJeQoOdRBw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSnC9P55EeeQJ-nOrlmILA" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSnC9f55EeeQJ-nOrlmILA" value="1"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oBGlRvhcEeerIJeQoOdRBw" name="Element_Infrastructure.Note" memberEnd="_oBGlR_hcEeerIJeQoOdRBw _oBGlPPhcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oBGlR_hcEeerIJeQoOdRBw" name="extension_Infrastructure.Note" type="_oBGlN_hcEeerIJeQoOdRBw" aggregation="composite" association="_oBGlRvhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KSnC9v55EeeQJ-nOrlmILA" name="Element_Infrastructure.Note" memberEnd="_KSnC9_55EeeQJ-nOrlmILA _KSnC7P55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KSnC9_55EeeQJ-nOrlmILA" name="extension_Infrastructure.Note" type="_KSnC5_55EeeQJ-nOrlmILA" aggregation="composite" association="_KSnC9v55EeeQJ-nOrlmILA"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oBGlSPhcEeerIJeQoOdRBw" name="Standard.Operation">
-    <eAnnotations xmi:id="_oBGlSfhcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oBGlSvhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlS_hcEeerIJeQoOdRBw" value="00bc2f68-0000-0fa9-0000-000000000000"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KSnC-P55EeeQJ-nOrlmILA" name="Standard.Operation">
+    <eAnnotations xmi:id="_KSnC-f55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KSnC-v55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnC-_55EeeQJ-nOrlmILA" value="00bc2f68-0000-0fa9-0000-000000000000"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oBGlTPhcEeerIJeQoOdRBw" name="isReference"/>
+      <contents xmi:type="uml:Property" xmi:id="_KSnC_P55EeeQJ-nOrlmILA" name="isReference"/>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlTfhcEeerIJeQoOdRBw" name="base_Element" association="_oBGlVvhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnC_f55EeeQJ-nOrlmILA" name="base_Element" association="_KSnDBv55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlTvhcEeerIJeQoOdRBw" name="nocode">
-      <eAnnotations xmi:id="_oBGlT_hcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oBGlUPhcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlUfhcEeerIJeQoOdRBw" value="%tagtype.nocode.label"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnC_v55EeeQJ-nOrlmILA" name="nocode">
+      <eAnnotations xmi:id="_KSnC__55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSnDAP55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnDAf55EeeQJ-nOrlmILA" value="%tagtype.nocode.label"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oBGlUvhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlU_hcEeerIJeQoOdRBw" value="00000000-0000-36bd-0000-000000000000"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnDAv55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnDA_55EeeQJ-nOrlmILA" value="00000000-0000-36bd-0000-000000000000"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Boolean"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oBGlVPhcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oBGlVfhcEeerIJeQoOdRBw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSnDBP55EeeQJ-nOrlmILA" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSnDBf55EeeQJ-nOrlmILA" value="1"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oBGlVvhcEeerIJeQoOdRBw" name="Element_Standard.Operation" memberEnd="_oBGlV_hcEeerIJeQoOdRBw _oBGlTfhcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oBGlV_hcEeerIJeQoOdRBw" name="extension_Standard.Operation" type="_oBGlSPhcEeerIJeQoOdRBw" aggregation="composite" association="_oBGlVvhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KSnDBv55EeeQJ-nOrlmILA" name="Element_Standard.Operation" memberEnd="_KSnDB_55EeeQJ-nOrlmILA _KSnC_f55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KSnDB_55EeeQJ-nOrlmILA" name="extension_Standard.Operation" type="_KSnC-P55EeeQJ-nOrlmILA" aggregation="composite" association="_KSnDBv55EeeQJ-nOrlmILA"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oBGlWPhcEeerIJeQoOdRBw" name="Standard.Package">
-    <eAnnotations xmi:id="_oBGlWfhcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oBGlWvhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlW_hcEeerIJeQoOdRBw" value="00bc2f68-0000-0faf-0000-000000000000"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KSnDCP55EeeQJ-nOrlmILA" name="Standard.Package">
+    <eAnnotations xmi:id="_KSnDCf55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KSnDCv55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnDC_55EeeQJ-nOrlmILA" value="00bc2f68-0000-0faf-0000-000000000000"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oBGlXPhcEeerIJeQoOdRBw" name="isReference"/>
+      <contents xmi:type="uml:Property" xmi:id="_KSnDDP55EeeQJ-nOrlmILA" name="isReference"/>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlXfhcEeerIJeQoOdRBw" name="base_Element" association="_oBHL1PhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnDDf55EeeQJ-nOrlmILA" name="base_Element" association="_KSnDFv55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBGlXvhcEeerIJeQoOdRBw" name="nocode">
-      <eAnnotations xmi:id="_oBGlX_hcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oBGlYPhcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBGlYfhcEeerIJeQoOdRBw" value="%tagtype.nocode.label"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnDDv55EeeQJ-nOrlmILA" name="nocode">
+      <eAnnotations xmi:id="_KSnDD_55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSnDEP55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnDEf55EeeQJ-nOrlmILA" value="%tagtype.nocode.label"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oBHL0PhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBHL0fhcEeerIJeQoOdRBw" value="00000000-0000-36bf-0000-000000000000"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnDEv55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnDE_55EeeQJ-nOrlmILA" value="00000000-0000-36bf-0000-000000000000"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Boolean"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oBHL0vhcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oBHL0_hcEeerIJeQoOdRBw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSnDFP55EeeQJ-nOrlmILA" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSnDFf55EeeQJ-nOrlmILA" value="1"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oBHL1PhcEeerIJeQoOdRBw" name="Element_Standard.Package" memberEnd="_oBHL1fhcEeerIJeQoOdRBw _oBGlXfhcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oBHL1fhcEeerIJeQoOdRBw" name="extension_Standard.Package" type="_oBGlWPhcEeerIJeQoOdRBw" aggregation="composite" association="_oBHL1PhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KSnDFv55EeeQJ-nOrlmILA" name="Element_Standard.Package" memberEnd="_KSnDF_55EeeQJ-nOrlmILA _KSnDDf55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KSnDF_55EeeQJ-nOrlmILA" name="extension_Standard.Package" type="_KSnDCP55EeeQJ-nOrlmILA" aggregation="composite" association="_KSnDFv55EeeQJ-nOrlmILA"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oBHL1vhcEeerIJeQoOdRBw" name="Standard.Parameter">
-    <eAnnotations xmi:id="_oBHL1_hcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oBHL2PhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBHL2fhcEeerIJeQoOdRBw" value="00bc2f68-0000-0fc2-0000-000000000000"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KSnDGP55EeeQJ-nOrlmILA" name="Standard.Parameter">
+    <eAnnotations xmi:id="_KSnDGf55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KSnDGv55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnDG_55EeeQJ-nOrlmILA" value="00bc2f68-0000-0fc2-0000-000000000000"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oBHL2vhcEeerIJeQoOdRBw" name="isReference"/>
+      <contents xmi:type="uml:Property" xmi:id="_KSnDHP55EeeQJ-nOrlmILA" name="isReference"/>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBHL2_hcEeerIJeQoOdRBw" name="base_Element" association="_oBHL5PhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnDHf55EeeQJ-nOrlmILA" name="base_Element" association="_KSnDJv55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oBHL3PhcEeerIJeQoOdRBw" name="type">
-      <eAnnotations xmi:id="_oBHL3fhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oBHL3vhcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBHL3_hcEeerIJeQoOdRBw" value="%tagtype.type.label"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KSnDHv55EeeQJ-nOrlmILA" name="type">
+      <eAnnotations xmi:id="_KSnDH_55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSnDIP55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnDIf55EeeQJ-nOrlmILA" value="%tagtype.type.label"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oBHL4PhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oBHL4fhcEeerIJeQoOdRBw" value="00000000-0000-3767-0000-000000000000"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSnDIv55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSnDI_55EeeQJ-nOrlmILA" value="00000000-0000-3767-0000-000000000000"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oBHL4vhcEeerIJeQoOdRBw" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oBHL4_hcEeerIJeQoOdRBw"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSnDJP55EeeQJ-nOrlmILA" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSnDJf55EeeQJ-nOrlmILA"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oBHL5PhcEeerIJeQoOdRBw" name="Element_Standard.Parameter" memberEnd="_oBHL5fhcEeerIJeQoOdRBw _oBHL2_hcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oBHL5fhcEeerIJeQoOdRBw" name="extension_Standard.Parameter" type="_oBHL1vhcEeerIJeQoOdRBw" aggregation="composite" association="_oBHL5PhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KSnDJv55EeeQJ-nOrlmILA" name="Element_Standard.Parameter" memberEnd="_KSnDJ_55EeeQJ-nOrlmILA _KSnDHf55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KSnDJ_55EeeQJ-nOrlmILA" name="extension_Standard.Parameter" type="_KSnDGP55EeeQJ-nOrlmILA" aggregation="composite" association="_KSnDJv55EeeQJ-nOrlmILA"/>
   </packagedElement>
 </uml:Profile>

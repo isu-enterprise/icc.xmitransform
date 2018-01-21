@@ -40,7 +40,7 @@ fails(simple_package_query):-
     package::dom([element(_,_,_)]).
 
 succeeds(simple_load_package):-
-    package::load_file('../tests/input/xmitransofmtest.xmi'),
+    package::load_file('../tests/input/XMITransformTest.xmi'),
     package::dom([_]).
 
 succeeds(clear_package):-
@@ -50,7 +50,7 @@ fails(package_try_dom):-
     package::dom([_]).
 
 test(package_load_again):-
-    package::load_file('../tests/input/xmitransofmtest.xmi'),
+    package::load_file('../tests/input/XMITransformTest.xmi'),
     package::dom([_]).
 
 test(package_NS_ok):-
@@ -63,7 +63,7 @@ test(package_NS_with_locations):-
     package::namespace(_, _, _).
 
 test(package_graph_name):-
-    package::graph('xmitransofmtest').
+    package::graph('XMITransformTest').
 
 succeeds(package_prefixes_register):-
     package::register_prefixes,
@@ -73,6 +73,6 @@ succeeds(package_process_xmi):-
     package::process.
 
 succeeds(package_save_turtle):-
-    package::save_turtle('../tests/output/xmitransformtest.ttl').
+    package::save_turtle('../tests/output/XMITransformTest.ttl').
 
 :- end_object.

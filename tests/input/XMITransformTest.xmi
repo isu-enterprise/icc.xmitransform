@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?><xmi:XMI xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Code="http:///schemas/Code/_KSlNQP55EeeQJ-nOrlmILA/0" xmlns:LocalProfile="http:///schemas/LocalProfile/_KSmbYP55EeeQJ-nOrlmILA/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.omg.org/spec/UML/20110701" xmi:version="2.1" xsi:schemaLocation="http://www.eclipse.org/uml2/3.0.0/UML http://schema.omg.org/spec/UML/20110701 http:///schemas/Code/_KSlNQP55EeeQJ-nOrlmILA/0 Code.profile.xmi#_KSnCd_55EeeQJ-nOrlmILA http:///schemas/LocalProfile/_KSmbYP55EeeQJ-nOrlmILA/0 LocalProfile.profile.xmi#_KTDHV_55EeeQJ-nOrlmILA">
+  <uml:Model xmi:id="_KSjYEP55EeeQJ-nOrlmILA" name="XMITransformTest">
+    <eAnnotations xmi:id="_KSj_IP55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KSj_If55EeeQJ-nOrlmILA" name="exporterVersion">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Iv55EeeQJ-nOrlmILA" value="3.0.0"/>
+      </contents>
+      <contents xmi:type="uml:Property" xmi:id="_KSj_I_55EeeQJ-nOrlmILA" name="isRoundTrip"/>
+      <contents xmi:type="uml:Property" xmi:id="_KSj_JP55EeeQJ-nOrlmILA" name="Visibility">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Jf55EeeQJ-nOrlmILA" value="0"/>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KSj_Jv55EeeQJ-nOrlmILA" name="Base" isAbstract="true">
+      <eAnnotations xmi:id="_KSj_J_55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_KP55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Kf55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+        <contents xmi:type="uml:Property" xmi:id="_KSj_Kv55EeeQJ-nOrlmILA" name="isPrimitive"/>
+        <contents xmi:type="uml:Property" xmi:id="_KSj_K_55EeeQJ-nOrlmILA" name="isRoot"/>
+      </eAnnotations>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KSj_LP55EeeQJ-nOrlmILA" name="Record" isAbstract="true">
+      <eAnnotations xmi:id="_KSj_Lf55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_Lv55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_L_55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_KSj_MP55EeeQJ-nOrlmILA" general="_KSj_Jv55EeeQJ-nOrlmILA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KSj_Mf55EeeQJ-nOrlmILA" name="code" visibility="public" isOrdered="true" isReadOnly="true" isDerived="true">
+        <eAnnotations xmi:id="_KSj_Mv55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_M_55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_NP55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_Nf55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Nv55EeeQJ-nOrlmILA" value="read"/>
+          </contents>
+        </eAnnotations>
+        <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KSj_N_55EeeQJ-nOrlmILA" name="Document" isAbstract="true">
+      <eAnnotations xmi:id="_KSj_OP55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_Of55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Ov55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_KSj_O_55EeeQJ-nOrlmILA" general="_KSj_LP55EeeQJ-nOrlmILA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KSj_PP55EeeQJ-nOrlmILA" name="number" visibility="public" isOrdered="true" isDerived="true">
+        <eAnnotations xmi:id="_KSj_Pf55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_Pv55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_P_55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_QP55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Qf55EeeQJ-nOrlmILA" value="read_write"/>
+          </contents>
+        </eAnnotations>
+        <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KSj_Qv55EeeQJ-nOrlmILA" name="Register" isAbstract="true">
+      <eAnnotations xmi:id="_KSj_Q_55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_RP55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Rf55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_KSj_Rv55EeeQJ-nOrlmILA" general="_KSj_Jv55EeeQJ-nOrlmILA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KSj_R_55EeeQJ-nOrlmILA" name="RecordRegister" isAbstract="true">
+      <eAnnotations xmi:id="_KSj_SP55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_Sf55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Sv55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_KSj_S_55EeeQJ-nOrlmILA" general="_KSj_Qv55EeeQJ-nOrlmILA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KSj_TP55EeeQJ-nOrlmILA" name="records" visibility="public" type="_KSj_LP55EeeQJ-nOrlmILA" aggregation="shared" association="_KSj_VP55EeeQJ-nOrlmILA">
+        <eAnnotations xmi:id="_KSj_Tf55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_Tv55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_T_55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_UP55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Uf55EeeQJ-nOrlmILA" value="read_write"/>
+          </contents>
+        </eAnnotations>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSj_Uv55EeeQJ-nOrlmILA" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSj_U_55EeeQJ-nOrlmILA"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_KSj_VP55EeeQJ-nOrlmILA" memberEnd="_KSj_TP55EeeQJ-nOrlmILA _KSj_Vf55EeeQJ-nOrlmILA">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_KSj_Vf55EeeQJ-nOrlmILA" visibility="public" type="_KSj_R_55EeeQJ-nOrlmILA" association="_KSj_VP55EeeQJ-nOrlmILA">
+        <eAnnotations xmi:id="_KSj_Vv55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_V_55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_WP55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_Wf55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Wv55EeeQJ-nOrlmILA" value="read_write"/>
+          </contents>
+        </eAnnotations>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSj_W_55EeeQJ-nOrlmILA"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KSj_XP55EeeQJ-nOrlmILA" name="AccountingRegister" isAbstract="true">
+      <eAnnotations xmi:id="_KSj_Xf55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_Xv55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_X_55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_KSj_YP55EeeQJ-nOrlmILA" general="_KSj_Qv55EeeQJ-nOrlmILA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KSj_Yf55EeeQJ-nOrlmILA" name="quantities" visibility="public" type="_KSj_iP55EeeQJ-nOrlmILA" aggregation="shared" association="_KSj_b_55EeeQJ-nOrlmILA">
+        <eAnnotations xmi:id="_KSj_Yv55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_Y_55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_ZP55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_Zf55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_Zv55EeeQJ-nOrlmILA" value="read_write"/>
+          </contents>
+        </eAnnotations>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSj_Z_55EeeQJ-nOrlmILA" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KSj_aP55EeeQJ-nOrlmILA" name="dimensions" visibility="public" type="_KSj_ff55EeeQJ-nOrlmILA" aggregation="shared" association="_KSj_dv55EeeQJ-nOrlmILA">
+        <eAnnotations xmi:id="_KSj_af55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_av55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_a_55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_bP55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_bf55EeeQJ-nOrlmILA" value="read_write"/>
+          </contents>
+        </eAnnotations>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSj_bv55EeeQJ-nOrlmILA" value="*"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_KSj_b_55EeeQJ-nOrlmILA" memberEnd="_KSj_Yf55EeeQJ-nOrlmILA _KSj_cP55EeeQJ-nOrlmILA">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_KSj_cP55EeeQJ-nOrlmILA" visibility="public" type="_KSj_XP55EeeQJ-nOrlmILA" association="_KSj_b_55EeeQJ-nOrlmILA">
+        <eAnnotations xmi:id="_KSj_cf55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_cv55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_c_55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_dP55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_df55EeeQJ-nOrlmILA" value="read_write"/>
+          </contents>
+        </eAnnotations>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_KSj_dv55EeeQJ-nOrlmILA" memberEnd="_KSj_aP55EeeQJ-nOrlmILA _KSj_d_55EeeQJ-nOrlmILA">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_KSj_d_55EeeQJ-nOrlmILA" visibility="public" type="_KSj_XP55EeeQJ-nOrlmILA" association="_KSj_dv55EeeQJ-nOrlmILA">
+        <eAnnotations xmi:id="_KSj_eP55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_ef55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_ev55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_e_55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_fP55EeeQJ-nOrlmILA" value="read_write"/>
+          </contents>
+        </eAnnotations>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_KSj_ff55EeeQJ-nOrlmILA" name="RecordReference">
+      <eAnnotations xmi:id="_KSj_fv55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_f_55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_gP55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+        <contents xmi:type="uml:Property" xmi:id="_KSj_gf55EeeQJ-nOrlmILA" name="isPrimitive"/>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_KSj_gv55EeeQJ-nOrlmILA" general="_KSj_g_55EeeQJ-nOrlmILA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_KSj_g_55EeeQJ-nOrlmILA" name="Reference">
+      <eAnnotations xmi:id="_KSj_hP55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_hf55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_hv55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+        <contents xmi:type="uml:Property" xmi:id="_KSj_h_55EeeQJ-nOrlmILA" name="isPrimitive"/>
+      </eAnnotations>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_KSj_iP55EeeQJ-nOrlmILA" name="ValueReference">
+      <eAnnotations xmi:id="_KSj_if55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_iv55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_i_55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+        <contents xmi:type="uml:Property" xmi:id="_KSj_jP55EeeQJ-nOrlmILA" name="isPrimitive"/>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_KSj_jf55EeeQJ-nOrlmILA" general="_KSj_g_55EeeQJ-nOrlmILA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KSj_jv55EeeQJ-nOrlmILA" name="DodumentRegister" isAbstract="true">
+      <eAnnotations xmi:id="_KSj_j_55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KSj_kP55EeeQJ-nOrlmILA" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_kf55EeeQJ-nOrlmILA" value="0"/>
+        </contents>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_KSj_kv55EeeQJ-nOrlmILA" general="_KSj_R_55EeeQJ-nOrlmILA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KSj_k_55EeeQJ-nOrlmILA" name="activated" visibility="public" type="_KSj_N_55EeeQJ-nOrlmILA" aggregation="shared" association="_KSj_pP55EeeQJ-nOrlmILA">
+        <eAnnotations xmi:id="_KSj_lP55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_lf55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_lv55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_l_55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_mP55EeeQJ-nOrlmILA" value="read_write"/>
+          </contents>
+        </eAnnotations>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSj_mf55EeeQJ-nOrlmILA" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSj_mv55EeeQJ-nOrlmILA"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KSj_m_55EeeQJ-nOrlmILA" name="documents" visibility="public" type="_KSj_LP55EeeQJ-nOrlmILA" isUnique="false" isReadOnly="true" isDerived="true">
+        <eAnnotations xmi:id="_KSj_nP55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_nf55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_nv55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_n_55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_oP55EeeQJ-nOrlmILA" value="read"/>
+          </contents>
+        </eAnnotations>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KSj_of55EeeQJ-nOrlmILA" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KSj_ov55EeeQJ-nOrlmILA"/>
+        <defaultValue xmi:type="uml:Expression" xmi:id="_KSj_o_55EeeQJ-nOrlmILA" symbol="records"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_KSj_pP55EeeQJ-nOrlmILA" memberEnd="_KSj_k_55EeeQJ-nOrlmILA _KSj_pf55EeeQJ-nOrlmILA">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_KSj_pf55EeeQJ-nOrlmILA" visibility="public" type="_KSj_jv55EeeQJ-nOrlmILA" association="_KSj_pP55EeeQJ-nOrlmILA">
+        <eAnnotations xmi:id="_KSj_pv55EeeQJ-nOrlmILA" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_KSj_p_55EeeQJ-nOrlmILA" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_qP55EeeQJ-nOrlmILA" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_KSj_qf55EeeQJ-nOrlmILA" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_KSj_qv55EeeQJ-nOrlmILA" value="read_write"/>
+          </contents>
+        </eAnnotations>
+      </ownedEnd>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:applyingPackage="_KSjYEP55EeeQJ-nOrlmILA" xmi:id="_KTU0IP55EeeQJ-nOrlmILA">
+      <eAnnotations xmi:id="_KTU0If55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="Code.profile.xmi#_KSnCd_55EeeQJ-nOrlmILA"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" xmi:applyingPackage="_KTU0IP55EeeQJ-nOrlmILA" href="Code.profile.xmi#_KSnCcP55EeeQJ-nOrlmILA"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:applyingPackage="_KSjYEP55EeeQJ-nOrlmILA" xmi:id="_KTWCQP55EeeQJ-nOrlmILA">
+      <eAnnotations xmi:id="_KTWCQf55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="LocalProfile.profile.xmi#_KTDHV_55EeeQJ-nOrlmILA"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" xmi:applyingPackage="_KTWCQP55EeeQJ-nOrlmILA" href="LocalProfile.profile.xmi#_KTDHUP55EeeQJ-nOrlmILA"/>
+    </profileApplication>
+  </uml:Model>
+  <Code:StandardGeneralClass xmi:id="_KTWpUP55EeeQJ-nOrlmILA" base_Element="_KSj_Jv55EeeQJ-nOrlmILA" nocode="true"/>
+  <LocalProfile:Persistent xmi:id="_KTXQYP55EeeQJ-nOrlmILA" base_Class="_KSj_LP55EeeQJ-nOrlmILA" system="SQLAlchemy"/>
+  <LocalProfile:InheritStereotype xmi:id="_KTXQYf55EeeQJ-nOrlmILA" base_Element="_KSj_LP55EeeQJ-nOrlmILA"/>
+  <LocalProfile:dc xmi:id="_KTXQYv55EeeQJ-nOrlmILA" base_Element="_KSj_Mf55EeeQJ-nOrlmILA"/>
+  <LocalProfile:dc xmi:id="_KTXQY_55EeeQJ-nOrlmILA" base_Element="_KSj_PP55EeeQJ-nOrlmILA"/>
+  <LocalProfile:Persistent xmi:id="_KTX3cP55EeeQJ-nOrlmILA" base_Class="_KSj_Qv55EeeQJ-nOrlmILA" system="SQLAlchemy"/>
+  <LocalProfile:InheritStereotype xmi:id="_KTX3cf55EeeQJ-nOrlmILA" base_Element="_KSj_Qv55EeeQJ-nOrlmILA"/>
+</xmi:XMI>

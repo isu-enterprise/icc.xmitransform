@@ -1,184 +1,152 @@
-<?xml version="1.0" encoding="UTF-8"?><uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:version="2.1" xmi:id="_oHNz0PhcEeerIJeQoOdRBw" name="LocalProfile" metaclassReference="_oHNz8PhcEeerIJeQoOdRBw _oHNz8fhcEeerIJeQoOdRBw">
-  <eAnnotations xmi:id="_oHNz0fhcEeerIJeQoOdRBw" source="Objing">
-    <contents xmi:type="uml:Property" xmi:id="_oHNz0vhcEeerIJeQoOdRBw" name="Module">
-      <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHNz0_hcEeerIJeQoOdRBw" value="ee297dcf-8619-4293-82eb-e61a073a3f93"/>
+<?xml version="1.0" encoding="UTF-8"?><uml:Profile xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:version="2.1" xmi:id="_KTDHUP55EeeQJ-nOrlmILA" name="LocalProfile" metaclassReference="_KTDuc_55EeeQJ-nOrlmILA _KTDudP55EeeQJ-nOrlmILA">
+  <eAnnotations xmi:id="_KTDHUf55EeeQJ-nOrlmILA" source="Objing">
+    <contents xmi:type="uml:Property" xmi:id="_KTDHUv55EeeQJ-nOrlmILA" name="Module">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDHU_55EeeQJ-nOrlmILA" value="ee297dcf-8619-4293-82eb-e61a073a3f93"/>
     </contents>
-    <contents xmi:type="uml:Property" xmi:id="_oHNz1PhcEeerIJeQoOdRBw" name="ID">
-      <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHNz1fhcEeerIJeQoOdRBw" value="cfaf0bbc-1bf5-4b29-9bea-861854b42b5d"/>
+    <contents xmi:type="uml:Property" xmi:id="_KTDHVP55EeeQJ-nOrlmILA" name="ID">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDHVf55EeeQJ-nOrlmILA" value="cfaf0bbc-1bf5-4b29-9bea-861854b42b5d"/>
     </contents>
   </eAnnotations>
-  <eAnnotations xmi:id="_oHNz1vhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML">
-    <contents xmi:type="ecore:EPackage" xmi:id="_oHNz1_hcEeerIJeQoOdRBw" name="LocalProfile" nsURI="http:///schemas/LocalProfile/_n_5D0PhcEeerIJeQoOdRBw/0" nsPrefix="LocalProfile">
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oHNz2PhcEeerIJeQoOdRBw" name="dc">
-        <eAnnotations xmi:id="_oHNz2fhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oHNz8vhcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oHNz2vhcEeerIJeQoOdRBw" name="base_Element" ordered="false" lowerBound="1">
-          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oHNz3PhcEeerIJeQoOdRBw" name="dctitle" ordered="false">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oHNz3vhcEeerIJeQoOdRBw" name="dcdescription" ordered="false">
-          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        </eStructuralFeatures>
-      </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oHNz4PhcEeerIJeQoOdRBw" name="InheritStereotype">
-        <eAnnotations xmi:id="_oHNz4fhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oHN0DfhcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oHNz4vhcEeerIJeQoOdRBw" name="base_Element" ordered="false" lowerBound="1">
+  <eAnnotations xmi:id="_KTDHVv55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_KTDHV_55EeeQJ-nOrlmILA" name="LocalProfile" nsURI="http:///schemas/LocalProfile/_KSmbYP55EeeQJ-nOrlmILA/0" nsPrefix="LocalProfile">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KTDHWP55EeeQJ-nOrlmILA" name="dc">
+        <eAnnotations xmi:id="_KTDuYP55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KTDudf55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KTDuYf55EeeQJ-nOrlmILA" name="base_Element" ordered="false" lowerBound="1">
           <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
         </eStructuralFeatures>
       </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oHNz5PhcEeerIJeQoOdRBw" name="Persistent">
-        <eAnnotations xmi:id="_oHNz5fhcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oHN0GPhcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oHNz5vhcEeerIJeQoOdRBw" name="base_Class" ordered="false" lowerBound="1">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KTDuY_55EeeQJ-nOrlmILA" name="InheritStereotype">
+        <eAnnotations xmi:id="_KTDuZP55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KTDugP55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KTDuZf55EeeQJ-nOrlmILA" name="base_Element" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Element"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KTDuZ_55EeeQJ-nOrlmILA" name="Persistent">
+        <eAnnotations xmi:id="_KTDuaP55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KTDui_55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KTDuaf55EeeQJ-nOrlmILA" name="base_Class" ordered="false" lowerBound="1">
           <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
         </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oHNz6PhcEeerIJeQoOdRBw" name="system" ordered="false">
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KTDua_55EeeQJ-nOrlmILA" name="system" ordered="false">
           <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         </eStructuralFeatures>
       </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_oHNz6vhcEeerIJeQoOdRBw" name="InheritingStereotypes">
-        <eAnnotations xmi:id="_oHNz6_hcEeerIJeQoOdRBw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oHN0K_hcEeerIJeQoOdRBw"/>
-        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_oHNz7PhcEeerIJeQoOdRBw" name="base_Class" ordered="false" lowerBound="1">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_KTDubf55EeeQJ-nOrlmILA" name="InheritingStereotypes">
+        <eAnnotations xmi:id="_KTDubv55EeeQJ-nOrlmILA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_KTDunv55EeeQJ-nOrlmILA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_KTDub_55EeeQJ-nOrlmILA" name="base_Class" ordered="false" lowerBound="1">
           <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
         </eStructuralFeatures>
-        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_oHNz7vhcEeerIJeQoOdRBw" name="stereotypes" ordered="false">
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_KTDucf55EeeQJ-nOrlmILA" name="stereotypes" ordered="false">
           <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         </eStructuralFeatures>
       </eClassifiers>
     </contents>
   </eAnnotations>
-  <elementImport xmi:id="_oHNz8PhcEeerIJeQoOdRBw">
+  <elementImport xmi:id="_KTDuc_55EeeQJ-nOrlmILA">
     <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
   </elementImport>
-  <elementImport xmi:id="_oHNz8fhcEeerIJeQoOdRBw">
+  <elementImport xmi:id="_KTDudP55EeeQJ-nOrlmILA">
     <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
   </elementImport>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oHNz8vhcEeerIJeQoOdRBw" name="dc">
-    <eAnnotations xmi:id="_oHNz8_hcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oHNz9PhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHNz9fhcEeerIJeQoOdRBw" value="d7c54711-042f-4c06-952c-188e1f178d9a"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KTDudf55EeeQJ-nOrlmILA" name="dc">
+    <eAnnotations xmi:id="_KTDudv55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KTDud_55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDueP55EeeQJ-nOrlmILA" value="d7c54711-042f-4c06-952c-188e1f178d9a"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oHNz9vhcEeerIJeQoOdRBw" name="Label">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHNz9_hcEeerIJeQoOdRBw" value="dc"/>
+      <contents xmi:type="uml:Property" xmi:id="_KTDuef55EeeQJ-nOrlmILA" name="Label">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDuev55EeeQJ-nOrlmILA" value="dc"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oHNz-PhcEeerIJeQoOdRBw" name="BaseClass">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHNz-fhcEeerIJeQoOdRBw" value="Standard.UmlModelElement"/>
-      </contents>
-    </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oHNz-vhcEeerIJeQoOdRBw" name="base_Element" association="_oHN0C_hcEeerIJeQoOdRBw">
-      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oHNz-_hcEeerIJeQoOdRBw" name="dc:title">
-      <eAnnotations xmi:id="_oHNz_PhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oHNz_fhcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHNz_vhcEeerIJeQoOdRBw" value="Title"/>
-        </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oHNz__hcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0APhcEeerIJeQoOdRBw" value="587f4032-6100-4655-b022-31a0135e3af3"/>
-        </contents>
-      </eAnnotations>
-      <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oHN0AfhcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oHN0AvhcEeerIJeQoOdRBw"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oHN0A_hcEeerIJeQoOdRBw" name="dc:description">
-      <eAnnotations xmi:id="_oHN0BPhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oHN0BfhcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0BvhcEeerIJeQoOdRBw" value="Description"/>
-        </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oHN0B_hcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0CPhcEeerIJeQoOdRBw" value="0dc5c14e-20c9-4963-b369-1e17a4015f27"/>
-        </contents>
-      </eAnnotations>
-      <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oHN0CfhcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oHN0CvhcEeerIJeQoOdRBw"/>
-    </ownedAttribute>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oHN0C_hcEeerIJeQoOdRBw" name="Element_dc" memberEnd="_oHN0DPhcEeerIJeQoOdRBw _oHNz-vhcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oHN0DPhcEeerIJeQoOdRBw" name="extension_dc" type="_oHNz8vhcEeerIJeQoOdRBw" aggregation="composite" association="_oHN0C_hcEeerIJeQoOdRBw"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oHN0DfhcEeerIJeQoOdRBw" name="InheritStereotype">
-    <eAnnotations xmi:id="_oHN0DvhcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oHN0D_hcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0EPhcEeerIJeQoOdRBw" value="362b35c1-80b3-4e67-b20a-7fc0c947baa9"/>
-      </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oHN0EfhcEeerIJeQoOdRBw" name="Label">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0EvhcEeerIJeQoOdRBw" value="InheritStereotype"/>
-      </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oHN0E_hcEeerIJeQoOdRBw" name="BaseClass">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0FPhcEeerIJeQoOdRBw" value="Standard.Class"/>
+      <contents xmi:type="uml:Property" xmi:id="_KTDue_55EeeQJ-nOrlmILA" name="BaseClass">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDufP55EeeQJ-nOrlmILA" value="Standard.UmlModelElement"/>
       </contents>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oHN0FfhcEeerIJeQoOdRBw" name="base_Element" association="_oHN0FvhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KTDuff55EeeQJ-nOrlmILA" name="base_Element" association="_KTDufv55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oHN0FvhcEeerIJeQoOdRBw" name="Element_InheritStereotype" memberEnd="_oHN0F_hcEeerIJeQoOdRBw _oHN0FfhcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oHN0F_hcEeerIJeQoOdRBw" name="extension_InheritStereotype" type="_oHN0DfhcEeerIJeQoOdRBw" aggregation="composite" association="_oHN0FvhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KTDufv55EeeQJ-nOrlmILA" name="Element_dc" memberEnd="_KTDuf_55EeeQJ-nOrlmILA _KTDuff55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KTDuf_55EeeQJ-nOrlmILA" name="extension_dc" type="_KTDudf55EeeQJ-nOrlmILA" aggregation="composite" association="_KTDufv55EeeQJ-nOrlmILA"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oHN0GPhcEeerIJeQoOdRBw" name="Persistent">
-    <eAnnotations xmi:id="_oHN0GfhcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oHN0GvhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0G_hcEeerIJeQoOdRBw" value="81e99861-d863-4017-8532-01cf27665693"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KTDugP55EeeQJ-nOrlmILA" name="InheritStereotype">
+    <eAnnotations xmi:id="_KTDugf55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KTDugv55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDug_55EeeQJ-nOrlmILA" value="362b35c1-80b3-4e67-b20a-7fc0c947baa9"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oHN0HPhcEeerIJeQoOdRBw" name="Label">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0HfhcEeerIJeQoOdRBw" value="Persistent"/>
+      <contents xmi:type="uml:Property" xmi:id="_KTDuhP55EeeQJ-nOrlmILA" name="Label">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDuhf55EeeQJ-nOrlmILA" value="InheritStereotype"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oHN0HvhcEeerIJeQoOdRBw" name="BaseClass">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0H_hcEeerIJeQoOdRBw" value="Class"/>
+      <contents xmi:type="uml:Property" xmi:id="_KTDuhv55EeeQJ-nOrlmILA" name="BaseClass">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDuh_55EeeQJ-nOrlmILA" value="Standard.Class"/>
       </contents>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oHN0IPhcEeerIJeQoOdRBw" name="base_Class" association="_oHN0KfhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KTDuiP55EeeQJ-nOrlmILA" name="base_Element" association="_KTDuif55EeeQJ-nOrlmILA">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KTDuif55EeeQJ-nOrlmILA" name="Element_InheritStereotype" memberEnd="_KTDuiv55EeeQJ-nOrlmILA _KTDuiP55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KTDuiv55EeeQJ-nOrlmILA" name="extension_InheritStereotype" type="_KTDugP55EeeQJ-nOrlmILA" aggregation="composite" association="_KTDuif55EeeQJ-nOrlmILA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KTDui_55EeeQJ-nOrlmILA" name="Persistent">
+    <eAnnotations xmi:id="_KTDujP55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KTDujf55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDujv55EeeQJ-nOrlmILA" value="81e99861-d863-4017-8532-01cf27665693"/>
+      </contents>
+      <contents xmi:type="uml:Property" xmi:id="_KTDuj_55EeeQJ-nOrlmILA" name="Label">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDukP55EeeQJ-nOrlmILA" value="Persistent"/>
+      </contents>
+      <contents xmi:type="uml:Property" xmi:id="_KTDukf55EeeQJ-nOrlmILA" name="BaseClass">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDukv55EeeQJ-nOrlmILA" value="Class"/>
+      </contents>
+    </eAnnotations>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KTDuk_55EeeQJ-nOrlmILA" name="base_Class" association="_KTDunP55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oHN0IfhcEeerIJeQoOdRBw" name="system">
-      <eAnnotations xmi:id="_oHN0IvhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oHN0I_hcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0JPhcEeerIJeQoOdRBw" value="System"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KTDulP55EeeQJ-nOrlmILA" name="system">
+      <eAnnotations xmi:id="_KTDulf55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KTDulv55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDul_55EeeQJ-nOrlmILA" value="System"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oHN0JfhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0JvhcEeerIJeQoOdRBw" value="01cccc43-4793-4d61-ae15-5b3adb5bcac0"/>
+        <contents xmi:type="uml:Property" xmi:id="_KTDumP55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDumf55EeeQJ-nOrlmILA" value="01cccc43-4793-4d61-ae15-5b3adb5bcac0"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oHN0J_hcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oHN0KPhcEeerIJeQoOdRBw"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KTDumv55EeeQJ-nOrlmILA" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KTDum_55EeeQJ-nOrlmILA"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oHN0KfhcEeerIJeQoOdRBw" name="Class_Persistent" memberEnd="_oHN0KvhcEeerIJeQoOdRBw _oHN0IPhcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oHN0KvhcEeerIJeQoOdRBw" name="extension_Persistent" type="_oHN0GPhcEeerIJeQoOdRBw" aggregation="composite" association="_oHN0KfhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KTDunP55EeeQJ-nOrlmILA" name="Class_Persistent" memberEnd="_KTDunf55EeeQJ-nOrlmILA _KTDuk_55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KTDunf55EeeQJ-nOrlmILA" name="extension_Persistent" type="_KTDui_55EeeQJ-nOrlmILA" aggregation="composite" association="_KTDunP55EeeQJ-nOrlmILA"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oHN0K_hcEeerIJeQoOdRBw" name="InheritingStereotypes">
-    <eAnnotations xmi:id="_oHN0LPhcEeerIJeQoOdRBw" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_oHN0LfhcEeerIJeQoOdRBw" name="ID">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0LvhcEeerIJeQoOdRBw" value="5522d067-fe3a-4e97-8222-95c66066065a"/>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_KTDunv55EeeQJ-nOrlmILA" name="InheritingStereotypes">
+    <eAnnotations xmi:id="_KTDun_55EeeQJ-nOrlmILA" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_KTDuoP55EeeQJ-nOrlmILA" name="ID">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDuof55EeeQJ-nOrlmILA" value="5522d067-fe3a-4e97-8222-95c66066065a"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oHN0L_hcEeerIJeQoOdRBw" name="Label">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0MPhcEeerIJeQoOdRBw" value="InheritingStereotypes"/>
+      <contents xmi:type="uml:Property" xmi:id="_KTDuov55EeeQJ-nOrlmILA" name="Label">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDuo_55EeeQJ-nOrlmILA" value="InheritingStereotypes"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_oHN0MfhcEeerIJeQoOdRBw" name="BaseClass">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0MvhcEeerIJeQoOdRBw" value="Class"/>
+      <contents xmi:type="uml:Property" xmi:id="_KTDupP55EeeQJ-nOrlmILA" name="BaseClass">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDupf55EeeQJ-nOrlmILA" value="Class"/>
       </contents>
     </eAnnotations>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oHN0M_hcEeerIJeQoOdRBw" name="base_Class" association="_oHN0PPhcEeerIJeQoOdRBw">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KTDupv55EeeQJ-nOrlmILA" name="base_Class" association="_KTDur_55EeeQJ-nOrlmILA">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
     </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_oHN0NPhcEeerIJeQoOdRBw" name="stereotypes">
-      <eAnnotations xmi:id="_oHN0NfhcEeerIJeQoOdRBw" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_oHN0NvhcEeerIJeQoOdRBw" name="Label">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0N_hcEeerIJeQoOdRBw" value="stereotypes"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KTDup_55EeeQJ-nOrlmILA" name="stereotypes">
+      <eAnnotations xmi:id="_KTDuqP55EeeQJ-nOrlmILA" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_KTDuqf55EeeQJ-nOrlmILA" name="Label">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDuqv55EeeQJ-nOrlmILA" value="stereotypes"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_oHN0OPhcEeerIJeQoOdRBw" name="ID">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_oHN0OfhcEeerIJeQoOdRBw" value="2286d465-58ce-485c-b5b1-dff9eca93111"/>
+        <contents xmi:type="uml:Property" xmi:id="_KTDuq_55EeeQJ-nOrlmILA" name="ID">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_KTDurP55EeeQJ-nOrlmILA" value="2286d465-58ce-485c-b5b1-dff9eca93111"/>
         </contents>
       </eAnnotations>
       <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oHN0OvhcEeerIJeQoOdRBw" value="1"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oHN0O_hcEeerIJeQoOdRBw"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KTDurf55EeeQJ-nOrlmILA" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KTDurv55EeeQJ-nOrlmILA"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Extension" xmi:id="_oHN0PPhcEeerIJeQoOdRBw" name="Class_InheritingStereotypes" memberEnd="_oHN0PfhcEeerIJeQoOdRBw _oHN0M_hcEeerIJeQoOdRBw">
-    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oHN0PfhcEeerIJeQoOdRBw" name="extension_InheritingStereotypes" type="_oHN0K_hcEeerIJeQoOdRBw" aggregation="composite" association="_oHN0PPhcEeerIJeQoOdRBw"/>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KTDur_55EeeQJ-nOrlmILA" name="Class_InheritingStereotypes" memberEnd="_KTDusP55EeeQJ-nOrlmILA _KTDupv55EeeQJ-nOrlmILA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KTDusP55EeeQJ-nOrlmILA" name="extension_InheritingStereotypes" type="_KTDunv55EeeQJ-nOrlmILA" aggregation="composite" association="_KTDur_55EeeQJ-nOrlmILA"/>
   </packagedElement>
 </uml:Profile>
