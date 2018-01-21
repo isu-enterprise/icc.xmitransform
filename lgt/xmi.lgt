@@ -95,6 +95,9 @@ debug.
 %debug(xmi_headers).
 %debug(xmlns).
 %debug(xml_locations).
+%debug(text).
+%debug(attrs).
+debug(elements).
 
 debug(processing).
 debug(assert).
@@ -146,9 +149,12 @@ expand_uri(nil, _):-!, fail.
 
 expand_uri(href(URI), URI):-!.
 
+expand_uri(URI, URI):-
+    ::atom_prefix_split(URI,Prefix, "://",_Id),
+    lists::member(NS, ['http','https','ftp','file']),!.
+
 expand_uri(Object, EObject):-
     ::atom_prefix_split(Object, NS, O),
-    % \+ lists::member(NS, ['http','https','ftp','file']),
     rdf_prefixes::rdf_current_prefix(NS,_URI), !,
     rdf_prefixes::rdf_global_id(NS:O, EObject).
 expand_uri(Object, EObject):-
@@ -191,6 +197,7 @@ process:-
     ::process(Root, _Relation, _OId).
 
 process(element(Atom, Attrs, Elements), Relation, OId):-
+    ::debugf(elements, "ELEMENT: %w<%w>", [Atom, Attrs]),
     ::process_atom(Atom, Attrs, OId, Relation),
     ::process_elements(Elements, OId).
 
@@ -200,7 +207,7 @@ process_elements([element(A,B,C)|T], SId):-!,
     ::check_rdf_assert(SId, Relation, OId),
     ::process_elements(T, SId).
 process_elements([X|T], SId):-
-    ::debugf("Text?:",[X]),
+    ::debugf(text,"Text?:",[X]),
     ::process_elements(T, SId).
 
 process_atom(Atom, Attrs, Id, Atom):-
@@ -213,7 +220,7 @@ process_atom(XMIRelation, Attrs, Id, XMIRelation):- % 'schema:hasPart'):-!,
     ::process_attrs_rest(Id, RestAttrs).
 
 process_atom(Atom, Attrs, nil, nil):-
-    ::debugf('FAILED PROCESS: %w(%w)',[Atom, Attrs]).
+    ::debugf(elements,'FAILED PROCESS: %w(%w)',[Atom, Attrs]).
 
 
 
@@ -256,7 +263,7 @@ process_attr_(_, _, Attrs, _, Attrs, _).
 
 process_attrs_def(Attrs, Id, Type, RestAttrs):-
     ::find_attr_(id, Attrs, Id, R1),
-    ::debugf("DEF:Attrs:%w, for id %w", [Attrs, Id]),
+    ::debugf(attrs,"DEF:Attrs:%w, for id %w", [Attrs, Id]),
     ::process_attr_(type, Id, R1, Type, R2, 'rdf:typeOf'),
     ::process_attr_(name, Id, R2, _Name, RestAttrs, 'rdfs:label').
 
