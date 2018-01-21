@@ -16,25 +16,25 @@ succeeds(test_list) :-
     L == [1,3,4].
 
 succeeds(test_atom_split):-
-    profile::atom_prefix_split('xmi:XMI','xmi','XMI').
+    local_profile::atom_prefix_split('xmi:XMI','xmi','XMI').
 
 succeeds(test_uri_normalise_1):-
-    profile::uri_normalize('http://irnok.net/ontology/1.0', 'http://irnok.net/ontology/1.0#').
+    local_profile::uri_normalize('http://irnok.net/ontology/1.0', 'http://irnok.net/ontology/1.0#').
 
 succeeds(test_uri_normalise_2):-
-    profile::uri_normalize('http://irnok.net/ontology/1.0/', 'http://irnok.net/ontology/1.0/').
+    local_profile::uri_normalize('http://irnok.net/ontology/1.0/', 'http://irnok.net/ontology/1.0/').
 
 succeeds(test_uri_normalise_3):-
-    profile::uri_normalize('http://irnok.net/ontology/1.0#', 'http://irnok.net/ontology/1.0#').
+    local_profile::uri_normalize('http://irnok.net/ontology/1.0#', 'http://irnok.net/ontology/1.0#').
 
 succeeds(simple_load_profile):-
-    profile::load_file('../tests/input/LocalProfile.profile.xmi').
+    local_profile::load_file('../tests/input/LocalProfile.profile.xmi').
 
 succeeds(profile_graph_name):-
-    profile::graph('LocalProfile').
+    local_profile::graph('LocalProfile').
 
 succeeds(simple_profile_query):-
-    profile::dom([element(_,_,_)]).
+    local_profile::dom([element(_,_,_)]).
 
 fails(simple_package_query):-
     package::dom([element(_,_,_)]).
@@ -74,5 +74,14 @@ succeeds(package_process_xmi):-
 
 succeeds(package_save_turtle):-
     package::save_turtle('../tests/output/XMITransformTest.ttl').
+
+succeeds(code_profile_load_and_export):-
+    code_profile::load_file('../tests/input/Code.profile.xmi'),
+    code_profile::process,
+    code_profile::save_turtle('../tests/output/Code.profile.ttl').
+
+succeeds(local_profile_export):-
+    local_profile::process,
+    local_profile::save_turtle('../tests/output/LocalProfile.profile.ttl').
 
 :- end_object.

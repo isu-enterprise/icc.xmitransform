@@ -91,7 +91,7 @@
                   graph_/1       % The Graph name to store triples, defaults to name attribute of uml:Model attribute.
               ]).
 
-debug.
+%debug.
 %debug(xmi_headers).
 %debug(xmlns).
 %debug(xml_locations).
@@ -150,8 +150,8 @@ expand_uri(nil, _):-!, fail.
 expand_uri(href(URI), URI):-!.
 
 expand_uri(URI, URI):-
-    ::atom_prefix_split(URI,Prefix, "://",_Id),
-    lists::member(NS, ['http','https','ftp','file']),!.
+    ::atom_prefix_split(URI, Protocol, "://",_Id),
+    lists::member(Protocol, ['http','https','ftp','file']),!.
 
 expand_uri(Object, EObject):-
     ::atom_prefix_split(Object, NS, O),
@@ -469,5 +469,8 @@ top_name_to_graph:-
     ::set_graph(Name).
 :- end_object.
 
-:- object(profile, instantiates(profileclass)).
+:- object(local_profile, instantiates(profileclass)).
+:- end_object.
+
+:- object(code_profile, instantiates(profileclass)).
 :- end_object.
