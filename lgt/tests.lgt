@@ -84,4 +84,9 @@ succeeds(local_profile_export):-
     local_profile::process,
     local_profile::save_turtle('../tests/output/LocalProfile.profile.ttl').
 
+succeeds(save_all_as_rdf):-
+    package::save_rdf('../tests/output/XMITransformTest.rdf'),
+    code_profile::save_rdf('../tests/output/Code.profile.rdf'),
+    local_profile::save_rdf('../tests/output/LocalProfile.profile.rdf').
+
 :- end_object.

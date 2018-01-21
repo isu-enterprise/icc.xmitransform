@@ -38,6 +38,9 @@
                  uri_normalize/2,
                  save_turtle/1,
                  save_turtle/2,
+                 save_rdf/1,
+                 save_rdf/2,
+                 base_uri/1,
                  register_prefixes/0
 		     ]).
 :- private([dom_/1,
@@ -83,6 +86,7 @@
 :- dynamic([
                   dom_/1,
                   namespace_/2,  % name -> URL
+                  base_uri/1,
                   location_/2,   % URL -> URL | FIle
                   % debug/0,       % debug at all.
                   % debug/1,       % debug(<what>), e.g. debug(basic_checks).
@@ -304,6 +308,16 @@ save_turtle(Out):-
                       user_prefixes(true)
                   ]).
 
+save_rdf(Out):-
+    ::base_uri(URI),
+    ::save_rdf(Out, [
+                   base_uri(URI),
+                   encoding(utf8)
+               ]).
+
+save_rdf(Out, Options):-
+    ::graph(Graph),
+    rdf_db::rdf_save(Out, [graph(Graph) | Options]).
 
 :- private([
                  p_ns/1,
@@ -363,14 +377,17 @@ register_prefixes:-
     rdf_prefixes::rdf_register_prefix(NS, URI, [keep(true)]),
     fail; true.
 
+base_uri(URI):-
+    ::filename(FileName),
+    atom_concat('file://', FileName, _S1),
+    ::uri_normalize(_S1, URI).
+
 namespace(NS, URI):-
     ::namespace_(NS, URI).
 
 namespace(Graph, URI):-
     ::graph(Graph),!,
-    ::filename(FileName),
-    atom_concat('file://', FileName, _S1),
-    ::uri_normalize(_S1, URI).
+    ::base_uri(URI).
 
 namespace(NS, URI, Location):-
     ::namespace(NS, URI),
