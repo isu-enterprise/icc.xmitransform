@@ -268,7 +268,7 @@ process_attr_(_, _, Attrs, _, Attrs, _).
 process_attrs_def(Attrs, Id, Type, RestAttrs):-
     ::find_attr_(id, Attrs, Id, R1),
     ::debugf(attrs,"DEF:Attrs:%w, for id %w", [Attrs, Id]),
-    ::process_attr_(type, Id, R1, Type, R2, 'rdf:typeOf'),
+    ::process_attr_(type, Id, R1, Type, R2, 'rdf:type'),
     ::process_attr_(name, Id, R2, _Name, RestAttrs, 'rdfs:label').
 
 process_attrs_rest(_,[]).
