@@ -144,6 +144,8 @@ graph(X):-
 
 expand_uri(nil, _):-!, fail.
 
+expand_uri(href(URI), URI):-!.
+
 expand_uri(Object, EObject):-
     ::atom_prefix_split(Object, NS, O),
     % \+ lists::member(NS, ['http','https','ftp','file']),
@@ -154,14 +156,21 @@ expand_uri(Object, EObject):-
     rdf_prefixes::rdf_global_id(NS:Object, EObject).
 
 %expand_object(true, type)
-expand_object(Object, EObject):-
-    ::expand_uri(Object, EObject).
+expand_object(href(A), A):-!.
+expand_object(Object, URI):-
+    ::atom_prefix_split(Object, '','_',_Rest),!,
+    ::expand_uri(Object, URI).
+expand_object(Object, URI):-
+    ::atom_prefix_split(Object, _Prefix,":",_Suffix),!,
+    ::expand_uri(Object, URI).
+expand_object(Atom, literal(Atom)).
+%% expand_object(Object, EObject):-
+%%     ::expand_uri(Object, EObject).
 
 check_rdf_assert(Subject, Predicate, Object):-
     ::expand_uri(Subject, ESubject),
     ::expand_uri(Predicate, EPredicate),
     ::expand_object(Object, EObject),
-    ::debugf(assert, 'CA: <%w,%w,%w>', [ESubject,EPredicate,EObject]),
     !,
     ::rdf_assert(ESubject, EPredicate, EObject).
 check_rdf_assert(Subject, Predicate, Object):-
@@ -218,8 +227,8 @@ find_attr_(id, Attrs, Id, RestAttrs):-
     ::process_attr(Attrs, 'xmi:id'(Id), RestAttrs),!.
 find_attr_(id, Attrs, Id, RestAttrs):-
     ::process_attr(Attrs, href(_Id), RestAttrs),!,
-    ::href_normalize(_Id, Id),
-    ::debugf("---> %w -> %w", [_Id, Id])
+    ::href_normalize(_Id, Id)
+    %::debugf("---> !HREF %w -> %w", [_Id, Id])
 .
 
 href_normalize(_Id, Id):-
@@ -232,7 +241,7 @@ href_normalize(_Id, Id):-
     atom_concat(NS,":", _NS),
     atom_concat(_NS, Suffix, Id).
 
-href_normalize(Id, Id).
+href_normalize(Id, href(Id)).
 
 process_attr_(Kind, Id, Attrs, Subject, RestAttrs, Relation):-
     find_attr_(Kind, Attrs, Subject, RestAttrs),
