@@ -1,11 +1,11 @@
-:- use_module([library(semweb/rdf_prefixes)]).
+% :- use_module([library(semweb/rdf_prefixes)]).
 
 :- object(test_block,
           specializes(code_block)).
 :- end_object.
 
 
-:- object(tinst, instantiates(test_block)).
+:- object(tinst, instantiates(code_block)).
 :- end_object.
 
 
@@ -14,10 +14,13 @@
                version is 0.1,
                author is 'Evgeny Cherkashin',
                date is 2017/01/22,
-               comment is 'Unit test for Python '
+               comment is 'Unit test for a Python code generator.'
            ]).
 
-succeeds(test_test) :-
+succeeds(test_clear) :-
     tinst::clear.
+
+%succeeds(test_test):-
+%    tinst::test.
 
 :- end_object.
