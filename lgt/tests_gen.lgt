@@ -17,10 +17,23 @@
                comment is 'Unit test for a Python code generator.'
            ]).
 
+succeeds(block_add_1) :-
+    tinst::append(1).
+
+succeeds(block_prepend) :-
+    tinst::prepend(0).
+
+succeeds(block_add_2) :-
+    tinst::append(2).
+
+succeeds(block_list):-
+    findall(X, tinst::item(X), L),
+    L == [0,1,2].
+
 succeeds(test_clear) :-
     tinst::clear.
 
-%succeeds(test_test):-
-%    tinst::test.
+succeeds(block_list_2):-
+    findall(X, tinst::item(X), []).
 
 :- end_object.
