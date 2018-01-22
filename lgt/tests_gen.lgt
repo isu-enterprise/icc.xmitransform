@@ -1,5 +1,14 @@
 :- use_module([library(semweb/rdf_prefixes)]).
 
+:- object(test_block,
+          specializes(code_block)).
+:- end_object.
+
+
+:- object(tinst, instantiates(test_block)).
+:- end_object.
+
+
 :- object(tests, extends(lgtunit)).
 :- info([
                version is 0.1,
@@ -9,6 +18,6 @@
            ]).
 
 succeeds(test_test) :-
-    true.
+    tinst::clear.
 
 :- end_object.

@@ -9,6 +9,7 @@
 :- public([
                  append/1,
                  prepend/1,
+                 clear/0,
                  item/1
 
              ]).
