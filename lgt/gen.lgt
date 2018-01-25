@@ -21,7 +21,7 @@
               ]).
 
 item(Item):-
-    item_(Item).
+    ::item_(Item).
 
 append(Item):-
     ::assertz(item_(Item)).

@@ -1,4 +1,5 @@
-% :- use_module([library(semweb/rdf_prefixes)]).
+%:- use_module([library(semweb/rdf_prefixes)]).
+:- use_module([library(writef)]).
 
 :- object(test_block,
           specializes(code_block)).
@@ -28,6 +29,7 @@ succeeds(block_add_2) :-
 
 succeeds(block_list):-
     findall(X, tinst::item(X), L),
+    writef::writef(':::: %w',[L]),
     L == [0,1,2].
 
 succeeds(test_clear) :-
