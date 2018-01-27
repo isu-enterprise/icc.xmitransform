@@ -111,6 +111,7 @@ renderitems([A,B|T], Setup, Separator, String):-
     string_concat(SAS, BTS, String).
 
 renderitem(Item, Setup, String):-
+    writef::writef("Object....?: %w",[Item]),
     current_object(Item),!,
     Item::render(Setup, String).
 
@@ -120,7 +121,7 @@ renderitem(Item, Setup, String):-
 :- object(param, specializes(code_block)).
 
 :- protected([
-                  render_item/3
+                  renderitem/3
               ]).
 :- public([
                  name/1,
@@ -135,22 +136,19 @@ type(Type):-
 default(Default):-
     ::append(default(Default)).
 
-render_item(name(Name), _Setup, String):-
+renderitem(I, Setup, ""):-
+    writef::writef("---- Call: %w,%w",[I, Setup]),
+    fail.
+renderitem(name(Name), _Setup, String):-
     atom_string(Name, String).
-render_item(type(Type), _Setup, String):-
+renderitem(type(Type), _Setup, String):-
     writef::swritef(String, ':%w', [Type]).
-render_item(default(Default), _Setup, String):-
+renderitem(default(Default), _Setup, String):-
     writef::swritef(String, '=%q', [Default]).
 
 render(Setup, Result):-
-    ::item(Item),!,
-    ::render_item(Item, Setup, ItemString),!,
-    % writef::writef("Item %w as %q\n",[Item, ItemString]),
-    ::remove(Item),!,
-    ::render(Setup, Rest),!,
-    string_concat(ItemString,Rest,Result).
+    ::renderaslist(Setup, "", Result).
 
-render(_Setup, "").
 :- end_object.
 
 

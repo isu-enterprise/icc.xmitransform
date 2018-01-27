@@ -103,7 +103,7 @@ succeeds(check_param_1):-
 
 succeeds(render_param_1):-
     aparam::render(setup, String),
-    % writef::writef("Result: %w", [String]),!,
+    writef::writef("!!!!Result: %w", [String]),!,
     String="name:String=\"Default\"".
 
 succeeds(create_param_2):-
