@@ -61,6 +61,7 @@ options(List):-
                  prepend/1,
                  clear/0,
                  render/2,
+                 renderaslist/3,
                  remove/1,
                  item/1,
                  items/1
@@ -71,6 +72,10 @@ options(List):-
 :- private([
                   item_/1
               ]).
+:- protected([
+                    renderitem/3,
+                    renderitems/4
+                ]).
 
 item(Item):-
     ::item_(Item).
@@ -91,6 +96,23 @@ clear:-
     ::retractall(item_(_)).
 
 render(_Setup, _String).
+renderaslist(Setup, Separator, String):-
+    ::items(Items),!,
+    ::renderitems(Items, Setup, Separator, String).
+renderaslist(_,_,"").
+
+renderitems([],_,_,"").
+renderitems([A], Setup, _, SA):-
+    renderitem(A, Setup, SA).
+renderitems([A,B|T], Setup, Separator, String):-
+    renderitem(A, Setup, SA),
+    string_concat(SA, Separator, SAS),
+    renderitems([B|T], Setup, Separator, BTS),
+    string_concat(SAS, BTS, String).
+
+renderitem(Item, Setup, String):-
+    current_object(Item),!,
+    Item::render(Setup, String).
 
 :- end_object.
 
@@ -129,4 +151,8 @@ render(Setup, Result):-
     string_concat(ItemString,Rest,Result).
 
 render(_Setup, "").
+:- end_object.
+
+
+:- object(params, specializes(code_block)).
 :- end_object.

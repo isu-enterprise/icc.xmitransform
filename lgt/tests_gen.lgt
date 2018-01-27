@@ -106,4 +106,37 @@ succeeds(render_param_1):-
     % writef::writef("Result: %w", [String]),!,
     String="name:String=\"Default\"".
 
+succeeds(create_param_2):-
+    create_object(bparam,[instantiates(param)],[],[]),
+    bparam::name(id),
+    bparam::type(int),
+    bparam::items(BItems),
+    BItems=[name(id),type(int)].
+
+
+succeeds(create_param_3):-
+    create_object(cparam,[instantiates(param)],[],[]),
+    cparam::name(name),
+    cparam::type('String'),
+    cparam::default(""),
+    cparam::items(CItems),
+    CItems=[name(name),type('String'),default("")].
+
+
+succeeds(create_params_1):-
+    create_object(params1,[instantiates(params)],[],[]),
+    params1::append(cparam),
+    params1::append(bparam).
+
+succeeds(render_params_1):-
+    params1::renderaslist(setup, ", ", Result),
+    % writef::writef('Render result: %p\n',[Result]),
+    Result="name:String=\"\", id:int".
+
+succeeds(render_params_again_1):-
+    params1::renderaslist(setup, ", ", Result),
+    % writef::writef('Render result: %p\n',[Result]),
+    Result="name:String=\"\", id:int".
+
+
 :- end_object.
