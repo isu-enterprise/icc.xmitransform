@@ -36,7 +36,7 @@ succeeds(setup_add_option_4):-
     setup::set(option4/value4).
 
 succeeds(setup_get_option_1):-
-    setup::get(option4,value4).
+    setup::option(option4,value4).
 
 succeeds(setup_get_options_nonempty):-
     setup::options(List),
@@ -73,19 +73,19 @@ succeeds(block_list_2):-
     findall(X, tinst::item(X), []).
 
 succeeds(test_render):-
-    tinst::render(setup).
+    tinst::render(setup,_).
 
 succeeds(setup_bad_option_set):-
     setup::set(tab_size, -100).
 
-fails(test_render_with_bad_option):-
-    tinst::render(setup).
+%fails(test_render_with_bad_option):-
+%    tinst::render(setup,_).
 
 succeeds(setup_restore_option_tab_size):-
     setup::set(tab_size, 4).
 
 succeeds(test_render_again):-
-    tinst::render(setup).
+    tinst::render(setup,_).
 
 
 :- end_object.
