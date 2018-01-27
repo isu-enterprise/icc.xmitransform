@@ -1,5 +1,6 @@
 :- initialization((
 	set_logtalk_flag(report, warnings),
+    logtalk_load(debugger(loader)),
 	logtalk_load(lgtunit(loader)),
 	logtalk_load([gen,tests_gen],
                  [dynamic_declarations(allow),

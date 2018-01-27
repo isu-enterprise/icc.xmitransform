@@ -1,3 +1,5 @@
+:- use_module(library(writef)).
+
 
 :- object(metaclass, instantiates(metaclass)).
 :- end_object.
@@ -41,9 +43,10 @@ clear:-
 
 option(Option, Value):-
     ::option_(Option=Value).
-option(Option, Value, Default):-
-    ::option_(Option=Value),!.
-option(Option, Default, Default).
+option(Option, Value, _):-
+    ::option(Option,Value),!.
+option(Option, Default, Default):-
+    ::option_(Option=_).
 option(Option):-
     ::option_(Option).
 
@@ -59,7 +62,8 @@ options(List):-
                  clear/0,
                  render/2,
                  remove/1,
-                 item/1
+                 item/1,
+                 items/1
              ]).
 :- dynamic([
                   item_/1
@@ -70,6 +74,9 @@ options(List):-
 
 item(Item):-
     ::item_(Item).
+
+items(Items):-
+    bagof(Item, ::item(Item), Items).
 
 append(Item):-
     ::assertz(item_(Item)).
@@ -91,7 +98,7 @@ render(_Setup, _String).
 :- object(param, specializes(code_block)).
 
 :- protected([
-                  render_item/2
+                  render_item/3
               ]).
 :- public([
                  name/1,
@@ -104,21 +111,22 @@ name(Name):-
 type(Type):-
     ::append(type(Type)).
 default(Default):-
-    ::append(default(Type)).
+    ::append(default(Default)).
 
-render(name(Name), _Setup, String):-
+render_item(name(Name), _Setup, String):-
     atom_string(Name, String).
-render(type(Type), _Setup, String):-
-    swritef(String, ':%w', [Type]).
-render(default(Default), _Setup, String):-
-    swritef(String, '=%q', [Default]).
+render_item(type(Type), _Setup, String):-
+    writef::swritef(String, ':%w', [Type]).
+render_item(default(Default), _Setup, String):-
+    writef::swritef(String, '=%q', [Default]).
 
 render(Setup, Result):-
     ::item(Item),!,
     ::render_item(Item, Setup, ItemString),!,
+    % writef::writef("Item %w as %q\n",[Item, ItemString]),
     ::remove(Item),!,
     ::render(Setup, Rest),!,
-    lists::append(String,Rest,Result).
+    string_concat(ItemString,Rest,Result).
 
 render(_Setup, "").
 :- end_object.

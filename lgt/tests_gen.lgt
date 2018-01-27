@@ -20,8 +20,9 @@
 
 :- discontiguous
        succeeds/1,
-       fails/1
-       .
+       fails/1.
+:- private([attr/1]).
+:- dynamic([attr/1]).
 
 succeeds(setup_add_option_1):-
     setup::set(option1=value1).
@@ -84,8 +85,25 @@ succeeds(setup_bad_option_set):-
 succeeds(setup_restore_option_tab_size):-
     setup::set(tab_size, 4).
 
-succeeds(test_render_again):-
+succeeds(render_again):-
     tinst::render(setup,_).
 
+succeeds(create_param_1):-
+    create_object(aparam, [instantiates(param)],[],[]).
+
+succeeds(setup_param_1):-
+    aparam::name(name),
+    aparam::type('String'),
+    aparam::default("Default").
+
+succeeds(check_param_1):-
+    aparam::items(L),
+    % write(L),
+    L=[name(name),type('String'),default("Default")].
+
+succeeds(render_param_1):-
+    aparam::render(setup, String),
+    % writef::writef("Result: %w", [String]),!,
+    String="name:String=\"Default\"".
 
 :- end_object.
