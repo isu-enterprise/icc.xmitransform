@@ -221,15 +221,9 @@ list_separator(Separator):-
                  item/1,
                  items/1
              ]).
-:- dynamic([
-                  item_/1
-              ]).
-:- private([
-                  item_/1
-              ]).
-:- protected([
-                    renderitem/2
-                ]).
+:- dynamic([item_/1]).
+:- private([item_/1]).
+:- protected([renderitem/2]).
 
 item(Item):-
     ::item_(Item).
@@ -252,6 +246,9 @@ clear:-
 render("").
     %writef::writef("Warning: Default rendering is empty\n").
 
+renderitem(Object, String):-
+    current_object(Object), !,
+    Object::render(String).
 renderitem(Item, String):-
     %writef::writef("Warning: Default renderitem is empty\n"),
     root::iswritef(String, '%w', [Item]).
@@ -383,6 +380,13 @@ render(Result):-
 :- object(classlist, specializes(code_block), imports([listrenderable])).
 
 separator_option(class_list_separator, ", ").
+
+:- end_object.
+
+:- object(methodlist, specializes(code_block)).
+
+render(List):-
+    findall(Result, (::item(Item), ::renderitem(Item, Result)), List).
 
 :- end_object.
 
