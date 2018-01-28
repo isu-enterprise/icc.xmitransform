@@ -103,11 +103,11 @@ renderaslist(_,_,"").
 
 renderitems([],_,_,"").
 renderitems([A], Setup, _, SA):-
-    renderitem(A, Setup, SA).
+    ::renderitem(A, Setup, SA).
 renderitems([A,B|T], Setup, Separator, String):-
-    renderitem(A, Setup, SA),
+    ::renderitem(A, Setup, SA),
     string_concat(SA, Separator, SAS),
-    renderitems([B|T], Setup, Separator, BTS),
+    ::renderitems([B|T], Setup, Separator, BTS),
     string_concat(SAS, BTS, String).
 
 renderitem(Item, Setup, String):-
