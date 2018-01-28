@@ -77,17 +77,18 @@ options(List):-
            indent/0,
            unindent/1,
            unindent/0,
-           iswritef/3
+           iswritef/3,
+           iswritef/2,
+           option/2,
+           option/3,
+           clear_indent/0
           ]).
 :- private([indent_/1,
             indent_str/2,
             indent_str_/2]).
 :- protected([current_setup/1,
-              option_/2,
-              option_/3,
               indentstr/1,
-              set_indent/1,
-              clear_indent/0
+              set_indent/1
              ]).
 :- dynamic([indent_/1, current_setup/1]).
 :- initialization(::clear_indent).
@@ -96,11 +97,11 @@ setup(Setup):-
     ::retractall(current_setup(_)),
     ::assert(current_setup(Setup)).
 
-option_(Name, Value, Default):-
+option(Name, Value, Default):-
     ::current_setup(Setup),
     Setup::option(Name, Value, Default).
 
-option_(Name, Value):-
+option(Name, Value):-
     ::current_setup(Setup),
     Setup::option(Name, Value).
 
@@ -127,19 +128,21 @@ iswritef(String, Pattern, Params):-
     ::indent(Indent),
     writef::swritef(_1, Pattern, Params),
     string_concat(Indent, _1, String).
+iswritef(String, Pattern):-
+    ::iswritef(String, Pattern, []).
 
 indent_str("\t"):-
-    ::option_(use_tabs,true,true),
+    ::option(use_tabs,true,true),
     !.
 indent_str(S):-
-    ::option_(use_tabs,false,true),!,
-    ::option_(tab_size,Size,8),!,
+    ::option(use_tabs,false,true),!,
+    ::option(tab_size,Size,8),!,
     indent_str_(Size, S).
 
 indent_str_(0, "").
 indent_str_(N, String):-
     N>0,
-    ::option_(indent_char, C, " "),
+    ::option(indent_char, C, " "),
     N1 is N - 1,
     ::indent_str_(N1, _1),
     string_concat(C, _1, String).
@@ -162,33 +165,33 @@ unindent:-
 
 :- category(listrenderable).
 
-:- protected([renderitem/3, renderobject/3]).
-:- private([renderitems/4]).
-:- public([renderaslist/3]).
+:- protected([renderitem/2, renderobject/2]).
+:- private([renderitems/3]).
+:- public([renderaslist/2,render/1]).
 
-renderaslist(Setup, Separator, String):-
+renderaslist(Separator, String):-
     ::items(Items),!,
-    ::renderitems(Items, Setup, Separator, String).
+    ::renderitems(Items, Separator, String).
 renderaslist(_,_,"").
 
-renderitems([],_,_,"").
-renderitems([A], Setup, _, SA):-
-    ::renderitem(A, Setup, SA).
-renderitems([A,B|T], Setup, Separator, String):-
-    ::renderitem(A, Setup, SA),
+renderitems([],_,"").
+renderitems([A], _, SA):-
+    ::renderitem(A, SA).
+renderitems([A,B|T], Separator, String):-
+    ::renderitem(A, SA),
     string_concat(SA, Separator, SAS),
-    ::renderitems([B|T], Setup, Separator, BTS),
+    ::renderitems([B|T], Separator, BTS),
     string_concat(SAS, BTS, String).
 
-renderitem(Item, Setup, String):-
-    renderobject(Item, Setup, String),!.
-renderitem(Item, _Setup, String):-
+renderitem(Item, String):-
+    renderobject(Item, String),!.
+renderitem(Item, String):-
     writef::swritef(String, '%q', Item).
 
-renderobject(Object, Setup, String):-
+renderobject(Object, String):-
     current_object(Object),!,
     writef::writef("Object: %w\n",[Object]),
-    Object::render(Setup, String).
+    Object::render(String).
 
 :- end_category.
 
@@ -198,7 +201,7 @@ renderobject(Object, Setup, String):-
                  append/1,
                  prepend/1,
                  clear/0,
-                 render/2,
+                 render/1,
                  remove/1,
                  item/1,
                  items/1
@@ -230,7 +233,7 @@ remove(Item):-
 clear:-
     ::retractall(item_(_)).
 
-render(_Setup, ""):-
+render(""):-
     writef::writef("Warning: Default rendering is empty\n").
 
 :- end_object.
@@ -239,12 +242,12 @@ render(_Setup, ""):-
 :- public([
                  name/1,
                  type/1,
-                 render/3,
-                 render/2
+                 render/2,
+                 render/1
              ]).
 :- protected([
-                    renderitem/3,
-                    type_separator/2
+                    renderitem/2,
+                    type_separator/1
                 ]).
 
 name(Name):-
@@ -253,25 +256,25 @@ name(Name):-
 type(Type):-
     ::append(type(Type)).
 
-renderitem(name(Name), _Setup, String):-!,
+renderitem(name(Name), String):-!,
     atom_string(Name, String).
-renderitem(type(Type), Setup, String):-!,
-    ::type_separator(Setup, Separator),
+renderitem(type(Type),String):-!,
+    ::type_separator(Separator),
     writef::swritef(String, '%w%w', [Separator, Type]).
 
-render(Setup, Middle, String):-
+render(Middle, String):-
     ::item(name(Name)),
-    ::renderitem(name(Name), Setup, SName),
+    ::renderitem(name(Name), SName),
     (
         ::item(type(Type)) ->
-        ::renderitem(type(Type), Setup, SType),
+        ::renderitem(type(Type), SType),
         string_concat(SName, Middle, _1),
         string_concat(_1, SType, String) ;
         SName = String
     ).
 
-render(Setup, String):-
-    ::render(Setup, "", String).
+render(String):-
+    ::render("", String).
 
 :- end_category.
 
@@ -284,21 +287,19 @@ render(Setup, String):-
 default(Default):-
     ::append(default(Default)).
 
-type_separator(Setup, Value):-
-    Setup::option(param_type_separator, Value, ':').
+type_separator(Value):-
+    class::option(param_type_separator, Value, ':').
 
-renderitem(default(Default), _Setup, String):-!,
+renderitem(default(Default), String):-!,
     writef::swritef(String, '=%q', [Default]).
-renderitem(Item, Setup, String):-
-    ^^renderitem(Item, Setup, String).
+renderitem(Item, String):-
+    ^^renderitem(Item, String).
 
-%% render(Setup, Result):-
-%%     ::renderaslist(Setup, "", Result).
-render(Setup, Result):-
-    ^^render(Setup, Beginning),
+render(Result):-
+    ^^render(Beginning),
     (
         ::item(default(Default)) ->
-        ::renderitem(default(Default), Setup, SDefault),
+        ::renderitem(default(Default), SDefault),
         string_concat(Beginning, SDefault, Result);
         Result = Beginning
     ).
@@ -308,8 +309,8 @@ render(Setup, Result):-
 
 :- object(params, specializes(code_block), imports(listrenderable)).
 
-render(Setup, Result):-
-    ::renderaslist(Setup, ', ', Result).
+render(Result):-
+    ::renderaslist(', ', Result).
 
 :- end_object.
 
@@ -321,20 +322,20 @@ params(X):-
     ::append(params(X)).
 
 
-renderitem(params(Object), Setup, Result):-!,
-    Object::render(Setup, SObject),
+renderitem(params(Object), Result):-!,
+    Object::render(SObject),
     writef::swritef(Result, '(%w)', [SObject]).
 
-renderitem(Item, Setup, Result):-
-    ^^renderitem(Item, Setup, Result).
+renderitem(Item, Result):-
+    ^^renderitem(Item, Result).
 
-type_separator(Setup, Value):-
-    Setup::option(method_type_separator, Value, ' -> ').
+type_separator(Value):-
+    class::option(method_type_separator, Value, ' -> ').
 
-render(Setup, Result):-
+render(Result):-
     ::item(params(Params)),
-    ::renderitem(params(Params), Setup, SParams),
-    ^^render(Setup, SParams, Sigpart),
+    ::renderitem(params(Params), SParams),
+    ^^render(SParams, Sigpart),
     writef::swritef(_1, 'def %w:', [Sigpart]),
     Result=_1.
 

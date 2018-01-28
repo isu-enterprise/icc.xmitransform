@@ -120,7 +120,7 @@ succeeds(block_list_2):-
     findall(X, tinst::item(X), []).
 
 succeeds(test_render):-
-    tinst::render(setup,_).
+    tinst::render(_).
 
 succeeds(setup_bad_option_set):-
     setup::set(tab_size, -100).
@@ -132,7 +132,7 @@ succeeds(setup_restore_option_tab_size):-
     setup::set(tab_size, 4).
 
 succeeds(render_again):-
-    tinst::render(setup,_).
+    tinst::render(_).
 
 succeeds(create_param_1):-
     create_object(aparam, [instantiates(param)],[],[]).
@@ -148,7 +148,7 @@ succeeds(check_param_1):-
     L=[name(name),type('String'),default("Default")].
 
 succeeds(render_param_1):-
-    aparam::render(setup, String),
+    aparam::render(String),
     % writef::writef("!!!!Result: %w", [String]),!,
     String="name:String=\"Default\"".
 
@@ -175,12 +175,12 @@ succeeds(create_params_1):-
     params1::append(bparam).
 
 succeeds(render_params_1):-
-    params1::renderaslist(setup, ", ", Result),
+    params1::renderaslist(", ", Result),
     % writef::writef('Render result: %p\n',[Result]),
     Result="name:String=\"\", id:int".
 
 succeeds(render_params_again_1):-
-    params1::renderaslist(setup, ", ", Result),
+    params1::renderaslist(", ", Result),
     Result="name:String=\"\", id:int".
 
 succeeds(render_method_1):-
@@ -189,7 +189,7 @@ succeeds(render_method_1):-
     methodadd::type(bool),
     methodadd::params(params1),
     methodadd::body(body1),
-    methodadd::render(setup, Result),
+    methodadd::render(Result),
     writef::writef('---> Method render result: %p\n',[Result]).
 
 
