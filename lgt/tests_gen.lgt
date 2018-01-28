@@ -183,15 +183,25 @@ succeeds(render_params_again_1):-
     params1::renderaslist(", ", Result),
     Result="name:String=\"\", id:int".
 
+succeeds(create_method_body):-
+    create_object(methodbody,[instantiates(body)],[],[]),
+    methodbody::append(pass).
+
+succeeds(render_method_body):-
+    methodbody::render(["pass"]).
+
 succeeds(render_method_1):-
-    create_object(methodadd,[instantiates(method)],[],[]),
+    create_object(methodadd, [instantiates(method)],[],[]),
     methodadd::name(add),
     methodadd::type(bool),
     methodadd::params(params1),
-    methodadd::body(body1),
+    methodadd::body(methodbody),
     methodadd::render(Result),
-    writef::writef('---> Method render result: %p\n',[Result]).
+    Result = ["def add(name:String=\"\", id:int) -> bool:","    pass"].
 
+
+succeeds(render_method_body_indent_check):-
+    methodbody::render(["pass"]).
 
 
 :- end_object.

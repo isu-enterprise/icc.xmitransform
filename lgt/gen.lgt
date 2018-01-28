@@ -190,7 +190,7 @@ renderitem(Item, String):-
 
 renderobject(Object, String):-
     current_object(Object),!,
-    writef::writef("Object: %w\n",[Object]),
+    % writef::writef("Object: %w\n",[Object]),
     Object::render(String).
 
 :- end_category.
@@ -213,6 +213,7 @@ renderobject(Object, String):-
                   item_/1
               ]).
 :- protected([
+                    renderitem/2
                 ]).
 
 item(Item):-
@@ -233,8 +234,12 @@ remove(Item):-
 clear:-
     ::retractall(item_(_)).
 
-render(""):-
-    writef::writef("Warning: Default rendering is empty\n").
+render("").
+    %writef::writef("Warning: Default rendering is empty\n").
+
+renderitem(Item, String):-
+    %writef::writef("Warning: Default renderitem is empty\n"),
+    class::iswritef(String, '%w', [Item]).
 
 :- end_object.
 
@@ -314,6 +319,11 @@ render(Result):-
 
 :- end_object.
 
+:- object(body, specializes(code_block)).
+render(List):-
+    findall(L, (::item(X),^^renderitem(X,L)), List).
+:- end_object.
+
 :- object(method, specializes(code_block), imports(namedtyped)).
 :- public([params/1, body/1]).
 body(X):-
@@ -321,10 +331,12 @@ body(X):-
 params(X):-
     ::append(params(X)).
 
-
 renderitem(params(Object), Result):-!,
     Object::render(SObject),
     writef::swritef(Result, '(%w)', [SObject]).
+
+renderitem(body(Body), StringList):-!,
+    Body::render(StringList).
 
 renderitem(Item, Result):-
     ^^renderitem(Item, Result).
@@ -336,7 +348,11 @@ render(Result):-
     ::item(params(Params)),
     ::renderitem(params(Params), SParams),
     ^^render(SParams, Sigpart),
-    writef::swritef(_1, 'def %w:', [Sigpart]),
-    Result=_1.
+    class::iswritef(ISignature, 'def %w:', [Sigpart]),
+    class::indent,
+    ::item(body(Body)),
+    ::renderitem(body(Body), LBody),
+    class::unindent,
+    Result=[ISignature | LBody].
 
 :- end_object.
