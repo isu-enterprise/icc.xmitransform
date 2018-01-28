@@ -199,12 +199,15 @@ succeeds(render_method_1):-
     methodadd::render(Result),
     Result = ["def add(name:String=\"\", id:int) -> bool:","    pass"].
 
+succeeds(render_method_body_indent_check):-
+    methodbody::render(["pass"]).
+
 succeeds(create_class):-
     create_object(aclass, [instantiates(class)],[],[]).
 
-
-succeeds(render_method_body_indent_check):-
-    methodbody::render(["pass"]).
+succeeds(render_class_1):-
+    aclass::render(L),
+    L="a class".
 
 
 :- end_object.

@@ -243,33 +243,43 @@ renderitem(Item, String):-
 
 :- end_object.
 
-:- category(namedtyped).
+:- category(named).
+:- public([name/1, render/1]).
+:- protected([renderitem/2]).
+
+name(Name):-
+    ::prepend(name(Name)).
+
+renderitem(name(Name), String):-!,
+    atom_string(Name, String).
+
+render(String):-
+    ::item(name(Name)),
+    ::renderitem(name(Name), String).
+
+:-end_category.
+
+:- category(namedtyped, extends(named)).
 :- public([
-                 name/1,
                  type/1,
-                 render/2,
-                 render/1
+                 render/2
              ]).
 :- protected([
                     renderitem/2,
                     type_separator/1
                 ]).
 
-name(Name):-
-    ::prepend(name(Name)).
-
 type(Type):-
     ::append(type(Type)).
 
-renderitem(name(Name), String):-!,
-    atom_string(Name, String).
+renderitem(Item, String):-
+    ^^renderitem(Item, String),!.
 renderitem(type(Type),String):-!,
     ::type_separator(Separator),
     writef::swritef(String, '%w%w', [Separator, Type]).
 
 render(Middle, String):-
-    ::item(name(Name)),
-    ::renderitem(name(Name), SName),
+    ^^render(SName),
     (
         ::item(type(Type)) ->
         ::renderitem(type(Type), SType),
@@ -283,7 +293,7 @@ render(String):-
 
 :- end_category.
 
-:- object(param, specializes(code_block), imports([namedtyped, listrenderable])).
+:- object(param, specializes(code_block), imports([namedtyped])).
 
 :- public([
                  default/1
