@@ -39,10 +39,14 @@ succeeds(setup_add_option_4):-
 succeeds(setup_get_option_1):-
     setup::option(option4,value4).
 
-succeeds(setup_get_options_nonempty):-
+succeeds(setup_get_options_nonexistent):-
     setup::options(List),
     List=[option1=value1,option2=value2,
           option3=value3,option4=value4].
+
+succeeds(setup_get_option_default):-
+    setup::option(option_none, Value, default),
+    Value=default.
 
 succeeds(setup_clear):-
     setup::clear.
@@ -135,8 +139,17 @@ succeeds(render_params_1):-
 
 succeeds(render_params_again_1):-
     params1::renderaslist(setup, ", ", Result),
-    % writef::writef('Render result: %p\n',[Result]),
     Result="name:String=\"\", id:int".
+
+succeeds(render_method_1):-
+    create_object(methodadd,[instantiates(method)],[],[]),
+    methodadd::name(add),
+    methodadd::type(bool),
+    methodadd::params(params1),
+    methodadd::body(body1),
+    methodadd::render(setup, Result),
+    writef::writef('---> Method render result: %p\n',[Result]).
+
 
 
 :- end_object.
