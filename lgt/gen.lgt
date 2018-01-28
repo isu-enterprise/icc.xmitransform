@@ -1,11 +1,6 @@
 :- use_module(library(writef)).
 
-
-:- object(metaclass, instantiates(metaclass)).
-:- end_object.
-
-:- object(class, instantiates(metaclass)).
-:- end_object.
+%%%%%%%%%%%%%%%%%%%% Global setup object prototype %%%%%%%%%%%%%%%%%%%%5
 
 :- object(setup).
 :- public([
@@ -43,16 +38,126 @@ clear:-
 
 option(Option, Value):-
     ::option_(Option=Value).
-option(Option, Value, _):-
-    ::option(Option,Value),!.
-option(Option, Default, Default):-
-    ::option_(Option=_).
+
+option(Option, Value, Default):-
+    var(Value),
+    (
+        ::option(Option, Value) ->
+        true;
+        Value = Default
+    ),!.
+
+option(Option, Value, Default):-
+    nonvar(Value),
+    (
+        ::option(Option, _Value) ->
+        (
+            Value = _Value ->
+            true;
+            fail
+        );
+        Value = Default
+    ),!.
+
+
 option(Option):-
     ::option_(Option).
 
 options(List):-
     findall(O, ::option_(O), List).
 
+:- end_object.
+
+%%%%%%%%%%%%%%%%%%%% A class hierarchy of code blocks %%%%%%%%%%%%%%%%%%%%5
+
+:- object(metaclass, instantiates(metaclass)).
+:- public([setup/1,
+           indent/1,
+           indent/2,
+           indent/0,
+           unindent/1,
+           unindent/0,
+           iswritef/3
+          ]).
+:- private([indent_/1,
+            indent_str/2,
+            indent_str_/2]).
+:- protected([current_setup/1,
+              option_/2,
+              option_/3,
+              indentstr/1,
+              set_indent/1,
+              clear_indent/0
+             ]).
+:- dynamic([indent_/1, current_setup/1]).
+:- initialization(::clear_indent).
+
+setup(Setup):-
+    ::retractall(current_setup(_)),
+    ::assert(current_setup(Setup)).
+
+option_(Name, Value, Default):-
+    ::current_setup(Setup),
+    Setup::option(Name, Value, Default).
+
+option_(Name, Value):-
+    ::current_setup(Setup),
+    Setup::option(Name, Value).
+
+set_indent(Number):-
+    ::retractall(indent_(_)),
+    ::assert(indent_(Number)).
+
+clear_indent:-
+    ::set_indent(0).
+
+indent(String):-
+    ::indent_(Number),
+    ::indent(Number, String).
+
+indent(0, "").
+indent(N, String):-
+    N > 0,!,
+    N1 is N-1,
+    ::indent(N1, _1),
+    indent_str(C),
+    string_concat(C, _1, String).
+
+iswritef(String, Pattern, Params):-
+    ::indent(Indent),
+    writef::swritef(_1, Pattern, Params),
+    string_concat(Indent, _1, String).
+
+indent_str("\t"):-
+    ::option_(use_tabs,true,true),
+    !.
+indent_str(S):-
+    ::option_(use_tabs,false,true),!,
+    ::option_(tab_size,Size,8),!,
+    indent_str_(Size, S).
+
+indent_str_(0, "").
+indent_str_(N, String):-
+    N>0,
+    ::option_(indent_char, C, " "),
+    N1 is N - 1,
+    ::indent_str_(N1, _1),
+    string_concat(C, _1, String).
+
+indent:-
+    ::indent_(Current),
+    New is Current + 1,
+    ::set_indent(New).
+
+unindent:-
+    ::indent_(Current),
+    Current >= 0,
+    New is Current - 1,
+    ::set_indent(New).
+
+:- end_object.
+
+:- object(class, instantiates(metaclass)).
 :- end_object.
 
 :- category(listrenderable).

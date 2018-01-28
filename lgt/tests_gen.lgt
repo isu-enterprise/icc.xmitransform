@@ -39,12 +39,12 @@ succeeds(setup_add_option_4):-
 succeeds(setup_get_option_1):-
     setup::option(option4,value4).
 
-succeeds(setup_get_options_nonexistent):-
+succeeds(setup_get_options):-
     setup::options(List),
     List=[option1=value1,option2=value2,
           option3=value3,option4=value4].
 
-succeeds(setup_get_option_default):-
+succeeds(setup_get_nonexistent_option_as_default):-
     setup::option(option_none, Value, default),
     Value=default.
 
@@ -56,6 +56,48 @@ succeeds(setup_get_options_empty):-
 
 succeeds(setup_add_option_tab_size):-
     setup::set(tab_size, 4).
+
+succeeds(setup_setup_globally):-
+    class::setup(setup).
+
+succeeds(setup_check_indent_1):-
+    class::indent("").
+
+succeeds(setup_check_indent_2):-
+    class::indent,
+    class::indent(S).
+
+succeeds(setup_check_indent_3):-
+    class::indent,
+    class::indent("\t\t").
+
+succeeds(setup_check_indent_4):-
+    class::unindent,
+    class::indent("\t").
+
+succeeds(setup_check_indent_5):-
+    class::unindent,
+    class::indent("").
+
+succeeds(setup_change_way_of_indent):-
+    setup::set(use_tabs, false).
+
+succeeds(setup_check_way_of_indent):-
+    setup::option(use_tabs, false).
+
+succeeds(setup_check_indent_6):-
+    class::indent("").
+
+succeeds(setup_check_indent_7):-
+    class::indent,
+    class::indent(S).
+
+succeeds(setup_check_indent_8):-
+    class::indent,
+    class::indent("        "),
+    class::unindent,
+    class::unindent,
+    class::indent("").
 
 succeeds(block_add_1) :-
     tinst::append(1).
