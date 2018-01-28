@@ -58,26 +58,26 @@ succeeds(setup_add_option_tab_size):-
     setup::set(tab_size, 4).
 
 succeeds(setup_setup_globally):-
-    class::setup(setup).
+    root::setup(setup).
 
 succeeds(setup_check_indent_1):-
-    class::indent("").
+    root::indent("").
 
 succeeds(setup_check_indent_2):-
-    class::indent,
-    class::indent(S).
+    root::indent,
+    root::indent(S).
 
 succeeds(setup_check_indent_3):-
-    class::indent,
-    class::indent("\t\t").
+    root::indent,
+    root::indent("\t\t").
 
 succeeds(setup_check_indent_4):-
-    class::unindent,
-    class::indent("\t").
+    root::unindent,
+    root::indent("\t").
 
 succeeds(setup_check_indent_5):-
-    class::unindent,
-    class::indent("").
+    root::unindent,
+    root::indent("").
 
 succeeds(setup_change_way_of_indent):-
     setup::set(use_tabs, false).
@@ -86,18 +86,18 @@ succeeds(setup_check_way_of_indent):-
     setup::option(use_tabs, false).
 
 succeeds(setup_check_indent_6):-
-    class::indent("").
+    root::indent("").
 
 succeeds(setup_check_indent_7):-
-    class::indent,
-    class::indent(S).
+    root::indent,
+    root::indent(S).
 
 succeeds(setup_check_indent_8):-
-    class::indent,
-    class::indent("        "),
-    class::unindent,
-    class::unindent,
-    class::indent("").
+    root::indent,
+    root::indent("        "),
+    root::unindent,
+    root::unindent,
+    root::indent("").
 
 succeeds(block_add_1) :-
     tinst::append(1).
@@ -198,6 +198,9 @@ succeeds(render_method_1):-
     methodadd::body(methodbody),
     methodadd::render(Result),
     Result = ["def add(name:String=\"\", id:int) -> bool:","    pass"].
+
+succeeds(create_class):-
+    create_object(aclass, [instantiates(class)],[],[]).
 
 
 succeeds(render_method_body_indent_check):-

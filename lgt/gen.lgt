@@ -160,7 +160,7 @@ unindent:-
 
 :- end_object.
 
-:- object(class, instantiates(metaclass)).
+:- object(root, instantiates(metaclass)).
 :- end_object.
 
 :- category(listrenderable).
@@ -196,7 +196,7 @@ renderobject(Object, String):-
 :- end_category.
 
 
-:- object(code_block, specializes(class)).
+:- object(code_block, specializes(root)).
 :- public([
                  append/1,
                  prepend/1,
@@ -239,7 +239,7 @@ render("").
 
 renderitem(Item, String):-
     %writef::writef("Warning: Default renderitem is empty\n"),
-    class::iswritef(String, '%w', [Item]).
+    root::iswritef(String, '%w', [Item]).
 
 :- end_object.
 
@@ -293,7 +293,7 @@ default(Default):-
     ::append(default(Default)).
 
 type_separator(Value):-
-    class::option(param_type_separator, Value, ':').
+    root::option(param_type_separator, Value, ':').
 
 renderitem(default(Default), String):-!,
     writef::swritef(String, '=%q', [Default]).
@@ -342,17 +342,21 @@ renderitem(Item, Result):-
     ^^renderitem(Item, Result).
 
 type_separator(Value):-
-    class::option(method_type_separator, Value, ' -> ').
+    root::option(method_type_separator, Value, ' -> ').
 
 render(Result):-
     ::item(params(Params)),
     ::renderitem(params(Params), SParams),
     ^^render(SParams, Sigpart),
-    class::iswritef(ISignature, 'def %w:', [Sigpart]),
-    class::indent,
+    root::iswritef(ISignature, 'def %w:', [Sigpart]),
+    root::indent,
     ::item(body(Body)),
     ::renderitem(body(Body), LBody),
-    class::unindent,
+    root::unindent,
     Result=[ISignature | LBody].
 
+:- end_object.
+
+:- object(class, specializes(code_block)).
+render("a class").
 :- end_object.
