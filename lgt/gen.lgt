@@ -55,13 +55,41 @@ options(List):-
 
 :- end_object.
 
+:- category(listrenderable).
+
+:- protected([renderitem/3]).
+:- private([renderitems/4]).
+:- public([renderaslist/3]).
+
+renderaslist(Setup, Separator, String):-
+    ::items(Items),!,
+    ::renderitems(Items, Setup, Separator, String).
+renderaslist(_,_,"").
+
+renderitems([],_,_,"").
+renderitems([A], Setup, _, SA):-
+    ::renderitem(A, Setup, SA).
+renderitems([A,B|T], Setup, Separator, String):-
+    ::renderitem(A, Setup, SA),
+    string_concat(SA, Separator, SAS),
+    ::renderitems([B|T], Setup, Separator, BTS),
+    string_concat(SAS, BTS, String).
+
+renderitem(Item, Setup, String):-
+    % writef::writef("Object....?: %w",[Item]),
+    current_object(Item),!,
+    Item::render(Setup, String).
+
+:- end_category.
+
+
+
 :- object(code_block, specializes(class)).
 :- public([
                  append/1,
                  prepend/1,
                  clear/0,
                  render/2,
-                 renderaslist/3,
                  remove/1,
                  item/1,
                  items/1
@@ -73,8 +101,6 @@ options(List):-
                   item_/1
               ]).
 :- protected([
-                    renderitem/3,
-                    renderitems/4
                 ]).
 
 item(Item):-
@@ -96,29 +122,10 @@ clear:-
     ::retractall(item_(_)).
 
 render(_Setup, _String).
-renderaslist(Setup, Separator, String):-
-    ::items(Items),!,
-    ::renderitems(Items, Setup, Separator, String).
-renderaslist(_,_,"").
-
-renderitems([],_,_,"").
-renderitems([A], Setup, _, SA):-
-    ::renderitem(A, Setup, SA).
-renderitems([A,B|T], Setup, Separator, String):-
-    ::renderitem(A, Setup, SA),
-    string_concat(SA, Separator, SAS),
-    ::renderitems([B|T], Setup, Separator, BTS),
-    string_concat(SAS, BTS, String).
-
-renderitem(Item, Setup, String):-
-    writef::writef("Object....?: %w",[Item]),
-    current_object(Item),!,
-    Item::render(Setup, String).
-
 :- end_object.
 
 
-:- object(param, specializes(code_block)).
+:- object(param, specializes(code_block), imports(listrenderable)).
 
 :- protected([
                   renderitem/3
@@ -136,15 +143,17 @@ type(Type):-
 default(Default):-
     ::append(default(Default)).
 
-renderitem(I, Setup, ""):-
-    writef::writef("---- Call: %w,%w",[I, Setup]),
-    fail.
-renderitem(name(Name), _Setup, String):-
+%% renderitem(I, Setup, ""):-
+%%     writef::writef("---- Call: %w,%w",[I, Setup]),
+%%     fail.
+renderitem(name(Name), _Setup, String):-!,
     atom_string(Name, String).
-renderitem(type(Type), _Setup, String):-
+renderitem(type(Type), _Setup, String):-!,
     writef::swritef(String, ':%w', [Type]).
-renderitem(default(Default), _Setup, String):-
+renderitem(default(Default), _Setup, String):-!,
     writef::swritef(String, '=%q', [Default]).
+renderitem(Item, Setup, String):-
+    ^^renderitem(Item, Setup, String).
 
 render(Setup, Result):-
     ::renderaslist(Setup, "", Result).
@@ -152,5 +161,5 @@ render(Setup, Result):-
 :- end_object.
 
 
-:- object(params, specializes(code_block)).
+:- object(params, specializes(code_block), imports(listrenderable)).
 :- end_object.

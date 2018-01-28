@@ -35,18 +35,14 @@ a(cat).
 b(X):-
     ::a(X).
 
-%% a(a).
-%% a(X):-
-%%     ^^a(X).
+a(a).
+a(X):-
+    ^^a(X).
 
 :- end_object.
 
 
 :- object(bclass, specializes(aclass)).
-
-
-%% p(X):-
-%%     a(X).
 
 a(b).
 a(X):-
