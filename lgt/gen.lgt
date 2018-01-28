@@ -165,9 +165,13 @@ unindent:-
 
 :- category(listrenderable).
 
-:- protected([renderitem/2, renderobject/2]).
+:- protected([renderitem/2,
+              renderobject/2,
+              list_separator/1,
+              separator_option/2
+             ]).
 :- private([renderitems/3]).
-:- public([renderaslist/2,render/1]).
+:- public([renderaslist/2,render/1,render/2]).
 
 renderaslist(Separator, String):-
     ::items(Items),!,
@@ -186,12 +190,23 @@ renderitems([A,B|T], Separator, String):-
 renderitem(Item, String):-
     renderobject(Item, String),!.
 renderitem(Item, String):-
-    writef::swritef(String, '%q', Item).
+    writef::swritef(String, '%q', [Item]).
 
 renderobject(Object, String):-
     current_object(Object),!,
     % writef::writef("Object: %w\n",[Object]),
     Object::render(String).
+
+render(Separator, Result):-
+    ::renderaslist(Separator, Result).
+
+render(Result):-
+    ::list_separator(Separator),
+    ::render(Separator, Result).
+
+list_separator(Separator):-
+    ::separator_option(Name, Default),!,
+    root::option(Name, Separator, Default).
 
 :- end_category.
 
@@ -262,12 +277,11 @@ render(String):-
 :- category(namedtyped, extends(named)).
 :- public([
                  type/1,
-                 render/2
+                 render/2,
+                 separator_option/2,
+                 list_separator/1
              ]).
-:- protected([
-                    renderitem/2,
-                    type_separator/1
-                ]).
+:- protected([renderitem/2]).
 
 type(Type):-
     ::append(type(Type)).
@@ -275,7 +289,7 @@ type(Type):-
 renderitem(Item, String):-
     ^^renderitem(Item, String),!.
 renderitem(type(Type),String):-!,
-    ::type_separator(Separator),
+    ::list_separator(Separator),
     writef::swritef(String, '%w%w', [Separator, Type]).
 
 render(Middle, String):-
@@ -291,19 +305,20 @@ render(Middle, String):-
 render(String):-
     ::render("", String).
 
+list_separator(Separator):-
+    ::separator_option(Name, Default),!,
+    root::option(Name, Separator, Default).
+
 :- end_category.
 
 :- object(param, specializes(code_block), imports([namedtyped])).
 
-:- public([
-                 default/1
-             ]).
+:- public([default/1]).
 
 default(Default):-
     ::append(default(Default)).
 
-type_separator(Value):-
-    root::option(param_type_separator, Value, ':').
+separator_option(param_type_separator, ':').
 
 renderitem(default(Default), String):-!,
     writef::swritef(String, '=%q', [Default]).
@@ -324,8 +339,7 @@ render(Result):-
 
 :- object(params, specializes(code_block), imports(listrenderable)).
 
-render(Result):-
-    ::renderaslist(', ', Result).
+separator_option(param_list_separator, ', ').
 
 :- end_object.
 
@@ -351,8 +365,7 @@ renderitem(body(Body), StringList):-!,
 renderitem(Item, Result):-
     ^^renderitem(Item, Result).
 
-type_separator(Value):-
-    root::option(method_type_separator, Value, ' -> ').
+separator_option(method_type_separator, ' -> ').
 
 render(Result):-
     ::item(params(Params)),
@@ -367,6 +380,35 @@ render(Result):-
 
 :- end_object.
 
-:- object(class, specializes(code_block)).
-render("a class").
+:- object(classlist, specializes(code_block), imports([listrenderable])).
+
+separator_option(class_list_separator, ", ").
+
+:- end_object.
+
+:- object(class, specializes(code_block), imports([named])).
+
+:- public([classlist/1, methods/1]).
+
+classlist(ClassList):-
+    ::append(classlist(ClassList)).
+
+methods(MethodList):-
+    ::append(methods(MethodList)).
+
+renderitem(Item, Result):-
+    ^^renderitem(Item, Result).
+
+render(Result):-
+    ^^render(Name),
+    ::item(classlist(List)),
+    List::render(ClassList),
+    % writef::writef('---> Class List: %w\n',[ClassList]),
+    root::iswritef(Signature,'class %w(%w):',[Name, ClassList]),
+    root::indent,
+    ::item(methods(Methods)),
+    Methods::render(StringList),
+    root::unindent,
+    Result=[Signature | StringList].
+
 :- end_object.

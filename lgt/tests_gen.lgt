@@ -65,7 +65,7 @@ succeeds(setup_check_indent_1):-
 
 succeeds(setup_check_indent_2):-
     root::indent,
-    root::indent(S).
+    root::indent("\t").
 
 succeeds(setup_check_indent_3):-
     root::indent,
@@ -90,7 +90,7 @@ succeeds(setup_check_indent_6):-
 
 succeeds(setup_check_indent_7):-
     root::indent,
-    root::indent(S).
+    root::indent("    ").
 
 succeeds(setup_check_indent_8):-
     root::indent,
@@ -202,12 +202,28 @@ succeeds(render_method_1):-
 succeeds(render_method_body_indent_check):-
     methodbody::render(["pass"]).
 
+succeeds(create_class_list):-
+    create_object(importclasses, [instantiates(classlist)],[],[]),
+    importclasses::append('object1'),
+    importclasses::append('object2').
+
+succeeds(render_class_list):-
+    importclasses::render(String),
+    String="object1, object2".
+
+succeeds(create_method_list):-
+    create_object(amethodlist, [instantiates(methodlist)],[],[]),
+    amethodlist::append(methodadd).
+
 succeeds(create_class):-
-    create_object(aclass, [instantiates(class)],[],[]).
+    create_object(aclass, [instantiates(class)],[],[]),
+    aclass::name('AClass'),
+    aclass::classlist(importclasses),
+    aclass::methods(amethodlist).
 
 succeeds(render_class_1):-
     aclass::render(L),
-    L="a class".
+    writef::writef('CLASS:\n%w\n',[L]).
 
 
 :- end_object.
