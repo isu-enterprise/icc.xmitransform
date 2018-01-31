@@ -165,18 +165,24 @@ unindent:-
 
 :- category(listrenderable).
 
-:- protected([renderitem/2,
+:- protected([
+              renderitem/2,
               renderobject/2,
               list_separator/1,
               separator_option/2
              ]).
 :- private([renderitems/3]).
-:- public([renderaslist/2,render/1,render/2]).
+:- public([renderaslist/2,
+           render/1,
+           render/2
+          ]).
 
 renderaslist(Separator, String):-
     ::items(Items),!,
     ::renderitems(Items, Separator, String).
-renderaslist(_,_,"").
+renderaslist(_,_,""):-
+    writef::writef('ERROR: The list is empty, nothing to render!\n'),
+    fail.
 
 renderitems([],_,"").
 renderitems([A], _, SA):-
@@ -187,15 +193,15 @@ renderitems([A,B|T], Separator, String):-
     ::renderitems([B|T], Separator, BTS),
     string_concat(SAS, BTS, String).
 
-renderitem(Item, String):-
-    renderobject(Item, String),!.
-renderitem(Item, String):-
-    writef::swritef(String, '%q', [Item]).
+%% renderitem(Item, String):-
+%%     renderobject(Item, String),!.
+%% renderitem(Item, String):-
+%%     writef::swritef(String, '%q', [Item]).
 
-renderobject(Object, String):-
-    current_object(Object),!,
-    % writef::writef("Object: %w\n",[Object]),
-    Object::render(String).
+%% renderobject(Object, String):-
+%%     current_object(Object),!,
+%%     % writef::writef("Object: %w\n",[Object]),
+%%     Object::render(String).
 
 render(Separator, Result):-
     ::renderaslist(Separator, Result).
@@ -243,15 +249,22 @@ remove(Item):-
 clear:-
     ::retractall(item_(_)).
 
-render("").
-    %writef::writef("Warning: Default rendering is empty\n").
+render(_):-
+    writef::writef("ERROR: Implement render/1 by a subclass!\n"),
+    fail.
 
+
+renderitem(Item, String):-
+    writef::writef("Try: %q\n", [Item]),
+    fail.
 renderitem(Object, String):-
     current_object(Object), !,
     Object::render(String).
+renderitem(literal(Item), String):-!,
+    atom_string(Item, String).
 renderitem(Item, String):-
     %writef::writef("Warning: Default renderitem is empty\n"),
-    root::iswritef(String, '%w', [Item]).
+    root::iswritef(String, '%q', [Item]).
 
 :- end_object.
 
@@ -337,6 +350,15 @@ render(Result):-
 :- object(params, specializes(code_block), imports(listrenderable)).
 
 separator_option(param_list_separator, ', ').
+
+renderitem(Item, Result):-
+    ^^renderitem(Item, Result).
+
+:- end_object.
+
+:- object(dottedname, specializes(params)).
+
+separator_option(dotted_name_separator, '.').
 
 :- end_object.
 

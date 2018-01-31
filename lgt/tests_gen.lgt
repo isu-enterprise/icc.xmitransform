@@ -119,7 +119,7 @@ succeeds(test_clear) :-
 succeeds(block_list_2):-
     findall(X, tinst::item(X), []).
 
-succeeds(test_render):-
+fails(test_render):-
     tinst::render(_).
 
 succeeds(setup_bad_option_set):-
@@ -131,7 +131,7 @@ succeeds(setup_bad_option_set):-
 succeeds(setup_restore_option_tab_size):-
     setup::set(tab_size, 4).
 
-succeeds(render_again):-
+fails(render_again):-
     tinst::render(_).
 
 succeeds(create_param_1):-
@@ -175,12 +175,12 @@ succeeds(create_params_1):-
     params1::append(bparam).
 
 succeeds(render_params_1):-
-    params1::renderaslist(", ", Result),
-    % writef::writef('Render result: %p\n',[Result]),
+    params1::render(Result),
+    writef::writef('Render result: %p\n',[Result]),
     Result="name:String=\"\", id:int".
 
 succeeds(render_params_again_1):-
-    params1::renderaslist(", ", Result),
+    params1::render(Result),
     Result="name:String=\"\", id:int".
 
 succeeds(create_method_body):-
@@ -225,5 +225,11 @@ succeeds(render_class_1):-
     aclass::render(L),
     writef::writef('CLASS:\n%w\n',[L]).
 
+succeeds(dotted_name_create):-
+    create_object(ospath, [instantiates(dottedname)],[],[]),
+    ospath::append(literal(os)),
+    ospath::append(literal(path)),
+    ospath::render(S),
+    writef::writef('Dotted name: %w\n', [S]).
 
 :- end_object.
