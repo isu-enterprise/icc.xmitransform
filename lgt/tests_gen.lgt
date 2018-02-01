@@ -228,4 +228,26 @@ succeeds(dotted_name_create):-
     ospath::append(literal(path)),
     ospath::render("os.path").
 
+succeeds(import_create):-
+    create_object(importospath, [instantiates(import)],[],[]),
+    importospath::import(ospath),
+    importospath::importas(sqlite3, sql).
+
+succeeds(import_render_1):-
+    importospath::render(["import os.path","import sqlite3 as sql"]).
+% writef::writef('Import:\n%w\n',[String]).
+
+succeeds(import_add_1):-
+    importospath::from(ospath, getcwd),
+    importospath::from(sqlite3, conn, connect).
+
+succeeds(import_render_2):-
+    importospath::render(["import os.path",
+                          "import sqlite3 as sql",
+                          "from os.path import getcwd",
+                          "from sqlite3 import conn as connect"]).
+%    writef::writef('Import:\n%w\n',[String]).
+
+
+
 :- end_object.

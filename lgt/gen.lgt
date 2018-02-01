@@ -421,3 +421,43 @@ render(Result):-
     Result=[Signature | StringList].
 
 :- end_object.
+
+:- object(import, specializes(code_block)).
+:- public([import/1, from/2, from/3, importas/2]).
+import(Name):-
+    ::append(import(Name)).
+from(Name, List):-
+    ::append(from(Name, List)).
+from(Name, Id, As):-
+    ::append(from(Name, Id, As)).
+importas(Name, As):-
+    ::append(import(Name, As)).
+
+renderitem(import(Name), String):-!,
+    ^^renderitem(Name, SName),!,
+    root::iswritef(String, 'import %w', [SName]).
+renderitem(import(Name, As), String):-!,
+    ^^renderitem(Name, SName),!,
+    root::iswritef(String, 'import %w as %w', [SName, As]).
+renderitem(from(Name, List), String):-!,
+    ^^renderitem(Name, SName),!,
+    ^^renderitem(List, SList),!,
+    root::iswritef(String, 'from %w import %w', [SName, SList]).
+renderitem(from(Name, Id, As), String):-
+    ^^renderitem(Name, SName),!,
+    ^^renderitem(Id, SId),!,
+    root::iswritef(String, 'from %w import %w as %w', [SName, SId, As]).
+
+renderitem(Item, String):-
+    ^^renderitem(Item, String).
+
+render(List):-
+    findall(Result, (::item(Item),
+                     ::renderitem(Item, Result)),
+            List).
+
+:- end_object.
+
+:- object(module, specializes(code_block)).
+% :- public(import/1, class/1,
+:- end_object.
