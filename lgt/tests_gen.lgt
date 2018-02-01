@@ -226,7 +226,6 @@ succeeds(dotted_name_create):-
     create_object(ospath, [instantiates(dottedname)],[],[]),
     ospath::append(literal(os)),
     ospath::append(literal(path)),
-    ospath::render(S),
-    writef::writef('Dotted name: %w\n', [S]).
+    ospath::render("os.path").
 
 :- end_object.
