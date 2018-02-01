@@ -166,8 +166,6 @@ unindent:-
 :- category(listrenderable).
 
 :- protected([
-              renderitem/2,
-              renderobject/2,
               list_separator/1,
               separator_option/2
              ]).
@@ -192,16 +190,6 @@ renderitems([A,B|T], Separator, String):-
     string_concat(SA, Separator, SAS),
     ::renderitems([B|T], Separator, BTS),
     string_concat(SAS, BTS, String).
-
-%% renderitem(Item, String):-
-%%     renderobject(Item, String),!.
-%% renderitem(Item, String):-
-%%     writef::swritef(String, '%q', [Item]).
-
-%% renderobject(Object, String):-
-%%     current_object(Object),!,
-%%     % writef::writef("Object: %w\n",[Object]),
-%%     Object::render(String).
 
 render(Separator, Result):-
     ::renderaslist(Separator, Result).
