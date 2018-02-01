@@ -9,14 +9,14 @@
 :- use_module([library(semweb/rdf_prefixes)]).
 :- use_module([library(semweb/turtle)]).
 
-:- object(metaclass, instantiates(metaclass)).
+:- object(xmimetaclass, instantiates(xmimetaclass)).
 :- end_object.
 
-:- object(class, instantiates(metaclass)).
+:- object(xmiroot, instantiates(xmimetaclass)).
 :- end_object.
 
 :- object(xmiclass,
-      specializes(class)).
+      specializes(xmiroot)).
 :- public([
                  load_file/1,
 	  	         load_file/2,

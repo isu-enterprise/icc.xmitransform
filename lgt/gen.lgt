@@ -70,7 +70,7 @@ options(List):-
 
 %%%%%%%%%%%%%%%%%%%% A class hierarchy of code blocks %%%%%%%%%%%%%%%%%%%%5
 
-:- object(metaclass, instantiates(metaclass)).
+:- object(genmetaclass, instantiates(genmetaclass)).
 :- public([setup/1,
            indent/1,
            indent/2,
@@ -160,7 +160,7 @@ unindent:-
 
 :- end_object.
 
-:- object(root, instantiates(metaclass)).
+:- object(root, instantiates(genmetaclass)).
 :- end_object.
 
 :- category(listrenderable).
