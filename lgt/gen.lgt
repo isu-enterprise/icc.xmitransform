@@ -241,17 +241,12 @@ render(_):-
     writef::writef("ERROR: Implement render/1 by a subclass!\n"),
     fail.
 
-
-renderitem(Item, String):-
-    writef::writef("Try: %q\n", [Item]),
-    fail.
 renderitem(Object, String):-
     current_object(Object), !,
     Object::render(String).
 renderitem(literal(Item), String):-!,
     atom_string(Item, String).
 renderitem(Item, String):-
-    %writef::writef("Warning: Default renderitem is empty\n"),
     root::iswritef(String, '%q', [Item]).
 
 :- end_object.

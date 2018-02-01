@@ -125,9 +125,6 @@ fails(test_render):-
 succeeds(setup_bad_option_set):-
     setup::set(tab_size, -100).
 
-%fails(test_render_with_bad_option):-
-%    tinst::render(setup,_).
-
 succeeds(setup_restore_option_tab_size):-
     setup::set(tab_size, 4).
 
@@ -176,7 +173,7 @@ succeeds(create_params_1):-
 
 succeeds(render_params_1):-
     params1::render(Result),
-    writef::writef('Render result: %p\n',[Result]),
+    % writef::writef('Render result: %p\n',[Result]),
     Result="name:String=\"\", id:int".
 
 succeeds(render_params_again_1):-
