@@ -36,15 +36,15 @@ tr(class, Class, ClassID):-
 
 tr(attribute, Attribute, ClassID, AttributeID):-
     ::package(Package),
-    query(Package)::class_attribute(Name, ClassID, AttributeID),
-    query(Package)::attribute_type(Type, AttributeID),
+    query(Package)::attribute(Name, ClassID, AttributeID),
+    query(Package)::type(Type, AttributeID),
     create_object(Attribute, [instantiates(param)],[],[]),
     Attribute::name(Name),
     Attribute::type(Type).
 
 tr(method, Method, ClassID, MethodID):-
     ::package(Package),
-    query(Package)::class_method(Name, ClassID, MethodID),
+    query(Package)::method(Name, ClassID, MethodID),
     create_object(Method, [instantiates(method)],[],[]),
     Method::name(Name).
 

@@ -35,6 +35,7 @@
                  atom_prefix_split/3,
                  atom_prefix_split/4,
                  rdf/3,
+                 rdf/4,
                  uri_normalize/2,
                  save_turtle/1,
                  save_turtle/2,
@@ -94,6 +95,7 @@
                   top_subject/1, % References to a top subject of the Package/Profile.
                   graph_/1       % The Graph name to store triples, defaults to name attribute of uml:Model attribute.
               ]).
+
 
 %debug.
 %debug(xmi_headers).
@@ -193,6 +195,11 @@ rdf_assert(Subject, Predicate, Object):-
 rdf(Subject, Predicate, Object):-
     ::graph(Graph),
     rdf_db::rdf(Subject, Predicate, Object, Graph).
+
+rdf(Subject, Predicate, NS, Term):-
+    rdf_prefixes::rdf_global_id(NS:Term, ETerm),
+    ::rdf(Subject, Predicate, ETerm).
+
 
 % ----------------- Main processing recursion -----------------------------------
 
