@@ -1,6 +1,10 @@
-.PHONY: all tests st itests gt igt
+.PHONY: all tests st itests gt igt t i
 
 all: tests
+
+t: tests
+
+i: itests
 
 tests:
 	LOGTALKHOME=/usr/lib/logtalk/share/logtalk swilgt -g "{tester},halt."
