@@ -461,10 +461,14 @@ base_check([_]).
 
 :- object(packageclass, specializes(xmiclass)).
 top_xmi_element('uml:Model').
-base_check([element('xmi:XMI',_,_)]).
+
+base_check([element('xmi:XMI',_,_)]):-!.
+base_check([element(TopElement,_,_)]):-top_xmi_element(TopElement).
+
 top_name_to_graph:-
     ::top_xmi_element(TopElement),
-    ::xpath(//'xmi:XMI'/TopElement, element(_,Attrs,_)),
+    % ::xpath(//'xmi:XMI'/TopElement, element(_,Attrs,_)),
+    ::xpath(//TopElement, element(_,Attrs,_)),
     ::debugf(xmi_headers, "Mdel--> %w",[Attrs]),
     swi_option::option(name(Name), Attrs),!,
     ::set_graph(Name).

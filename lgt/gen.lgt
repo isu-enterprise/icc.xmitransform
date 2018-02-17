@@ -397,10 +397,13 @@ render(List):-
 
 :- object(class, specializes(code_block), imports([named])).
 
-:- public([classlist/1, methods/1]).
+:- public([classlist/1, methods/1, attributes/1]).
 
 classlist(ClassList):-
-    ::append(classlist(ClassList)).
+    ::prepend(classlist(ClassList)).
+
+attributes(Attributes):-
+    ::prepend(attributes(Attributes)).
 
 methods(MethodList):-
     ::append(methods(MethodList)).
@@ -415,8 +418,15 @@ render(Result):-
     % writef::writef('---> Class List: %w\n',[ClassList]),
     root::iswritef(Signature,'class %w(%w):',[Name, ClassList]),
     root::indent,
-    ::item(methods(Methods)),
-    Methods::render(StringList),
+    (
+        ::irem(attributes(Attributes))->
+        Attributes::render(AttrList);
+        AttrList=[]),
+    (
+        ::item(methods(Methods))->
+        Methods::render(MethodList);
+        MethodList=[]),
+    lists::append(AttrList, MethodList, StringList),
     root::unindent,
     Result=[Signature | StringList].
 

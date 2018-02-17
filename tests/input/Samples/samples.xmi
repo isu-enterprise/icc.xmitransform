@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><uml:Model xmlns:uml="http://www.omg.org/spec/UML/20110701" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmi:version="2.1" xmi:id="__k9i8BN_EeijsfqEI5TgsA" name="samples">
+  <eAnnotations xmi:id="__k9i8RN_EeijsfqEI5TgsA" source="Objing">
+    <contents xmi:type="uml:Property" xmi:id="__k9i8hN_EeijsfqEI5TgsA" name="exporterVersion">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="__k9i8xN_EeijsfqEI5TgsA" value="3.0.0"/>
+    </contents>
+  </eAnnotations>
+  <packagedElement xmi:type="uml:Class" xmi:id="__k9i9BN_EeijsfqEI5TgsA" name="Person">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="__k9i9RN_EeijsfqEI5TgsA" name="Name" visibility="public" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="__k9i9hN_EeijsfqEI5TgsA" name="Family" visibility="public" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="__k9i9xN_EeijsfqEI5TgsA" name="BirthDay" visibility="public" type="__k-KAxN_EeijsfqEI5TgsA" isUnique="false"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="__k9i-BN_EeijsfqEI5TgsA" name="Pay" visibility="public">
+      <ownedComment xmi:type="uml:Comment" xmi:id="__k9i-RN_EeijsfqEI5TgsA">
+        <body>&lt;Enter note text here&gt;</body>
+      </ownedComment>
+      <ownedParameter xmi:id="__k9i-hN_EeijsfqEI5TgsA" name="amount" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Integer"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__k9i-xN_EeijsfqEI5TgsA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__k9i_BN_EeijsfqEI5TgsA" value="1"/>
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="__k9i_RN_EeijsfqEI5TgsA" value=""/>
+      </ownedParameter>
+      <ownedParameter xmi:id="__k9i_hN_EeijsfqEI5TgsA" isUnique="false" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Boolean"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__k-KABN_EeijsfqEI5TgsA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__k-KARN_EeijsfqEI5TgsA" value="1"/>
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="__k-KAhN_EeijsfqEI5TgsA" value=""/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="__k-KAxN_EeijsfqEI5TgsA" name="date"/>
+</uml:Model>
