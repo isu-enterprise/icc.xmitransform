@@ -8,7 +8,7 @@
 :- dynamic(xmi_model/4).
 
 model(Model):-
-    ::parameter(1, Model).
+    parameter(1, Model).
 
 package(Package):-
     ::model(Model),
