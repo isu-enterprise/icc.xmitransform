@@ -89,4 +89,17 @@ succeeds(save_all_as_rdf):-
     code_profile::save_rdf('../tests/output/Code.profile.rdf'),
     local_profile::save_rdf('../tests/output/LocalProfile.profile.rdf').
 
+succeeds(qurey_class_1):-
+    query(package)::class('Document',_).
+
+succeeds(qurey_class_2):-
+    query(package)::class('Document',ClassID),
+    query(package)::attribute('number', ClassID,_).
+
+succeeds(qurey_class_methods_1):-
+    query(package)::class('Document',ClassID),
+    findall(Name, query(package)::method(Name, ClassID,_), L),
+    L==['accept','revoke'].
+
+
 :- end_object.

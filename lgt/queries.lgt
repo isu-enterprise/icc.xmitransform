@@ -4,7 +4,7 @@
 :- object(query(_XMI)).
 
 :- protected(xmi/1).
-:- public([class/2, attr/3]).
+:- public([class/2, attribute/3, method/3]).
 
 xmi(XMI):-
     parameter(1, XMI).
@@ -14,15 +14,17 @@ class(Name, ID):-
     XMI::rdf(ID,rdf:type,uml,'Class'),
     XMI::rdf(ID,rdfs:label, literal(Name)).
 
-attr(Name, ClassID, ID):-
-    ::xmi(XNI),
-    write(1),
+attribute(Name, ClassID, ID):-
+    ::xmi(XMI),
     XMI::graph(G),
-    write(2),
     XMI::rdf(ClassID, G:ownedAttribute, ID),
-    write(3),
-    XMI::rdf(ID, rdf:type, uml,'Property'),
-    write(4),
+    % XMI::rdf(ID, rdf:type, uml,'Property'), % this can be a type
+    XMI::rdf(ID, rdfs:label, literal(Name)).
+
+method(Name, ClassID, ID):-
+    ::xmi(XMI),
+    XMI::graph(G),
+    XMI::rdf(ClassID, G:ownedOperation, ID),
     XMI::rdf(ID, rdfs:label, literal(Name)).
 
 
