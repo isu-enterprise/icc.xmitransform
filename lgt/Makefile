@@ -10,7 +10,7 @@ tests:
 	LOGTALKHOME=/usr/lib/logtalk/share/logtalk swilgt -g "{tester},halt."
 
 itests:
-	LOGTALKHOME=/usr/lib/logtalk/share/logtalk swilgt -g "{tester}."
+	LOGTALKHOME=/usr/lib/logtalk/share/logtalk swilgt -g "{tester},logtalk_load(tools(loader))."
 
 gt:
 	LOGTALKHOME=/usr/lib/logtalk/share/logtalk swilgt -g "{tester_gen},halt."
