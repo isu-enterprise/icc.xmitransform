@@ -39,7 +39,9 @@ succeeds(test_test) :-
     true.
 
 succeeds(setup_setup_globally):-
-    root::setup(setup).
+    root::setup(setup),
+    setup::set(use_tabs, false),
+    setup::set(tab_size, 4).
 
 succeeds(direct_3_is_an_object):-
     current_object(direct(apackage, localprofile, codeprofile)).
