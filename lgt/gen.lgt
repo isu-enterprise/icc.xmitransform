@@ -413,15 +413,33 @@ renderitem(Item, Result):-
 
 render(Result):-
     ^^render(Name),
-    ::item(classlist(List)),
-    List::render(ClassList),
-    % writef::writef('---> Class List: %w\n',[ClassList]),
-    root::iswritef(Signature,'class %w(%w):',[Name, ClassList]),
+    (
+        ::item(classlist(List)) ->
+        List::render(ClassList),
+        root::iswritef(Signature,'class %w(%w):',[Name, ClassList]);
+        root::iswritef(Signature,'class %w:',[Name])
+    ),
     root::indent,
+    write(1),nl,
     (
         ::item(attributes(Attributes))->
-        Attributes::render(AttrList);
+        Attributes::render(DefAttrList),
+        root::iswritef(ConstructorDef,'def __init__(self, %w):',
+                       [DefAttrList]),
+        root::indent,
+        Attributes::items(InstanceAttrs),
+        findall(S,
+                (
+                    lists::member(Attr, InstanceAttrs),
+                    Attr::item(name(AttrName)),
+                    root::iswritef(S, "self.%w=%w",
+                                   [AttrName, AttrName])
+                ),
+                AttrAssigns),
+        root::unindent,
+        AttrList=[ConstructorDef|AttrAssigns];
         AttrList=[]),
+    write(2),nl,
     (
         ::item(methods(Methods))->
         Methods::render(MethodList);
