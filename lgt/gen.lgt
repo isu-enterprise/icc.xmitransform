@@ -419,7 +419,7 @@ render(Result):-
     root::iswritef(Signature,'class %w(%w):',[Name, ClassList]),
     root::indent,
     (
-        ::irem(attributes(Attributes))->
+        ::item(attributes(Attributes))->
         Attributes::render(AttrList);
         AttrList=[]),
     (
