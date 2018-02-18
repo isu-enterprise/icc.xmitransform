@@ -38,11 +38,14 @@
 succeeds(test_test) :-
     true.
 
+succeeds(setup_setup_globally):-
+    root::setup(setup).
+
 succeeds(direct_3_is_an_object):-
     current_object(direct(apackage, localprofile, codeprofile)).
 
 succeeds(test_tr_1) :-
-    direct(apackage, localprofile, codeprofile)::tr(class, Class, _),
-    current_object(Class).
+    direct(apackage, localprofile, codeprofile)::tr(class, person, _),
+    current_object(person).
 
 :- end_object.

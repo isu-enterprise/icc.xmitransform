@@ -1,6 +1,6 @@
 % Load modules
 
-:- logtalk_load(['../queries.lgt', '../xmi.lgt', '../model.lgt'],[debug(on)]).
+% :- logtalk_load(['../queries.lgt', '../xmi.lgt', '../model.lgt'],[debug(on)]).
 
 :- object(direct(_Package,_LocalProfile,_CodeProfile)).
 :- public([tr/4,tr/3]).
@@ -23,7 +23,7 @@ tr(class, Class, ClassID):-
     query(Package)::class(Name, ClassID),
     create_object(Class, [instantiates(class)],[],[]),
     create_object(Attributes, [instantiates(params)],[],[]),
-    create_object(Methods, [instantiates(methods)],[],[]),
+    create_object(Methods, [instantiates(methodlist)],[],[]),
     Class::name(Name),
     forall(
         ::tr(attribute, Attribute, ClassID, _AttributeID),
@@ -39,10 +39,9 @@ tr(class, Class, ClassID):-
 tr(attribute, Attribute, ClassID, AttributeID):-
     ::package(Package),
     query(Package)::attribute(Name, ClassID, AttributeID),
-    query(Package)::type(Type, AttributeID),
+    % query(Package)::type(Type, AttributeID),
     create_object(Attribute, [instantiates(param)],[],[]),
-    Attribute::name(Name),
-    Attribute::type(Type).
+    Attribute::name(Name).
 
 tr(method, Method, ClassID, MethodID):-
     ::package(Package),
