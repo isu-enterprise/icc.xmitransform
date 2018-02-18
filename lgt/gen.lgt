@@ -211,13 +211,14 @@ list_separator(Separator):-
                  prepend/1,
                  clear/0,
                  render/1,
+                 render_to/1,
                  remove/1,
                  item/1,
                  items/1
              ]).
 :- dynamic([item_/1]).
 :- private([item_/1]).
-:- protected([renderitem/2]).
+:- protected([renderitem/2, render_to/2]).
 
 item(Item):-
     ::item_(Item).
@@ -240,6 +241,17 @@ clear:-
 render(_):-
     writef::writef("ERROR: Implement render/1 by a subclass!\n"),
     fail.
+
+render_to(Stream):-
+    ::render(List),
+    ::render_to(List, Stream).
+
+render_to(List, Stream):-
+    lists::is_list(List),!,
+    forall(lists::member(X,List), ::render_to(X, Stream)).
+
+render_to(X,_):-
+    write(X),nl.
 
 renderitem(Object, String):-
     current_object(Object), !,
@@ -359,7 +371,7 @@ params(X):-
 
 renderitem(params(Object), Result):-!,
     Object::render(SObject),
-    writef::swritef(Result, '(%w)', [SObject]).
+    writef::swritef(Result, '(self, %w)', [SObject]).
 
 renderitem(body(Body), StringList):-!,
     Body::render(StringList).
@@ -370,13 +382,20 @@ renderitem(Item, Result):-
 separator_option(method_type_separator, ' -> ').
 
 render(Result):-
-    ::item(params(Params)),
-    ::renderitem(params(Params), SParams),
+    (
+        ::item(params(Params)),
+        ::renderitem(params(Params), SParams);
+        SParams='(self)'
+    ),
     ^^render(SParams, Sigpart),
     root::iswritef(ISignature, 'def %w:', [Sigpart]),
     root::indent,
-    ::item(body(Body)),
-    ::renderitem(body(Body), LBody),
+    (
+        ::item(body(Body)) ->
+        ::renderitem(body(Body), LBody);
+        root::iswritef(Pass, 'pass', []),
+        LBody=[Pass]
+    ),
     root::unindent,
     Result=[ISignature | LBody].
 
@@ -420,7 +439,6 @@ render(Result):-
         root::iswritef(Signature,'class %w:',[Name])
     ),
     root::indent,
-    write(1),nl,
     (
         ::item(attributes(Attributes))->
         Attributes::render(DefAttrList),
@@ -438,8 +456,11 @@ render(Result):-
                 AttrAssigns),
         root::unindent,
         AttrList=[ConstructorDef|AttrAssigns];
-        AttrList=[]),
-    write(2),nl,
+        root::iswritef(ConstructorDef,'def __init__(self): # Empty constructor', []),
+        root::indent,
+        root::iswritef(Pass,'pass', []),
+        root::unindent,
+        AttrList=[ConstructorDef, Pass]),
     (
         ::item(methods(Methods))->
         Methods::render(MethodList);
