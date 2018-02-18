@@ -1,246 +1,267 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Code="http:///schemas/Code/_xgKV8AgPEei0_-FbmjEdAA/0" xmlns:LocalProfile="http:///schemas/LocalProfile/_xgLkEAgPEei0_-FbmjEdAA/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xsi:schemaLocation="http:///schemas/Code/_xgKV8AgPEei0_-FbmjEdAA/0 Code.profile.xmi#_xgMLJwgPEei0_-FbmjEdAA http:///schemas/LocalProfile/_xgLkEAgPEei0_-FbmjEdAA/0 LocalProfile.profile.xmi#_xgTf5wgPEei0_-FbmjEdAA">
-  <uml:Model xmi:id="_xgIgwAgPEei0_-FbmjEdAA" name="XMITransformTest">
-    <eAnnotations xmi:id="_xgIgwQgPEei0_-FbmjEdAA" source="Objing">
-      <contents xmi:type="uml:Property" xmi:id="_xgIgwggPEei0_-FbmjEdAA" name="exporterVersion">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIgwwgPEei0_-FbmjEdAA" value="3.0.0"/>
+<?xml version="1.0" encoding="UTF-8"?><xmi:XMI xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Code="http:///schemas/Code/_nq6RABSlEeim5Ly11vG7kg/0" xmlns:LocalProfile="http:///schemas/LocalProfile/_nq9UUBSlEeim5Ly11vG7kg/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.omg.org/spec/UML/20110701" xmi:version="2.1" xsi:schemaLocation="http://www.eclipse.org/uml2/3.0.0/UML http://schema.omg.org/spec/UML/20110701 http:///schemas/Code/_nq6RABSlEeim5Ly11vG7kg/0 Code.profile.xmi#_nq97ZxSlEeim5Ly11vG7kg http:///schemas/LocalProfile/_nq9UUBSlEeim5Ly11vG7kg/0 LocalProfile.profile.xmi#_nuWmlxSlEeim5Ly11vG7kg">
+  <uml:Model xmi:id="_nqmvABSlEeim5Ly11vG7kg" name="XMITransformTest">
+    <eAnnotations xmi:id="_nqmvARSlEeim5Ly11vG7kg" source="Objing">
+      <contents xmi:type="uml:Property" xmi:id="_nqmvAhSlEeim5Ly11vG7kg" name="exporterVersion">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvAxSlEeim5Ly11vG7kg" value="3.0.0"/>
       </contents>
-      <contents xmi:type="uml:Property" xmi:id="_xgIgxAgPEei0_-FbmjEdAA" name="isRoundTrip"/>
-      <contents xmi:type="uml:Property" xmi:id="_xgIgxQgPEei0_-FbmjEdAA" name="Visibility">
-        <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIgxggPEei0_-FbmjEdAA" value="0"/>
+      <contents xmi:type="uml:Property" xmi:id="_nqmvBBSlEeim5Ly11vG7kg" name="isRoundTrip"/>
+      <contents xmi:type="uml:Property" xmi:id="_nqmvBRSlEeim5Ly11vG7kg" name="Visibility">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvBhSlEeim5Ly11vG7kg" value="0"/>
       </contents>
     </eAnnotations>
-    <packagedElement xmi:type="uml:Class" xmi:id="_xgIgxwgPEei0_-FbmjEdAA" name="Base" isAbstract="true">
-      <eAnnotations xmi:id="_xgIgyAgPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIgyQgPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIgyggPEei0_-FbmjEdAA" value="0"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nqmvBxSlEeim5Ly11vG7kg" name="Base" isAbstract="true">
+      <eAnnotations xmi:id="_nqmvCBSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvCRSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvChSlEeim5Ly11vG7kg" value="0"/>
         </contents>
-        <contents xmi:type="uml:Property" xmi:id="_xgIgywgPEei0_-FbmjEdAA" name="isPrimitive"/>
-        <contents xmi:type="uml:Property" xmi:id="_xgIgzAgPEei0_-FbmjEdAA" name="isRoot"/>
+        <contents xmi:type="uml:Property" xmi:id="_nqmvCxSlEeim5Ly11vG7kg" name="isPrimitive"/>
+        <contents xmi:type="uml:Property" xmi:id="_nqmvDBSlEeim5Ly11vG7kg" name="isRoot"/>
       </eAnnotations>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_xgIgzQgPEei0_-FbmjEdAA" name="Record" isAbstract="true">
-      <eAnnotations xmi:id="_xgIgzggPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIgzwgPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg0AgPEei0_-FbmjEdAA" value="0"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nqmvDRSlEeim5Ly11vG7kg" name="Record" isAbstract="true">
+      <eAnnotations xmi:id="_nqmvDhSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvDxSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvEBSlEeim5Ly11vG7kg" value="0"/>
         </contents>
       </eAnnotations>
-      <generalization xmi:id="_xgIg0QgPEei0_-FbmjEdAA" general="_xgIgxwgPEei0_-FbmjEdAA"/>
-      <ownedAttribute xmi:id="_xgIg0ggPEei0_-FbmjEdAA" name="code" visibility="public" isOrdered="true" isReadOnly="true" isDerived="true">
-        <eAnnotations xmi:id="_xgIg0wgPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIg1AgPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg1QgPEei0_-FbmjEdAA" value="0"/>
+      <generalization xmi:type="uml:Generalization" xmi:id="_nqmvERSlEeim5Ly11vG7kg" general="_nqmvBxSlEeim5Ly11vG7kg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nqmvEhSlEeim5Ly11vG7kg" name="code" visibility="public" isOrdered="true" isReadOnly="true" isDerived="true">
+        <eAnnotations xmi:id="_nqmvExSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvFBSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvFRSlEeim5Ly11vG7kg" value="0"/>
           </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIg1ggPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg1wgPEei0_-FbmjEdAA" value="read"/>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvFhSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvFxSlEeim5Ly11vG7kg" value="read"/>
           </contents>
         </eAnnotations>
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#Integer"/>
       </ownedAttribute>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_xgIg2AgPEei0_-FbmjEdAA" name="Document" isAbstract="true">
-      <eAnnotations xmi:id="_xgIg2QgPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIg2ggPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg2wgPEei0_-FbmjEdAA" value="0"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nqmvGBSlEeim5Ly11vG7kg" name="Document" isAbstract="true">
+      <eAnnotations xmi:id="_nqmvGRSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvGhSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvGxSlEeim5Ly11vG7kg" value="0"/>
         </contents>
       </eAnnotations>
-      <generalization xmi:id="_xgIg3AgPEei0_-FbmjEdAA" general="_xgIgzQgPEei0_-FbmjEdAA"/>
-      <ownedAttribute xmi:id="_xgIg3QgPEei0_-FbmjEdAA" name="number" visibility="public" isOrdered="true" isDerived="true">
-        <eAnnotations xmi:id="_xgIg3ggPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIg3wgPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg4AgPEei0_-FbmjEdAA" value="0"/>
+      <generalization xmi:type="uml:Generalization" xmi:id="_nqmvHBSlEeim5Ly11vG7kg" general="_nqmvDRSlEeim5Ly11vG7kg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nqmvHRSlEeim5Ly11vG7kg" name="number" visibility="public" isOrdered="true" isDerived="true">
+        <eAnnotations xmi:id="_nqmvHhSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvHxSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvIBSlEeim5Ly11vG7kg" value="0"/>
           </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIg4QgPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg4ggPEei0_-FbmjEdAA" value="read_write"/>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvIRSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvIhSlEeim5Ly11vG7kg" value="read_write"/>
           </contents>
         </eAnnotations>
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <type xmi:type="uml:PrimitiveType" href="http://www.omg.org/spec/UML/20110701/PrimitiveTypes.xmi#String"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nqmvIxSlEeim5Ly11vG7kg" name="accept" visibility="public">
+        <eAnnotations xmi:id="_nqmvJBSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvJRSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvJhSlEeim5Ly11vG7kg" value="0"/>
+          </contents>
+        </eAnnotations>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_nqmvJxSlEeim5Ly11vG7kg">
+          <eAnnotations xmi:id="_nqmvKBSlEeim5Ly11vG7kg" source="Objing">
+            <contents xmi:type="uml:Property" xmi:id="_nqmvKRSlEeim5Ly11vG7kg" name="NoteType_Name">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvKhSlEeim5Ly11vG7kg" value="description"/>
+            </contents>
+          </eAnnotations>
+          <body>Effectuate the document, e.g. saving it to a register and calculate depended values.</body>
+        </ownedComment>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nqmvKxSlEeim5Ly11vG7kg" name="revoke" visibility="public">
+        <eAnnotations xmi:id="_nqmvLBSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvLRSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvLhSlEeim5Ly11vG7kg" value="0"/>
+          </contents>
+        </eAnnotations>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nqmvLxSlEeim5Ly11vG7kg" name="Register" isAbstract="true">
+      <eAnnotations xmi:id="_nqmvMBSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvMRSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvMhSlEeim5Ly11vG7kg" value="0"/>
+        </contents>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_nqmvMxSlEeim5Ly11vG7kg" general="_nqmvBxSlEeim5Ly11vG7kg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nqmvNBSlEeim5Ly11vG7kg" name="RecordRegister" isAbstract="true">
+      <eAnnotations xmi:id="_nqmvNRSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvNhSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvNxSlEeim5Ly11vG7kg" value="0"/>
+        </contents>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_nqmvOBSlEeim5Ly11vG7kg" general="_nqmvLxSlEeim5Ly11vG7kg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nqmvORSlEeim5Ly11vG7kg" name="records" visibility="public" type="_nqmvDRSlEeim5Ly11vG7kg" aggregation="shared" association="_nqmvQRSlEeim5Ly11vG7kg">
+        <eAnnotations xmi:id="_nqmvOhSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvOxSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvPBSlEeim5Ly11vG7kg" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvPRSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvPhSlEeim5Ly11vG7kg" value="read_write"/>
+          </contents>
+        </eAnnotations>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nqmvPxSlEeim5Ly11vG7kg" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nqmvQBSlEeim5Ly11vG7kg"/>
       </ownedAttribute>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_xgIg4wgPEei0_-FbmjEdAA" name="Register" isAbstract="true">
-      <eAnnotations xmi:id="_xgIg5AgPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIg5QgPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg5ggPEei0_-FbmjEdAA" value="0"/>
-        </contents>
-      </eAnnotations>
-      <generalization xmi:id="_xgIg5wgPEei0_-FbmjEdAA" general="_xgIgxwgPEei0_-FbmjEdAA"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_xgIg6AgPEei0_-FbmjEdAA" name="RecordRegister" isAbstract="true">
-      <eAnnotations xmi:id="_xgIg6QgPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIg6ggPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg6wgPEei0_-FbmjEdAA" value="0"/>
-        </contents>
-      </eAnnotations>
-      <generalization xmi:id="_xgIg7AgPEei0_-FbmjEdAA" general="_xgIg4wgPEei0_-FbmjEdAA"/>
-      <ownedAttribute xmi:id="_xgIg7QgPEei0_-FbmjEdAA" name="records" visibility="public" type="_xgIgzQgPEei0_-FbmjEdAA" aggregation="shared" association="_xgIg9QgPEei0_-FbmjEdAA">
-        <eAnnotations xmi:id="_xgIg7ggPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIg7wgPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg8AgPEei0_-FbmjEdAA" value="0"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nqmvQRSlEeim5Ly11vG7kg" memberEnd="_nqmvORSlEeim5Ly11vG7kg _nqmvQhSlEeim5Ly11vG7kg">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nqmvQhSlEeim5Ly11vG7kg" visibility="public" type="_nqmvNBSlEeim5Ly11vG7kg" association="_nqmvQRSlEeim5Ly11vG7kg">
+        <eAnnotations xmi:id="_nqmvQxSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvRBSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvRRSlEeim5Ly11vG7kg" value="0"/>
           </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIg8QgPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg8ggPEei0_-FbmjEdAA" value="read_write"/>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvRhSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvRxSlEeim5Ly11vG7kg" value="read_write"/>
           </contents>
         </eAnnotations>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xgIg8wgPEei0_-FbmjEdAA" value="*"/>
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_xgIg9AgPEei0_-FbmjEdAA"/>
-      </ownedAttribute>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Association" xmi:id="_xgIg9QgPEei0_-FbmjEdAA" memberEnd="_xgIg7QgPEei0_-FbmjEdAA _xgIg9ggPEei0_-FbmjEdAA">
-      <ownedEnd xmi:id="_xgIg9ggPEei0_-FbmjEdAA" visibility="public" type="_xgIg6AgPEei0_-FbmjEdAA" association="_xgIg9QgPEei0_-FbmjEdAA">
-        <eAnnotations xmi:id="_xgIg9wgPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIg-AgPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg-QgPEei0_-FbmjEdAA" value="0"/>
-          </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIg-ggPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIg-wgPEei0_-FbmjEdAA" value="read_write"/>
-          </contents>
-        </eAnnotations>
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_xgIg_AgPEei0_-FbmjEdAA"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nqmvSBSlEeim5Ly11vG7kg"/>
       </ownedEnd>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_xgIg_QgPEei0_-FbmjEdAA" name="AccountingRegister" isAbstract="true">
-      <eAnnotations xmi:id="_xgIg_ggPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIg_wgPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhAAgPEei0_-FbmjEdAA" value="0"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nqmvSRSlEeim5Ly11vG7kg" name="AccountingRegister" isAbstract="true">
+      <eAnnotations xmi:id="_nqmvShSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvSxSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvTBSlEeim5Ly11vG7kg" value="0"/>
         </contents>
       </eAnnotations>
-      <generalization xmi:id="_xgIhAQgPEei0_-FbmjEdAA" general="_xgIg4wgPEei0_-FbmjEdAA"/>
-      <ownedAttribute xmi:id="_xgIhAggPEei0_-FbmjEdAA" name="quantities" visibility="public" type="_xgIhKQgPEei0_-FbmjEdAA" aggregation="shared" association="_xgIhEAgPEei0_-FbmjEdAA">
-        <eAnnotations xmi:id="_xgIhAwgPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIhBAgPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhBQgPEei0_-FbmjEdAA" value="0"/>
+      <generalization xmi:type="uml:Generalization" xmi:id="_nqmvTRSlEeim5Ly11vG7kg" general="_nqmvLxSlEeim5Ly11vG7kg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nqmvThSlEeim5Ly11vG7kg" name="quantities" visibility="public" type="_nqmvdRSlEeim5Ly11vG7kg" aggregation="shared" association="_nqmvXBSlEeim5Ly11vG7kg">
+        <eAnnotations xmi:id="_nqmvTxSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvUBSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvURSlEeim5Ly11vG7kg" value="0"/>
           </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIhBggPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhBwgPEei0_-FbmjEdAA" value="read_write"/>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvUhSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvUxSlEeim5Ly11vG7kg" value="read_write"/>
           </contents>
         </eAnnotations>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xgIhCAgPEei0_-FbmjEdAA" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nqmvVBSlEeim5Ly11vG7kg" value="*"/>
       </ownedAttribute>
-      <ownedAttribute xmi:id="_xgIhCQgPEei0_-FbmjEdAA" name="dimensions" visibility="public" type="_xgIhHggPEei0_-FbmjEdAA" aggregation="shared" association="_xgIhFwgPEei0_-FbmjEdAA">
-        <eAnnotations xmi:id="_xgIhCggPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIhCwgPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhDAgPEei0_-FbmjEdAA" value="0"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nqmvVRSlEeim5Ly11vG7kg" name="dimensions" visibility="public" type="_nqmvahSlEeim5Ly11vG7kg" aggregation="shared" association="_nqmvYxSlEeim5Ly11vG7kg">
+        <eAnnotations xmi:id="_nqmvVhSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvVxSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvWBSlEeim5Ly11vG7kg" value="0"/>
           </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIhDQgPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhDggPEei0_-FbmjEdAA" value="read_write"/>
-          </contents>
-        </eAnnotations>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xgIhDwgPEei0_-FbmjEdAA" value="*"/>
-      </ownedAttribute>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Association" xmi:id="_xgIhEAgPEei0_-FbmjEdAA" memberEnd="_xgIhAggPEei0_-FbmjEdAA _xgIhEQgPEei0_-FbmjEdAA">
-      <ownedEnd xmi:id="_xgIhEQgPEei0_-FbmjEdAA" visibility="public" type="_xgIg_QgPEei0_-FbmjEdAA" association="_xgIhEAgPEei0_-FbmjEdAA">
-        <eAnnotations xmi:id="_xgIhEggPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIhEwgPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhFAgPEei0_-FbmjEdAA" value="0"/>
-          </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIhFQgPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhFggPEei0_-FbmjEdAA" value="read_write"/>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvWRSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvWhSlEeim5Ly11vG7kg" value="read_write"/>
           </contents>
         </eAnnotations>
-      </ownedEnd>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Association" xmi:id="_xgIhFwgPEei0_-FbmjEdAA" memberEnd="_xgIhCQgPEei0_-FbmjEdAA _xgIhGAgPEei0_-FbmjEdAA">
-      <ownedEnd xmi:id="_xgIhGAgPEei0_-FbmjEdAA" visibility="public" type="_xgIg_QgPEei0_-FbmjEdAA" association="_xgIhFwgPEei0_-FbmjEdAA">
-        <eAnnotations xmi:id="_xgIhGQgPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIhGggPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhGwgPEei0_-FbmjEdAA" value="0"/>
-          </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIhHAgPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhHQgPEei0_-FbmjEdAA" value="read_write"/>
-          </contents>
-        </eAnnotations>
-      </ownedEnd>
-    </packagedElement>
-    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_xgIhHggPEei0_-FbmjEdAA" name="RecordReference">
-      <eAnnotations xmi:id="_xgIhHwgPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIhIAgPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhIQgPEei0_-FbmjEdAA" value="0"/>
-        </contents>
-        <contents xmi:type="uml:Property" xmi:id="_xgIhIggPEei0_-FbmjEdAA" name="isPrimitive"/>
-      </eAnnotations>
-      <generalization xmi:id="_xgIhIwgPEei0_-FbmjEdAA" general="_xgIhJAgPEei0_-FbmjEdAA"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_xgIhJAgPEei0_-FbmjEdAA" name="Reference">
-      <eAnnotations xmi:id="_xgIhJQgPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIhJggPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhJwgPEei0_-FbmjEdAA" value="0"/>
-        </contents>
-        <contents xmi:type="uml:Property" xmi:id="_xgIhKAgPEei0_-FbmjEdAA" name="isPrimitive"/>
-      </eAnnotations>
-    </packagedElement>
-    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_xgIhKQgPEei0_-FbmjEdAA" name="ValueReference">
-      <eAnnotations xmi:id="_xgIhKggPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIhKwgPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhLAgPEei0_-FbmjEdAA" value="0"/>
-        </contents>
-        <contents xmi:type="uml:Property" xmi:id="_xgIhLQgPEei0_-FbmjEdAA" name="isPrimitive"/>
-      </eAnnotations>
-      <generalization xmi:id="_xgIhLggPEei0_-FbmjEdAA" general="_xgIhJAgPEei0_-FbmjEdAA"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_xgIhLwgPEei0_-FbmjEdAA" name="DodumentRegister" isAbstract="true">
-      <eAnnotations xmi:id="_xgIhMAgPEei0_-FbmjEdAA" source="Objing">
-        <contents xmi:type="uml:Property" xmi:id="_xgIhMQgPEei0_-FbmjEdAA" name="Visibility">
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhMggPEei0_-FbmjEdAA" value="0"/>
-        </contents>
-      </eAnnotations>
-      <generalization xmi:id="_xgIhMwgPEei0_-FbmjEdAA" general="_xgIg6AgPEei0_-FbmjEdAA"/>
-      <ownedAttribute xmi:id="_xgIhNAgPEei0_-FbmjEdAA" name="activated" visibility="public" type="_xgIg2AgPEei0_-FbmjEdAA" aggregation="shared" association="_xgJH1AgPEei0_-FbmjEdAA">
-        <eAnnotations xmi:id="_xgIhNQgPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIhNggPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhNwgPEei0_-FbmjEdAA" value="0"/>
-          </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIhOAgPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhOQgPEei0_-FbmjEdAA" value="read_write"/>
-          </contents>
-        </eAnnotations>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xgIhOggPEei0_-FbmjEdAA" value="*"/>
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_xgIhOwgPEei0_-FbmjEdAA"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:id="_xgIhPAgPEei0_-FbmjEdAA" name="documents" visibility="public" type="_xgIgzQgPEei0_-FbmjEdAA" isUnique="false" isReadOnly="true" isDerived="true">
-        <eAnnotations xmi:id="_xgIhPQgPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgIhPggPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgIhPwgPEei0_-FbmjEdAA" value="0"/>
-          </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgIhQAgPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgJH0AgPEei0_-FbmjEdAA" value="read"/>
-          </contents>
-        </eAnnotations>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xgJH0QgPEei0_-FbmjEdAA" value="*"/>
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_xgJH0ggPEei0_-FbmjEdAA"/>
-        <defaultValue xmi:type="uml:Expression" xmi:id="_xgJH0wgPEei0_-FbmjEdAA" symbol="records"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nqmvWxSlEeim5Ly11vG7kg" value="*"/>
       </ownedAttribute>
     </packagedElement>
-    <packagedElement xmi:type="uml:Association" xmi:id="_xgJH1AgPEei0_-FbmjEdAA" memberEnd="_xgIhNAgPEei0_-FbmjEdAA _xgJH1QgPEei0_-FbmjEdAA">
-      <ownedEnd xmi:id="_xgJH1QgPEei0_-FbmjEdAA" visibility="public" type="_xgIhLwgPEei0_-FbmjEdAA" association="_xgJH1AgPEei0_-FbmjEdAA">
-        <eAnnotations xmi:id="_xgJH1ggPEei0_-FbmjEdAA" source="Objing">
-          <contents xmi:type="uml:Property" xmi:id="_xgJH1wgPEei0_-FbmjEdAA" name="Visibility">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgJH2AgPEei0_-FbmjEdAA" value="0"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nqmvXBSlEeim5Ly11vG7kg" memberEnd="_nqmvThSlEeim5Ly11vG7kg _nqmvXRSlEeim5Ly11vG7kg">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nqmvXRSlEeim5Ly11vG7kg" visibility="public" type="_nqmvSRSlEeim5Ly11vG7kg" association="_nqmvXBSlEeim5Ly11vG7kg">
+        <eAnnotations xmi:id="_nqmvXhSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvXxSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvYBSlEeim5Ly11vG7kg" value="0"/>
           </contents>
-          <contents xmi:type="uml:Property" xmi:id="_xgJH2QgPEei0_-FbmjEdAA" name="AccessMode">
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_xgJH2ggPEei0_-FbmjEdAA" value="read_write"/>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvYRSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvYhSlEeim5Ly11vG7kg" value="read_write"/>
           </contents>
         </eAnnotations>
       </ownedEnd>
     </packagedElement>
-    <profileApplication xmi:id="_xgV8IAgPEei0_-FbmjEdAA">
-      <eAnnotations xmi:id="_xgV8IQgPEei0_-FbmjEdAA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="Code.profile.xmi#_xgMLJwgPEei0_-FbmjEdAA"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nqmvYxSlEeim5Ly11vG7kg" memberEnd="_nqmvVRSlEeim5Ly11vG7kg _nqmvZBSlEeim5Ly11vG7kg">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nqmvZBSlEeim5Ly11vG7kg" visibility="public" type="_nqmvSRSlEeim5Ly11vG7kg" association="_nqmvYxSlEeim5Ly11vG7kg">
+        <eAnnotations xmi:id="_nqmvZRSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvZhSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvZxSlEeim5Ly11vG7kg" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvaBSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvaRSlEeim5Ly11vG7kg" value="read_write"/>
+          </contents>
+        </eAnnotations>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_nqmvahSlEeim5Ly11vG7kg" name="RecordReference">
+      <eAnnotations xmi:id="_nqmvaxSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvbBSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvbRSlEeim5Ly11vG7kg" value="0"/>
+        </contents>
+        <contents xmi:type="uml:Property" xmi:id="_nqmvbhSlEeim5Ly11vG7kg" name="isPrimitive"/>
       </eAnnotations>
-      <appliedProfile href="Code.profile.xmi#_xgMLIAgPEei0_-FbmjEdAA"/>
+      <generalization xmi:type="uml:Generalization" xmi:id="_nqmvbxSlEeim5Ly11vG7kg" general="_nqmvcBSlEeim5Ly11vG7kg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_nqmvcBSlEeim5Ly11vG7kg" name="Reference">
+      <eAnnotations xmi:id="_nqmvcRSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvchSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvcxSlEeim5Ly11vG7kg" value="0"/>
+        </contents>
+        <contents xmi:type="uml:Property" xmi:id="_nqmvdBSlEeim5Ly11vG7kg" name="isPrimitive"/>
+      </eAnnotations>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_nqmvdRSlEeim5Ly11vG7kg" name="ValueReference">
+      <eAnnotations xmi:id="_nqmvdhSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvdxSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmveBSlEeim5Ly11vG7kg" value="0"/>
+        </contents>
+        <contents xmi:type="uml:Property" xmi:id="_nqmveRSlEeim5Ly11vG7kg" name="isPrimitive"/>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_nqmvehSlEeim5Ly11vG7kg" general="_nqmvcBSlEeim5Ly11vG7kg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_nqmvexSlEeim5Ly11vG7kg" name="DodumentRegister" isAbstract="true">
+      <eAnnotations xmi:id="_nqmvfBSlEeim5Ly11vG7kg" source="Objing">
+        <contents xmi:type="uml:Property" xmi:id="_nqmvfRSlEeim5Ly11vG7kg" name="Visibility">
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvfhSlEeim5Ly11vG7kg" value="0"/>
+        </contents>
+      </eAnnotations>
+      <generalization xmi:type="uml:Generalization" xmi:id="_nqmvfxSlEeim5Ly11vG7kg" general="_nqmvNBSlEeim5Ly11vG7kg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nqmvgBSlEeim5Ly11vG7kg" name="activated" visibility="public" type="_nqmvGBSlEeim5Ly11vG7kg" aggregation="shared" association="_nqmvkRSlEeim5Ly11vG7kg">
+        <eAnnotations xmi:id="_nqmvgRSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvghSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvgxSlEeim5Ly11vG7kg" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvhBSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvhRSlEeim5Ly11vG7kg" value="read_write"/>
+          </contents>
+        </eAnnotations>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nqmvhhSlEeim5Ly11vG7kg" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nqmvhxSlEeim5Ly11vG7kg"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nqmviBSlEeim5Ly11vG7kg" name="documents" visibility="public" type="_nqmvDRSlEeim5Ly11vG7kg" isUnique="false" isReadOnly="true" isDerived="true">
+        <eAnnotations xmi:id="_nqmviRSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvihSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvixSlEeim5Ly11vG7kg" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvjBSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvjRSlEeim5Ly11vG7kg" value="read"/>
+          </contents>
+        </eAnnotations>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nqmvjhSlEeim5Ly11vG7kg" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nqmvjxSlEeim5Ly11vG7kg"/>
+        <defaultValue xmi:type="uml:Expression" xmi:id="_nqmvkBSlEeim5Ly11vG7kg" symbol="records"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_nqmvkRSlEeim5Ly11vG7kg" memberEnd="_nqmvgBSlEeim5Ly11vG7kg _nqmvkhSlEeim5Ly11vG7kg">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_nqmvkhSlEeim5Ly11vG7kg" visibility="public" type="_nqmvexSlEeim5Ly11vG7kg" association="_nqmvkRSlEeim5Ly11vG7kg">
+        <eAnnotations xmi:id="_nqmvkxSlEeim5Ly11vG7kg" source="Objing">
+          <contents xmi:type="uml:Property" xmi:id="_nqmvlBSlEeim5Ly11vG7kg" name="Visibility">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvlRSlEeim5Ly11vG7kg" value="0"/>
+          </contents>
+          <contents xmi:type="uml:Property" xmi:id="_nqmvlhSlEeim5Ly11vG7kg" name="AccessMode">
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_nqmvlxSlEeim5Ly11vG7kg" value="read_write"/>
+          </contents>
+        </eAnnotations>
+      </ownedEnd>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:applyingPackage="_nqmvABSlEeim5Ly11vG7kg" xmi:id="_nu6AMBSlEeim5Ly11vG7kg">
+      <eAnnotations xmi:id="_nu7OUBSlEeim5Ly11vG7kg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="Code.profile.xmi#_nq97ZxSlEeim5Ly11vG7kg"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" xmi:applyingPackage="_nu6AMBSlEeim5Ly11vG7kg" href="Code.profile.xmi#_nq97YBSlEeim5Ly11vG7kg"/>
     </profileApplication>
-    <profileApplication xmi:id="_xgXKQAgPEei0_-FbmjEdAA">
-      <eAnnotations xmi:id="_xgXKQQgPEei0_-FbmjEdAA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="LocalProfile.profile.xmi#_xgTf5wgPEei0_-FbmjEdAA"/>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:applyingPackage="_nqmvABSlEeim5Ly11vG7kg" xmi:id="_nvE_UBSlEeim5Ly11vG7kg">
+      <eAnnotations xmi:id="_nvE_URSlEeim5Ly11vG7kg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="LocalProfile.profile.xmi#_nuWmlxSlEeim5Ly11vG7kg"/>
       </eAnnotations>
-      <appliedProfile href="LocalProfile.profile.xmi#_xgTf4AgPEei0_-FbmjEdAA"/>
+      <appliedProfile xmi:type="uml:Profile" xmi:applyingPackage="_nvE_UBSlEeim5Ly11vG7kg" href="LocalProfile.profile.xmi#_nuWmkBSlEeim5Ly11vG7kg"/>
     </profileApplication>
   </uml:Model>
-  <Code:StandardGeneralClass xmi:id="_xgYYYAgPEei0_-FbmjEdAA" base_Element="_xgIgxwgPEei0_-FbmjEdAA" nocode="true"/>
-  <LocalProfile:Persistent xmi:id="_xgY_cAgPEei0_-FbmjEdAA" base_Class="_xgIgzQgPEei0_-FbmjEdAA" system="SQLAlchemy"/>
-  <LocalProfile:InheritStereotype xmi:id="_xgY_cQgPEei0_-FbmjEdAA" base_Element="_xgIgzQgPEei0_-FbmjEdAA"/>
-  <LocalProfile:dc xmi:id="_xgY_cggPEei0_-FbmjEdAA" base_Element="_xgIg0ggPEei0_-FbmjEdAA"/>
-  <LocalProfile:dc xmi:id="_xgY_cwgPEei0_-FbmjEdAA" base_Element="_xgIg3QgPEei0_-FbmjEdAA"/>
-  <LocalProfile:Persistent xmi:id="_xgY_dAgPEei0_-FbmjEdAA" base_Class="_xgIg4wgPEei0_-FbmjEdAA" system="SQLAlchemy"/>
-  <LocalProfile:InheritStereotype xmi:id="_xgZmgAgPEei0_-FbmjEdAA" base_Element="_xgIg4wgPEei0_-FbmjEdAA"/>
+  <Code:StandardGeneralClass xmi:id="_nvNiMBSlEeim5Ly11vG7kg" base_Element="_nqmvBxSlEeim5Ly11vG7kg" nocode="true"/>
+  <LocalProfile:Persistent xmi:id="_nvNiMRSlEeim5Ly11vG7kg" base_Class="_nqmvDRSlEeim5Ly11vG7kg" system="SQLAlchemy"/>
+  <LocalProfile:InheritStereotype xmi:id="_nvNiMhSlEeim5Ly11vG7kg" base_Element="_nqmvDRSlEeim5Ly11vG7kg"/>
+  <LocalProfile:dc xmi:id="_nvOJQBSlEeim5Ly11vG7kg" base_Element="_nqmvEhSlEeim5Ly11vG7kg"/>
+  <LocalProfile:dc xmi:id="_nvOJQRSlEeim5Ly11vG7kg" base_Element="_nqmvHRSlEeim5Ly11vG7kg"/>
+  <LocalProfile:Persistent xmi:id="_nvOJQhSlEeim5Ly11vG7kg" base_Class="_nqmvLxSlEeim5Ly11vG7kg" system="SQLAlchemy"/>
+  <LocalProfile:InheritStereotype xmi:id="_nvOJQxSlEeim5Ly11vG7kg" base_Element="_nqmvLxSlEeim5Ly11vG7kg"/>
 </xmi:XMI>
