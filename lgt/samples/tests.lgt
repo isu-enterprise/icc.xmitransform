@@ -27,8 +27,6 @@
                      )).
 :- end_object.
 
-xmi_model(samples, apackage, localprofile, codeprofile).
-
 :- object(tests, extends(lgtunit)).
 :- info([
                version is 0.1,
@@ -40,7 +38,11 @@ xmi_model(samples, apackage, localprofile, codeprofile).
 succeeds(test_test) :-
     true.
 
+succeeds(direct_3_is_an_object):-
+    current_object(direct(apackage, localprofile, codeprofile)).
+
 succeeds(test_tr_1) :-
-    direct(samples)::tr(class, Class, ID).
+    direct(apackage, localprofile, codeprofile)::tr(class, Class, _),
+    current_object(Class).
 
 :- end_object.

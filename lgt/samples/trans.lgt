@@ -1,22 +1,22 @@
 % Load modules
 
-:- logtalk_load(['../queries.lgt', '../xmi.lgt', '../model.lgt']).
+:- logtalk_load(['../queries.lgt', '../xmi.lgt', '../model.lgt'],[debug(on)]).
 
-:- object(direct(_Model)).
+:- object(direct(_Package,_LocalProfile,_CodeProfile)).
 :- public([tr/4,tr/3]).
-:- protected([model/1, package/1, profiles/2]).
-:- dynamic(xmi_model/4).
-
-model(Model):-
-    parameter(1, Model).
+:- protected([package/1, profiles/2, profile/1]).
 
 package(Package):-
-    ::model(Model),
-    xmi_model(Model, Package, _, _).
+    parameter(1, Package).
 
-profiles(Local, Code):-
-    ::model(Model),
-    xmi_model(Model, _, Local, Code).
+profile(Profile):-
+    parameter(2, Profile).
+
+profile(Profile):-
+    parameter(3, Profile).
+
+profiles(L):-
+    findall(Profile, ::profile(Profile), L).
 
 tr(class, Class, ClassID):-
     ::package(Package),
@@ -25,12 +25,14 @@ tr(class, Class, ClassID):-
     create_object(Attributes, [instantiates(params)],[],[]),
     create_object(Methods, [instantiates(methods)],[],[]),
     Class::name(Name),
-    forall(::tr(attribute, Attribute, ClassID, _AttributeID),
-           Attributes::append(Attribute)
-          ),
-    forall(::tr(method, Method, ClassID, _MethodID),
-           Methods::append(Method)
-          ),
+    forall(
+        ::tr(attribute, Attribute, ClassID, _AttributeID),
+        Attributes::append(Attribute)
+    ),
+    forall(
+        ::tr(method, Method, ClassID, _MethodID),
+        Methods::append(Method)
+    ),
     Class::attributes(Attributes),
     Class::methods(Methods).
 
