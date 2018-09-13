@@ -220,7 +220,7 @@ namespace(NS, URI, nil):-
     ::namespace(NS, URI),
     \+ ::location(URI, _).
 
-add_loaction(URI, Location):-
+add_location(URI, Location):-
     ::assertz(location_(URI, Location)).
 
 location(URI, Location):-
