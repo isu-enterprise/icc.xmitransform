@@ -9,139 +9,92 @@
 :- use_module([library(semweb/rdf_prefixes)]).
 :- use_module([library(semweb/turtle)]).
 
-:- object(xmimetaclass, instantiates(xmimetaclass)).
+:- object(rdfmetaclass, instantiates(rdfmetaclass)).
 :- end_object.
 
-:- object(xmiroot, instantiates(xmimetaclass)).
-:- end_object.
-
-:- object(xmiclass,
-      specializes(xmiroot)).
+:- category(debugging).
 :- public([
-                 load_file/1,
-	  	         load_file/2,
-		         dom/1,
-		         clear/0,
-                 xpath/2,
-                 write/0,
-                 location/2,
-                 namespace/2,
-                 namespace/3,
-                 set_graph/1,
-                 graph/1,
-                 triple/4,
-                 filename/1,
-                 process/0,
-                 atom_prefix_split/3,
-                 atom_prefix_split/4,
-                 rdf/3,
-                 rdf/4,
-                 uri_normalize/2,
-                 save_turtle/1,
-                 save_turtle/2,
-                 save_rdf/1,
-                 save_rdf/2,
-                 base_uri/1,
-                 register_prefixes/0
-		     ]).
-:- private([dom_/1,
-            process_namespaces/0,
-            process_ns_locations/0,
-            location_/2,
-            namespace_/2,
+            debugf/2,
+            debugf/3,
+            writef/2,
+            p/1
+             ]).
+writef(String, List):-
+    writef::writef(String, List).
+
+debugf(String, List):-
+    ::debug,!,
+    ::writef('DEBUG:',[]),
+    ::writef(String, List),
+    nl.
+
+debugf(_,_).
+
+debugf(What, String, List):-
+    ::debug(What),!,
+    ::debugf(String, List).
+
+debugf(_,_,_).
+
+p(X):- % FIXME: Necessary?
+    ::debugf(p, 'P: %w',[X]).
+
+:-protected([
             debug/0,
             debug/1,
-            top_name_to_graph/0,
-            filename_/1
+               ]).
+
+:- end_category.
+
+:- object(rdfclass, instantiates(rdfmetaclass)).
+:- public([
+                 clear/0,  %!
+                 location/2,
+                 namespace/2, %!
+                 namespace/3, %!
+                 set_graph/1, %!
+                 graph/1,  %!
+                 triple/4,
+                 rdf/3, %!
+                 rdf/4, %!
+                 uri_normalize/2,
+                 save_turtle/1, %!
+                 save_turtle/2, %!
+                 save_rdf/1, %!
+                 save_rdf/2, %!
+                 register_prefixes/0 %!
+		     ]).
+:- private([
+            location_/2,
+            namespace_/2, %!
+            graph_/1,
            ]).
 
 :- protected([
-                    debugf/2,
-                    debugf/3,
-                    writef/2,
-                    base_check/1,
-                    xmlns/2,
-                    graph_/1,
-                    triple/3,
-                    rdf_assert/3,
-                    top_xmi_element/1,
-                    top_subject/1,
-                    process_attrs_def/4,
-                    process_attrs_rest/2,
-                    process_attr/3,
-                    process_attr_/6,
-                    find_attr_/4,
-                    process_elements/2,
-                    process/3,
-                    process_atom/4,
-                    check_rdf_assert/3,
-                    expand_object/2,
-                    expand_uri/2,
-                    atom_last_char/2,
-                    uri_good_last_char/1,
-                    href_normalize/2,
-                    p/1,
-                    atom_starts_with/3
-                ]).
+            process_ns_locations/0,
+            process_namespaces/0,
+            top_name_to_graph/0,
+            triple/3,
+            rdf_assert/3, %!
+            check_rdf_assert/3, %!
+            expand_object/2, %!
+            expand_uri/2, %!
+            uri_good_last_char/1,
+            href_normalize/2, %!
+            atom_starts_with/3, %!
+            atom_last_char/2 %!
+            ]).
 
 :- dynamic([
-                  dom_/1,
                   namespace_/2,  % name -> URL
-                  base_uri/1,
                   location_/2,   % URL -> URL | FIle
-                  % debug/0,       % debug at all.
-                  % debug/1,       % debug(<what>), e.g. debug(basic_checks).
-                  filename_/1,   % Name of file loaded. It corresponds to NS nil.
-                  top_subject/1, % References to a top subject of the Package/Profile.
                   graph_/1       % The Graph name to store triples, defaults to name attribute of uml:Model attribute.
               ]).
 
-
-%debug.
-%debug(xmi_headers).
-%debug(xmlns).
-%debug(xml_locations).
-%debug(text).
-%debug(attrs).
-debug(elements).
-
-debug(processing).
-debug(assert).
-debug(p).
-
-p(X):-
-    ::debugf(p, 'P: %w',[X]).
-
-load_file(FileName):-
-	::load_file(FileName, []).
-
-load_file(FileName, Options):-
-	open(FileName, read, I),!,
-	sgml::load_xml(I, DOM, Options),!,
-    ::base_check(DOM),!,
-	::assert(dom_(DOM)),!,
-    ::assert(filename_(FileName)),!,
-	close(I),!,
-    ::process_ns_locations,!,
-    ::process_namespaces,!,
-    ::top_name_to_graph.
-
-dom(X) :-
-	::dom_(X).
-
-filename(FileName):-
-    ::filename_(FileName).
-
 clear:-
-	::retractall(dom_(_)),
     ::retractall(location_(_,_)),
     % FIXME: Unregister NSs?
-    ::retractall(namespace_(_,_)),
-    ::retractall(filename_(_)).
-
-xpath(Spec, Content):-
-    ::dom(DOM),
-    xpath::xpath(DOM, Spec,  Content).
+    ::retractall(namespace_(_,_)).
 
 set_graph(X):-
     nonvar(X),!,
@@ -200,6 +153,162 @@ rdf(Subject, Predicate, NS, Term):-
     rdf_prefixes::rdf_global_id(NS:Term, ETerm),
     ::rdf(Subject, Predicate, ETerm).
 
+href_normalize(_Id, Id):-
+    ::atom_prefix_split(_Id, Prefix, "#", Suffix),
+    atom_concat(Prefix, "#", _Prefix),
+    ::location(URI, _Prefix),
+    % ::debugf("---> Loc:%w Id: %w", [URI, _Id]),
+    ::namespace(NS, URI), !,
+    % ::debugf("---> Loc:%w NS:%w", [URI,NS]),
+    atom_concat(NS,":", _NS),
+    atom_concat(_NS, Suffix, Id).
+
+href_normalize(Id, href(Id)).
+
+atom_starts_with(Atom, Sub, Rest):-
+    sub_atom(Atom, 0, L, A, Sub),
+    sub_atom(Atom, L, A, 0, Rest).
+
+atom_last_char(Atom, Char):-
+    atom_length(Atom, L),!,
+    L1 is L - 1,!,
+    sub_atom(Atom, L1, 1, 0, Char).
+
+save_turtle(Out, Options):-
+    ::graph(Graph),
+    turtle::rdf_save_turtle(Out, [graph(Graph) | Options]).
+
+save_turtle(Out):-
+    ::save_turtle(Out, [
+                      a(true),
+                      align_prefixes(true),
+                      canonize_numbers(true),
+                      indent(2),
+                      group(true),
+                      only_known_prefixes(true),
+                      single_line_bnodes(true),
+                      tab_distance(0),
+                      user_prefixes(true)
+                  ]).
+
+save_rdf(Out):-
+    ::base_uri(URI),
+    ::save_rdf(Out, [
+                   base_uri(URI),
+                   encoding(utf8)
+               ]).
+
+save_rdf(Out, Options):-
+    ::graph(Graph),
+    rdf_db::rdf_save(Out, [graph(Graph) | Options]).
+
+register_prefixes:-
+    ::namespace(NS, URI),
+    rdf_prefixes::rdf_register_prefix(NS, URI, [keep(true)]),
+    fail; true.
+
+namespace(NS, URI):-
+    ::namespace_(NS, URI).
+
+namespace(NS, URI, Location):-
+    ::namespace(NS, URI),
+    ::location(URI, Location).
+
+namespace(NS, URI, nil):-
+    ::namespace(NS, URI),
+    \+ ::location(URI, _).
+
+
+
+:- end_object.
+
+:- object(xmiclass,
+      specializes(rdfclass), imports(debugging)).
+:- public([
+                 load_file/1,
+	  	         load_file/2,
+		         dom/1,
+		         clear/0, %!
+                 xpath/2,
+                 write/0,
+                 namespace/2, %!
+                 filename/1,
+                 process/0,
+                 atom_prefix_split/3,
+                 atom_prefix_split/4,
+                 base_uri/1
+		     ]).
+:- private([dom_/1,
+            process_namespaces/0,
+            process_ns_locations/0,
+            top_name_to_graph/0,
+            filename_/1
+           ]).
+
+:- protected([
+                    xmlns/2,
+                    top_xmi_element/1,
+                    top_subject/1,
+                    process_attrs_def/4,
+                    process_attrs_rest/2,
+                    process_attr/3,
+                    process_attr_/6,
+                    find_attr_/4,
+                    process_elements/2,
+                    process/3,
+                    process_atom/4,
+                    uri_good_last_char/1,
+                    href_normalize/2
+                ]).
+
+:- dynamic([
+                  dom_/1,
+                  base_uri/1,
+                  filename_/1,   % Name of file loaded. It corresponds to NS nil.
+                  top_subject/1 % References to a top subject of the Package/Profile.
+              ]).
+
+
+%debug.
+%debug(xmi_headers).
+%debug(xmlns).
+%debug(xml_locations).
+%debug(text).
+%debug(attrs).
+debug(elements).
+
+debug(processing).
+debug(assert).
+debug(p).
+
+load_file(FileName):-
+	::load_file(FileName, []).
+
+load_file(FileName, Options):-
+	open(FileName, read, I),!,
+	sgml::load_xml(I, DOM, Options),!,
+    ::base_check(DOM),!,
+	::assert(dom_(DOM)),!,
+    ::assert(filename_(FileName)),!,
+	close(I),!,
+    ::process_ns_locations,!,
+    ::process_namespaces,!,
+    ::top_name_to_graph.
+
+dom(X) :-
+	::dom_(X).
+
+filename(FileName):-
+    ::filename_(FileName).
+
+clear:-
+	::retractall(dom_(_)),
+    ::retractall(filename_(_)),
+    ^^clear.
+
+xpath(Spec, Content):-
+    ::dom(DOM),
+    xpath::xpath(DOM, Spec,  Content).
 
 % ----------------- Main processing recursion -----------------------------------
 
@@ -249,18 +358,6 @@ find_attr_(id, Attrs, Id, RestAttrs):-
     %::debugf("---> !HREF %w -> %w", [_Id, Id])
 .
 
-href_normalize(_Id, Id):-
-    ::atom_prefix_split(_Id, Prefix, "#", Suffix),
-    atom_concat(Prefix, "#", _Prefix),
-    ::location(URI, _Prefix),
-    % ::debugf("---> Loc:%w Id: %w", [URI, _Id]),
-    ::namespace(NS, URI), !,
-    % ::debugf("---> Loc:%w NS:%w", [URI,NS]),
-    atom_concat(NS,":", _NS),
-    atom_concat(_NS, Suffix, Id).
-
-href_normalize(Id, href(Id)).
-
 process_attr_(Kind, Id, Attrs, Subject, RestAttrs, Relation):-
     find_attr_(Kind, Attrs, Subject, RestAttrs),
     nonvar(Id),
@@ -270,7 +367,6 @@ process_attr_(Kind, Id, Attrs, Subject, RestAttrs, Relation):-
     ::check_rdf_assert(Id, Relation, Subject).
 
 process_attr_(_, _, Attrs, _, Attrs, _).
-
 
 process_attrs_def(Attrs, Id, Type, RestAttrs):-
     ::find_attr_(id, Attrs, Id, R1),
@@ -287,44 +383,8 @@ process_attrs_rest(Id, [A=B|T]):-
 process_attr(Attrs, Struct, RestAttrs):-
     swi_option::select_option(Struct, Attrs, RestAttrs).
 
-atom_starts_with(Atom, Sub, Rest):-
-    sub_atom(Atom, 0, L, A, Sub),
-    sub_atom(Atom, L, A, 0, Rest).
-
-atom_last_char(Atom, Char):-
-    atom_length(Atom, L),!,
-    L1 is L - 1,!,
-    sub_atom(Atom, L1, 1, 0, Char).
-
 % ----------------- END OF Main processing recursion ----------------------------
 
-save_turtle(Out, Options):-
-    ::graph(Graph),
-    turtle::rdf_save_turtle(Out, [graph(Graph) | Options]).
-
-save_turtle(Out):-
-    ::save_turtle(Out, [
-                      a(true),
-                      align_prefixes(true),
-                      canonize_numbers(true),
-                      indent(2),
-                      group(true),
-                      only_known_prefixes(true),
-                      single_line_bnodes(true),
-                      tab_distance(0),
-                      user_prefixes(true)
-                  ]).
-
-save_rdf(Out):-
-    ::base_uri(URI),
-    ::save_rdf(Out, [
-                   base_uri(URI),
-                   encoding(utf8)
-               ]).
-
-save_rdf(Out, Options):-
-    ::graph(Graph),
-    rdf_db::rdf_save(Out, [graph(Graph) | Options]).
 
 :- private([
                  p_ns/1,
@@ -379,30 +439,17 @@ p2_locs(URI, Location):-
 p2_locs([]).
 p2_locs([URI,Location|R]):-p2_locs(URI,Location), p2_locs(R).
 
-register_prefixes:-
-    ::namespace(NS, URI),
-    rdf_prefixes::rdf_register_prefix(NS, URI, [keep(true)]),
-    fail; true.
-
 base_uri(URI):-
     ::filename(FileName),
     atom_concat('file://', FileName, _S1),
     ::uri_normalize(_S1, URI).
 
-namespace(NS, URI):-
-    ::namespace_(NS, URI).
+namespace(Graph, URI):-
+    ^^namespace(Graph, URI).
 
 namespace(Graph, URI):-
     ::graph(Graph),!,
     ::base_uri(URI).
-
-namespace(NS, URI, Location):-
-    ::namespace(NS, URI),
-    ::location(URI, Location).
-
-namespace(NS, URI, nil):-
-    ::namespace(NS, URI),
-    \+ ::location(URI, _).
 
 location(URI, Location):-
     ::location_(URI, Location).
@@ -440,23 +487,6 @@ top_name_to_graph.
 write:-
     ::dom(DOM),
     writef::writef("\n-------------\n%w\n-------------\n", [DOM]).
-
-writef(String, List):-
-    writef::writef(String, List).
-
-debugf(String, List):-
-    ::debug,!,
-    ::writef('DEBUG:',[]),
-    ::writef(String, List),
-    nl.
-
-debugf(_,_).
-
-debugf(What, String, List):-
-    ::debug(What),!,
-    ::debugf(String, List).
-
-debugf(_,_,_).
 
 
 base_check([_]).
