@@ -1,5 +1,15 @@
 :- use_module([library(semweb/rdf_prefixes)]).
 
+
+:- object(rdfprivclass, specializes(xmiclass)).
+:- public(test_atom_split/3).
+test_atom_split(A,B,C):-
+    ::atom_prefix_split(A,B,C).
+:- end_object.
+
+:- object(rdfpriv, instantiates(rdfprivclass)).
+:- end_object.
+
 :- object(tests, extends(lgtunit)).
 :- info([
                version is 0.1,
@@ -15,8 +25,8 @@ succeeds(test_list) :-
     findall(X, listtest::member(X,[1,3,4]), L),
     L == [1,3,4].
 
-%succeeds(test_atom_split):-
-%    local_profile::atom_prefix_split('xmi:XMI','xmi','XMI').
+succeeds(test_atom_split):-
+    rdfpriv::test_atom_split('xmi:XMI','xmi','XMI').
 
 succeeds(test_uri_normalise_1):-
     local_profile::uri_normalize('http://irnok.net/ontology/1.0', 'http://irnok.net/ontology/1.0#').
