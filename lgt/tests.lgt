@@ -15,8 +15,8 @@ succeeds(test_list) :-
     findall(X, listtest::member(X,[1,3,4]), L),
     L == [1,3,4].
 
-succeeds(test_atom_split):-
-    local_profile::atom_prefix_split('xmi:XMI','xmi','XMI').
+%succeeds(test_atom_split):-
+%    local_profile::atom_prefix_split('xmi:XMI','xmi','XMI').
 
 succeeds(test_uri_normalise_1):-
     local_profile::uri_normalize('http://irnok.net/ontology/1.0', 'http://irnok.net/ontology/1.0#').
