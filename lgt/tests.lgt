@@ -166,6 +166,7 @@ succeeds(test_query_module_params_by_name):-
 succeeds(test_query_module_parameter_descr):-
     Q=queryngs(mothur),
     Q::module('chimera.ccode',Module),
-    Q::parameter(Module, Parameter, 'fasta').
+    Q::parameter(Module, Parameter, 'fasta', QP),
+    QP::name('fasta').
 
 :- end_object.

@@ -30,6 +30,30 @@ method(Name, ClassID, ID):-
 
 :- end_object.
 
+
+% Querying NGS RDF Graphs for modules.
+
+:- object(queryparam(_RDF,_Parameter)).
+
+ngs(RDF):-
+    parameter(1, RDF).
+
+parameter(Parameter):-
+    parameter(2,Parameter).
+
+:- public(type/1).
+type(Type) :-
+    ngs(RDF),
+    parameter(Parameter),
+    RDF::rdf(Parameter, ngsp:type, Type).
+
+:- public(name/1).
+name(Name) :-
+    ngs(RDF),
+    parameter(Parameter),
+    RDF::rdf(Parameter, dc:title, literal(Name)).
+:- end_object.
+
 :- object(queryngs(_RDF)).
 :- protected([ngs/1]).
 :- public([module/2, parameter/3]).
@@ -53,11 +77,12 @@ mothur(RES):-
 parameter(Module, Parameter, ParameterName):-
     ::ngs(RDF),
     RDF::rdf(Module, ngsp:parameter, Parameter),
+    RDF::rdf(Parameter, rdf:type, ngsp, 'Parameter'),
     RDF::rdf(Parameter, dc:title, literal(ParameterName)).
 
-%% :- public(parameter/4).
-%% parameter(Module, Parameter, ParameterName, Definition):-
-%%     ::ngs(RDF),
-%%     ::parameter(Module, Parameter, ParameterName)...
+:- public(parameter/4).
+parameter(Module, Parameter, ParameterName, queryparam(RDF,Parameter)):-
+    ::ngs(RDF),
+    ::parameter(Module, Parameter, ParameterName).
 
 :- end_object.
