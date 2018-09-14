@@ -37,16 +37,27 @@ method(Name, ClassID, ID):-
 ngs(RDF):-
     parameter(1, RDF).
 
-module(Name, ID):-
+module(Name, Module):-
     ::ngs(RDF),
     % RDF::graph(Mothur),
     ::mothur(Mothur),
     RDF::rdf(Mothur, ngsp:module, Module),
-    RDF::rdf(Module, dc:title, Name).
+    RDF::rdf(Module, dc:title, literal(Name)).
 
 :- public(mothur/1).
 mothur(RES):-
     ::ngs(RDF),
     RDF::rdf(RES, rdf:type, ngsp, 'Specification').
+
+:- public(parameter/3).
+parameter(Module, Parameter, ParameterName):-
+    ::ngs(RDF),
+    RDF::rdf(Module, ngsp:parameter, Parameter),
+    RDF::rdf(Parameter, dc:title, literal(ParameterName)).
+
+%% :- public(parameter/4).
+%% parameter(Module, Parameter, ParameterName, Definition):-
+%%     ::ngs(RDF),
+%%     ::parameter(Module, Parameter, ParameterName)...
 
 :- end_object.

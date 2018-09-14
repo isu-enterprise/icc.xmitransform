@@ -145,10 +145,27 @@ succeeds(test_save_graph):-
     mothur::save_turtle('../tests/output/mothur.ttl').
 
 succeeds(test_request_modules_1):-
-    findall(ID,
-            queryngs(mothur)::module(Name, ID),
+    findall(Name,
+            queryngs(mothur)::module(Name, _),
             Answer),
     lists::length(Answer, N),
     N>10.
+
+succeeds(test_query_module_by_name):-
+    queryngs(mothur)::module('chimera.ccode',_).
+
+succeeds(test_query_module_params_by_name):-
+    queryngs(mothur)::module('chimera.ccode',Module),
+    findall(ParameterName,
+            queryngs(mothur)::parameter(Module, _, ParameterName),
+            Names),
+    lists::length(Names, N),
+    % writef::writef('Names: %w', [Names]),
+    N >= 9.
+
+succeeds(test_query_module_parameter_descr):-
+    Q=queryngs(mothur),
+    Q::module('chimera.ccode',Module),
+    Q::parameter(Module, Parameter, 'fasta').
 
 :- end_object.
