@@ -35,9 +35,11 @@ method(Name, ClassID, ID):-
 
 :- object(queryparam(_RDF,_Parameter)).
 
+:- protected(ngs/1).
 ngs(RDF):-
     parameter(1, RDF).
 
+:- protected(parameter/1).
 parameter(Parameter):-
     parameter(2,Parameter).
 
@@ -87,25 +89,25 @@ important:-
 
 :- protected(attr/2).
 attr(NS:Name, Value):-
-    ngs(RDF),
-    parameter(Parameter),
+    ::ngs(RDF),
+    ::parameter(Parameter),
     RDF::rdf(Parameter, NS:Name, Value).
 
 attr(Name, Value):-
     \+ Name=_:_,!,
-    ngs(RDF),
-    parameter(Parameter),
+    ::ngs(RDF),
+    ::parameter(Parameter),
     RDF::rdf(Parameter, ngsp:Name, Value).
 
 :- protected(bool_attr/1).
 bool_attr(Name):-
-    attr(Name, literal(type('http://www.w3.org/2001/XMLSchema#boolean',true))),!.
+    ::attr(Name, literal(type('http://www.w3.org/2001/XMLSchema#boolean',true))),!.
 bool_attr(Name):-
-    attr(Name, literal(type('http://www.w3.org/2001/XMLSchema#boolean',false))),!,
+    ::attr(Name, literal(type('http://www.w3.org/2001/XMLSchema#boolean',false))),!,
     fail.
 bool_attr(Name):-
-    attr(Name, Value),
-    parameter(Parameter),
+    ::attr(Name, Value),
+    ::parameter(Parameter),
     writef::writef('WARNING: attr %w of %w has wring bool value: %w (assuming false)\n',
                    [Name, Parameter, Value]),!,
     fail.
@@ -114,7 +116,7 @@ bool_attr(Name):-
 
 :- object(queryngs(_RDF)).
 :- protected([ngs/1]).
-:- public([module/2, parameter/3]).
+:- public([module/2]).
 
 ngs(RDF):-
     parameter(1, RDF).
