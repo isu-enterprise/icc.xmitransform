@@ -167,6 +167,8 @@ succeeds(test_query_module_parameter_descr):-
     Q=queryngs(mothur),
     Q::module('chimera.ccode',Module),
     Q::parameter(Module, Parameter, 'fasta', QP),
-    QP::name('fasta').
+    QP::name('fasta'),
+    QP::type('http://icc.ru/ontologies/NGS/mothur/InputTypes'),
+    QP::important.
 
 :- end_object.

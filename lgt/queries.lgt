@@ -43,15 +43,73 @@ parameter(Parameter):-
 
 :- public(type/1).
 type(Type) :-
-    ngs(RDF),
-    parameter(Parameter),
-    RDF::rdf(Parameter, ngsp:type, Type).
+    ::attr(type, Type).
 
 :- public(name/1).
 name(Name) :-
+    ::attr(dc:title, literal(Name)).
+
+:- public(options/1).
+options(Value):-
+    ::attr(options, Value).
+
+:- public(options_default/1).
+options_default(Value):-
+    ::attr(optionsDefault, Value).
+
+:- public(choose_only_one_group/1).
+choose_only_one_group(Value):-
+    ::attr(chooseAtLeastOneGroup, Value).
+
+:- public(choose_at_least_one_group/1).
+choose_at_least_one_group(Value):-
+    ::attr(chooseAtLeastOneGroup, Value).
+
+:- public(linked_group/1).
+linked_group(Value):-
+    ::attr(linkedGroup, Value).
+
+:- public(output_types/1).
+output_types(Types):-
+    ::attr(outputTypes, Types).
+
+:- public(multiple_selection_allowed/0).
+multiple_selection_allowed:-
+    ::bool_attr(multipleSelectionAllowed).
+
+:- public(required/0).
+required:-
+    ::bool_attr(required).
+
+:- public(important/0).
+important:-
+    ::bool_attr(important).
+
+:- protected(attr/2).
+attr(NS:Name, Value):-
     ngs(RDF),
     parameter(Parameter),
-    RDF::rdf(Parameter, dc:title, literal(Name)).
+    RDF::rdf(Parameter, NS:Name, Value).
+
+attr(Name, Value):-
+    \+ Name=_:_,!,
+    ngs(RDF),
+    parameter(Parameter),
+    RDF::rdf(Parameter, ngsp:Name, Value).
+
+:- protected(bool_attr/1).
+bool_attr(Name):-
+    attr(Name, literal(type('http://www.w3.org/2001/XMLSchema#boolean',true))),!.
+bool_attr(Name):-
+    attr(Name, literal(type('http://www.w3.org/2001/XMLSchema#boolean',false))),!,
+    fail.
+bool_attr(Name):-
+    attr(Name, Value),
+    parameter(Parameter),
+    writef::writef('WARNING: attr %w of %w has wring bool value: %w (assuming false)\n',
+                   [Name, Parameter, Value]),!,
+    fail.
+
 :- end_object.
 
 :- object(queryngs(_RDF)).
