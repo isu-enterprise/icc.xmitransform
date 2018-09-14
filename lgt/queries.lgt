@@ -29,3 +29,24 @@ method(Name, ClassID, ID):-
 
 
 :- end_object.
+
+:- object(queryngs(_RDF)).
+:- protected([ngs/1]).
+:- public([module/2, parameter/3]).
+
+ngs(RDF):-
+    parameter(1, RDF).
+
+module(Name, ID):-
+    ::ngs(RDF),
+    % RDF::graph(Mothur),
+    ::mothur(Mothur),
+    RDF::rdf(Mothur, ngsp:module, Module),
+    RDF::rdf(Module, dc:title, Name).
+
+:- public(mothur/1).
+mothur(RES):-
+    ::ngs(RDF),
+    RDF::rdf(RES, rdf:type, ngsp, 'Specification').
+
+:- end_object.

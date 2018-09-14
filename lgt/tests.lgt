@@ -113,3 +113,42 @@ succeeds(qurey_class_methods_1):-
 
 
 :- end_object.
+
+
+% Tests of RDF of mothur description
+
+:- object(mothur, instantiates(mothurrdfclass)).
+:- end_object.
+
+
+:- object(mothurrdftests, extends(lgtunit)).
+:- info([
+               version is 0.1,
+               author is 'Evgeny Cherkashin',
+               date is 2018/09/14,
+               comment is 'Unit test for RDF imports of Mothur tool'
+           ]).
+
+succeeds(test_test) :-
+    true.
+
+succeeds(test_set_graph_name):-
+    mothur::set_graph(mothur).
+
+succeeds(test_install_namespaces):-
+    mothur::register_prefixes.
+
+succeeds(test_load_file) :-
+    mothur::load_file('../tests/input/result.ttl').
+
+succeeds(test_save_graph):-
+    mothur::save_turtle('../tests/output/mothur.ttl').
+
+succeeds(test_request_modules_1):-
+    findall(ID,
+            queryngs(mothur)::module(Name, ID),
+            Answer),
+    lists::length(Answer, N),
+    N>10.
+
+:- end_object.

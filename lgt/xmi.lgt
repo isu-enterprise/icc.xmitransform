@@ -531,3 +531,55 @@ top_name_to_graph:-
 
 :- object(code_profile, instantiates(profileclass)).
 :- end_object.
+
+
+
+% Mothur description as RDF graph saved as TTL
+
+:- use_module(library(semweb/turtle)).
+
+:- object(mothurrdfclass,
+          specializes(rdfclass),
+          imports(debugging)
+         ).
+
+:- public(load_file/1).
+load_file(FileName):-
+    ::load_file(FileName,[anon_prefix(bnode)]).
+
+:- public(load_file/2).
+load_file(FileName, Options):-
+    turtle::rdf_read_turtle(FileName, Triples, Options),
+    % Triples=[T|_],
+    % ::writef("Tur: %w", [T]),
+    % T=rdf(_,_,_),
+    forall(lists::member(Triple, Triples), ::process_triple(Triple)).
+
+:- protected(process_triple/1).
+
+process_triple(rdf(S,P,O)):-
+    % ::writef("3: %w\n", [[S,P,O]]),
+    ::rdf_assert(S,P,O).
+
+process_triple(rdf(S,O,P,G)):-
+    % ::writef("4: %w\n", [[S,P,O,G]]),
+    (::graph(G)->true;::set_graph(G)),
+    ::rdf_assert(S,O,P).
+
+:- public(namespace/2).
+
+namespace(Name, URI):-
+    ^^namespace(Name, URI).
+
+namespace(cnt,'http://www.w3.org/2011/content#').
+namespace(mothur,'http://icc.ru/ontologies/NGS/mothur/').
+namespace(ngs,'http://icc.ru/ontologies/NGS/').
+namespace(ngsp,'http://icc.ru/ontologies/NGS/processing/').
+namespace(oslc,'http://open-services.net/ns/core#').
+namespace(rdfs,'http://www.w3.org/2000/01/rdf-schema#').
+namespace(schema,'http://schema.org/').
+namespace(v,'http://www.w3.org/2006/vcard/ns#').
+namespace(xml,'http://www.w3.org/XML/1998/namespace').
+
+
+:- end_object.
