@@ -28,7 +28,7 @@ set(Option-Value):-
 
 set(Option, Value):-
     ::remove(Option),
-    ::assert(option_(Option=Value)).
+    ::assertz(option_(Option=Value)).
 
 remove(Option):-
     ::retractall(option_(Option=_)).
@@ -95,7 +95,7 @@ options(List):-
 
 setup(Setup):-
     ::retractall(current_setup(_)),
-    ::assert(current_setup(Setup)).
+    ::assertz(current_setup(Setup)).
 
 option(Name, Value, Default):-
     ::current_setup(Setup),
@@ -107,7 +107,7 @@ option(Name, Value):-
 
 set_indent(Number):-
     ::retractall(indent_(_)),
-    ::assert(indent_(Number)).
+    ::assertz(indent_(Number)).
 
 clear_indent:-
     ::set_indent(0).
@@ -241,6 +241,12 @@ clear:-
 render(_):-
     writef::writef("ERROR: Implement render/1 by a subclass!\n"),
     fail.
+
+:- public(simple_render/1).
+simple_render(Result):-
+    findall(R, (::item(Item),
+                ::renderitem(Item, R)),
+            Result).
 
 render_to(Stream):-
     ::render(List),
@@ -509,4 +515,82 @@ render(List):-
 
 :- object(module, specializes(code_block)).
 % :- public(import/1, class/1,
+:- end_object.
+
+
+% -------------------- Java class generator -------------------------------------
+
+:- object(java_import,
+          specializes(code_block)).
+
+:- public(add/1).
+add(Import):-
+    ::append(import(Import)).
+
+:- protected(renderitem/2).
+renderitem(import(Item), Result):-!,
+    root::iswritef(Result, 'import %w;', [Item]).
+
+renderitem(Item, String):-
+    ^^renderitem(Item, String).
+
+:- public(render/1).
+render(String):-
+    ::simple_render(String).
+
+:- end_object.
+
+
+:- object(java_module,
+         specializes(code_block)).
+
+:- public(set_package/1).
+set_package(Name):-
+    ::append(package(Name)).
+
+renderitem(package(Name), String):-!,
+    root::iswritef(String, 'package %w;', [Name]).
+
+renderitem(imports(Object), String):-!,
+    Object::render(String).
+
+renderitem(Item, String):-
+    ^^renderitem(Item, String).
+
+:- public(render/1).
+render(Result):-
+    ::simple_render(Result).
+
+:- public(add_imports/1).
+add_imports(Object):-
+    ::append(imports(Object)).
+
+:- public(imports/1).
+imports(Object):-
+    ::item(imports(Object)).
+
+:- end_object.
+
+:- object(java_class,
+          specializes(code_block)).
+:- end_object.
+
+
+% -------------------- Java class generator for Rapid Miner ---------------------
+
+% -------------------- Mothur Operator Java class Generator ---------------------
+
+
+:- object(mothur_module,
+          specializes(java_module)).
+
+:- public(preamble/0).
+preamble:-
+    ::set_package('com.rapidminer.ngs.operator'),
+    create_object(Imports, [instantiates(java_import)],[],[]),
+    ::add_imports(Imports),
+    Imports::add('com.rapidminer.operator.OperatorDescription'),
+    Imports::add('com.rapidminer.operator.ports.InputPort'),
+    Imports::add('com.rapidminer.operator.ports.OutputPort').
+
 :- end_object.

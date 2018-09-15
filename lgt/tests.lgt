@@ -193,4 +193,10 @@ succeeds(test_query_module_output_pattern_list):-
             Patterns),
     lists::length(Patterns, 3).
 
+succeeds(test_default_mothur_module_render):-
+    create_object(M, [instantiates(mothur_module)],[],[]),
+    M::preamble,
+    M::render(Strings),
+    writef::writef('Strings: %w',[Strings]).
+
 :- end_object.
