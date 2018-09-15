@@ -33,14 +33,24 @@ method(Name, ClassID, ID):-
 
 % Querying NGS RDF Graphs for modules.
 
-:- object(queryparam(_RDF,_Parameter)).
+:- object(ngsquerybase).
 
 :- protected(ngs/1).
 ngs(RDF):-
+    ::first(RDF).
+
+:- end_object.
+
+
+:- object(queryparam(_RDF,_Parameter),
+          extends(ngsquerybase)).
+
+:- protected(first/1).
+first(RDF):-
     parameter(1, RDF).
 
-:- protected(parameter/1).
-parameter(Parameter):-
+:- protected(second/1).
+second(Parameter):-
     parameter(2,Parameter).
 
 :- public(type/1).
@@ -90,13 +100,13 @@ important:-
 :- protected(attr/2).
 attr(NS:Name, Value):-
     ::ngs(RDF),
-    ::parameter(Parameter),
+    ::second(Parameter),
     RDF::rdf(Parameter, NS:Name, Value).
 
 attr(Name, Value):-
     \+ Name=_:_,!,
     ::ngs(RDF),
-    ::parameter(Parameter),
+    ::second(Parameter),
     RDF::rdf(Parameter, ngsp:Name, Value).
 
 :- protected(bool_attr/1).
@@ -107,21 +117,66 @@ bool_attr(Name):-
     fail.
 bool_attr(Name):-
     ::attr(Name, Value),
-    ::parameter(Parameter),
+    ::second(Parameter),
     writef::writef('WARNING: attr %w of %w has wring bool value: %w (assuming false)\n',
                    [Name, Parameter, Value]),!,
     fail.
 
 :- end_object.
 
-:- object(queryngs(_RDF)).
-:- protected([ngs/1]).
-:- public([module/2]).
+:- object(querymodule(_RDF,_Module),
+          extends(ngsquerybase)).
 
-ngs(RDF):-
+:- protected(first/1).
+first(RDF):-
     parameter(1, RDF).
 
-module(Name, Module):-
+:- protected(second/1).
+second(Parameter):-
+    parameter(2,Parameter).
+
+:- public(parameter/3).
+parameter(Parameter, ParameterName, queryparam(RDF,Parameter)):-
+    ::ngs(RDF),
+    ::second(Module),
+    RDF::rdf(Module, ngsp:parameter, Parameter),
+    RDF::rdf(Parameter, rdf:type, ngsp, 'Parameter'),
+    RDF::rdf(Parameter, dc:title, literal(ParameterName)).
+
+:- public(output_pattern/2).
+output_pattern(Pattern,Type):-
+    ::ngs(RDF),
+    ::second(Module),
+    RDF::rdf(Module, ngsp:outputPattern, BNode),
+    RDF::rdf(BNode, rdf:type, cnt, 'Chars'),  % type check
+    RDF::rdf(BNode, ngsp:parameterName, literal(Type)), % of type string.
+    RDF::rdf(BNode, cnt:chars, literal(Pattern)).
+
+:- public(description/1).
+description(Description):-
+    ::ngs(RDF),
+    ::second(Module),
+    RDF::rdf(Module,dcterms:description,literal(Description)).
+
+:- public(citation/1).
+description(Citation):-
+    ::ngs(RDF),
+    ::second(Module),
+    RDF::rdf(Module,schema:citation,literal(Citation)).
+
+% TODO: Proceed with command attributes public accessors.
+
+:- end_object.
+
+:- object(queryngs(_RDF),
+          extends(ngsquerybase)).
+
+:- protected(first/1).
+first(RDF):-
+    parameter(1, RDF).
+
+:- public(module/3).
+module(Module, Name, querymodule(RDF,Module)):-
     ::ngs(RDF),
     % RDF::graph(Mothur),
     ::mothur(Mothur),
@@ -132,17 +187,5 @@ module(Name, Module):-
 mothur(RES):-
     ::ngs(RDF),
     RDF::rdf(RES, rdf:type, ngsp, 'Specification').
-
-:- public(parameter/3).
-parameter(Module, Parameter, ParameterName):-
-    ::ngs(RDF),
-    RDF::rdf(Module, ngsp:parameter, Parameter),
-    RDF::rdf(Parameter, rdf:type, ngsp, 'Parameter'),
-    RDF::rdf(Parameter, dc:title, literal(ParameterName)).
-
-:- public(parameter/4).
-parameter(Module, Parameter, ParameterName, queryparam(RDF,Parameter)):-
-    ::ngs(RDF),
-    ::parameter(Module, Parameter, ParameterName).
 
 :- end_object.

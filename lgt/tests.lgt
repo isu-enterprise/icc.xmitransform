@@ -146,18 +146,18 @@ succeeds(test_save_graph):-
 
 succeeds(test_request_modules_1):-
     findall(Name,
-            queryngs(mothur)::module(Name, _),
+            queryngs(mothur)::module(_, Name, _),
             Answer),
     lists::length(Answer, N),
     N>10.
 
 succeeds(test_query_module_by_name):-
-    queryngs(mothur)::module('chimera.ccode',_).
+    queryngs(mothur)::module(_, 'chimera.ccode',_).
 
 succeeds(test_query_module_params_by_name):-
-    queryngs(mothur)::module('chimera.ccode',Module),
+    queryngs(mothur)::module(Module, 'chimera.ccode',QM),
     findall(ParameterName,
-            queryngs(mothur)::parameter(Module, _, ParameterName),
+            QM::parameter(_, ParameterName, _),
             Names),
     lists::length(Names, N),
     % writef::writef('Names: %w', [Names]),
@@ -165,10 +165,19 @@ succeeds(test_query_module_params_by_name):-
 
 succeeds(test_query_module_parameter_descr):-
     Q=queryngs(mothur),
-    Q::module('chimera.ccode',Module),
-    Q::parameter(Module, _, 'fasta', QP),
+    Q::module(Module,'chimera.ccode',QM),
+    QM::parameter(_, 'fasta', QP),
     QP::name('fasta'),
     QP::type('http://icc.ru/ontologies/NGS/mothur/InputTypes'),
     QP::important.
+
+
+succeeds(test_query_module_descriptions):-
+    Q=queryngs(mothur),
+    Q::module(Module,'chimera.ccode',QM),
+    %    QM::parameter(_, 'fasta', QP),
+    QM::output_pattern(Pattern,Type),
+    writef::writef('Output pattern - type: %w\n----------\n%w\n-----------\n',
+                  [Type,Pattern]).
 
 :- end_object.
