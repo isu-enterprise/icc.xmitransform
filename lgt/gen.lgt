@@ -259,11 +259,20 @@ render_to(List, Stream):-
 render_to(X,_):-
     write(X),nl.
 
+:- public(add_skip/1).
+add_skip(NumberLines):-
+    ::append(empty_lines(NumberLines)).
+
 renderitem(Object, String):-
     current_object(Object), !,
     Object::render(String).
 renderitem(literal(Item), String):-!,
     atom_string(Item, String).
+renderitem(empty_lines(1), [""]):-!.
+renderitem(empty_lines(Number), [""|Rest]):-
+    Number>1, !,
+    N2 is Number-1,
+    renderitem(empty_lines(N2), Rest).
 renderitem(Item, String):-
     root::iswritef(String, '%q', [Item]).
 
@@ -587,8 +596,10 @@ imports(Object):-
 :- public(preamble/0).
 preamble:-
     ::set_package('com.rapidminer.ngs.operator'),
+    ::add_skip(1),
     create_object(Imports, [instantiates(java_import)],[],[]),
-    ::add_imports(Imports),
+    ::append(Imports),
+    ::add_skip(1),
     Imports::add('com.rapidminer.operator.OperatorDescription'),
     Imports::add('com.rapidminer.operator.ports.InputPort'),
     Imports::add('com.rapidminer.operator.ports.OutputPort').
