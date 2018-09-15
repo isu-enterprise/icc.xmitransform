@@ -155,7 +155,7 @@ succeeds(test_query_module_by_name):-
     queryngs(mothur)::module(_, 'chimera.ccode',_).
 
 succeeds(test_query_module_params_by_name):-
-    queryngs(mothur)::module(Module, 'chimera.ccode',QM),
+    queryngs(mothur)::module(_, 'chimera.ccode',QM),
     findall(ParameterName,
             QM::parameter(_, ParameterName, _),
             Names),
@@ -165,7 +165,7 @@ succeeds(test_query_module_params_by_name):-
 
 succeeds(test_query_module_parameter_descr):-
     Q=queryngs(mothur),
-    Q::module(Module,'chimera.ccode',QM),
+    Q::module(_,'chimera.ccode',QM),
     QM::parameter(_, 'fasta', QP),
     QP::name('fasta'),
     QP::type('http://icc.ru/ontologies/NGS/mothur/InputTypes'),
@@ -174,10 +174,23 @@ succeeds(test_query_module_parameter_descr):-
 
 succeeds(test_query_module_descriptions):-
     Q=queryngs(mothur),
-    Q::module(Module,'chimera.ccode',QM),
+    Q::module(_,'chimera.ccode',QM),
     %    QM::parameter(_, 'fasta', QP),
-    QM::output_pattern(Pattern,Type),
-    writef::writef('Output pattern - type: %w\n----------\n%w\n-----------\n',
-                  [Type,Pattern]).
+    QM::output_pattern(_,_),
+    %% writef::writef('Output pattern - type: %w\n----------\n%w\n-----------\n',
+    %%                [Type,Pattern]),
+    QM::help(_),
+    %% writef::writef('Help:\n----------\n%w\n-----------\n',
+    %%                [Text]),
+    QM::web_site(_),
+    QM::category('Sequence Processing').
+
+succeeds(test_query_module_output_pattern_list):-
+    Q=queryngs(mothur),
+    Q::module(_,'chimera.ccode',QM),
+    findall(Type-PatternString,
+            QM::type_pattern(Type, PatternString),
+            Patterns),
+    lists::length(Patterns, 3).
 
 :- end_object.

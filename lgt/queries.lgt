@@ -164,6 +164,35 @@ description(Citation):-
     ::second(Module),
     RDF::rdf(Module,schema:citation,literal(Citation)).
 
+:- public(help/1).
+help(Text):-
+    ::ngs(RDF),
+    ::second(Module),
+    RDF::rdf(Module,schema:softwareHelp,literal(Text)).
+
+:- public(web_site/1).
+web_site(URL):-
+    ::ngs(RDF),
+    ::second(Module),
+    RDF::rdf(Module,nco:websiteURL,URL).
+
+:- public(category/1).
+category(Name):-
+    ::ngs(RDF),
+    ::second(Module),
+    RDF::rdf(Module,v:category,literal(Name)).
+
+:- public(type_pattern/2).
+type_pattern(Type, PatternString):-
+    ::ngs(RDF),
+    ::second(Module),
+    RDF::rdf(Module, ngsp:outputPattern, GOP),
+    RDF::rdf(GOP, rdf:type, cnt, 'Chars'),
+    RDF::rdf(GOP, ngsp:pattern, Pattern),
+    RDF::rdf(Pattern, dc:identifier, literal(Type)),
+    RDF::rdf(Pattern, ngsp:patternString, literal(PatternString)).
+
+
 % TODO: Proceed with command attributes public accessors.
 
 :- end_object.

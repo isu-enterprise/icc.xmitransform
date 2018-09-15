@@ -580,6 +580,7 @@ namespace(rdfs,'http://www.w3.org/2000/01/rdf-schema#').
 namespace(schema,'http://schema.org/').
 namespace(v,'http://www.w3.org/2006/vcard/ns#').
 namespace(xml,'http://www.w3.org/XML/1998/namespace').
+namespace(nco,'http://www.semanticdesktop.org/ontologies/2007/03/22/nco#').
 
 
 :- end_object.
