@@ -206,7 +206,7 @@ succeeds(test_default_mothur_module_render):-
 succeeds(test_mothur_psm_synthesis_all_classes):-
     Tr=mothurpsm(mothur),
     findall(Res,
-            Tr::class(Res,_,nil),
+            Tr::class(Res,_Module),
             Classes),
     lists::length(Classes, N),
     N>10.

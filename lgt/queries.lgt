@@ -54,6 +54,7 @@ second(Parameter):-
     parameter(2,Parameter).
 
 :- public(type/1).
+
 type(Type) :-
     ::attr(type, Type).
 
@@ -101,13 +102,15 @@ important:-
 attr(NS:Name, Value):-
     ::ngs(RDF),
     ::second(Parameter),
-    RDF::rdf(Parameter, NS:Name, Value).
+    rdf_db::rdf_global_object(Value, V),
+    RDF::rdf(Parameter, NS:Name, V).
 
 attr(Name, Value):-
     \+ Name=_:_,!,
     ::ngs(RDF),
     ::second(Parameter),
-    RDF::rdf(Parameter, ngsp:Name, Value).
+    rdf_db::rdf_global_id(Value, V),
+    RDF::rdf(Parameter, ngsp:Name, V).
 
 :- protected(bool_attr/1).
 bool_attr(Name):-

@@ -601,7 +601,7 @@ preamble. % Do nothing
           imports(named)).
 
 :- public(render/1).
-render([CD,A,M,"}"]):-
+render([CD,"",A,"",M,"}"]):-
     ::render_class_def(CD),
     root::indent,
     ::render_attributes(A),
@@ -624,7 +624,8 @@ render_class_def("// FATAL: cannot render class definition, (no name set)").
 
 :- public(render_attributes/1).
 render_attributes(String):-
-    root::iswritef(String, '// Attributes', []).
+    (::item(attributes(O)) -> O::render(String);
+    root::iswritef(String, '// Attributes', [])).
 
 :- public(render_methods/1).
 render_methods(String):-
@@ -640,15 +641,52 @@ renderitem(Item, Result):-
 extends(ClassName):-
     ::append(extends(ClassName)).
 
+:- public(attributes/1).
+attributes(Object):-
+    ::append(attributes(Object)).
+
 :- end_object.
 
 
+:- object(java_attributes,
+         specializes(code_block)).
+
+:- public(render/1).
+render(String):-
+    ::simple_render(String).
+
+:- end_object.
 % -------------------- Java class generator for Rapid Miner ---------------------
 
 % -------------------- Mothur Operator Java class Generator ---------------------
 
+:- object(mothur_attributes,
+          specializes(java_attributes)).
+
+:- protected(renderitem/2).
+renderitem(input_parameter(Name), String):-!,
+    root::iswritef(String, 'private InputPort %wInPort = getInputPorts().createPort("%w");',
+                   [Name,Name]).
+renderitem(A,B):-
+    ^^renderitem(A,B).
+
+:- end_object.
+
 :- object(mothur_class,
           specializes(java_class)).
+
+:- public(input_parameter/1).
+input_parameter(Name):-
+    ::item(attributes(A)),
+    A::append(input_parameter(Name)).
+
+:- public(preamble/0).
+preamble:-
+    create_object(Attributes, [instantiates(mothur_attributes)],[],[]),
+    ::append(attributes(Attributes)),
+    ::set_block(attributes(Attributes)).
+% FIXME: methods
+
 :- end_object.
 
 :- object(mothur_module,
@@ -665,6 +703,7 @@ preamble:-
     ::append(Imports),
     ::add_skip(1),
     create_object(ClassDef, [instantiates(mothur_class)],[],[]),
+    ClassDef::preamble,
     ::set_block(class(ClassDef)),
     ::append(ClassDef),
     Imports::add('com.rapidminer.operator.OperatorDescription'),
