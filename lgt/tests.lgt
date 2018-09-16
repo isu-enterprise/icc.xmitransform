@@ -201,13 +201,12 @@ succeeds(test_default_mothur_module_render):-
     M::preamble,
     M::block(class(ClassDef)),
     ClassDef::name('MothurTestingOperator'),
-    M::render_to(_).
+    M::render_to(nil).
 
 succeeds(test_mothur_psm_synthesis_all_classes):-
     Tr=mothurpsm(mothur),
     findall(Res,
-            (Tr::class(Res),
-             writef::writef("Module: %w\n", [Res])),
+            Tr::class(Res,_,nil),
             Classes),
     lists::length(Classes, N),
     N>10.

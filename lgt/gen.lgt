@@ -265,8 +265,12 @@ render_to(List, Stream):-
     lists::is_list(List),!,
     forall(lists::member(X,List), ::render_to(X, Stream)).
 
-render_to(X,_):-
+render_to(X,Stream):-
+    (var(Stream);
+     Stream\=nil),
+    !,
     write(X),nl.
+render_to(X,nil).
 
 :- public(add_skip/1).
 add_skip(NumberLines):-
