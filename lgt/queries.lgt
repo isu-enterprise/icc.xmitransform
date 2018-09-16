@@ -155,6 +155,15 @@ output_pattern(Pattern,Type):-
     RDF::rdf(BNode, ngsp:parameterName, literal(Type)), % of type string.
     RDF::rdf(BNode, cnt:chars, literal(Pattern)).
 
+:- public(output_pattern_types/2).
+output_pattern_types(Pattern,Identifier):-
+    ::ngs(RDF),
+    ::second(Module),
+    RDF::rdf(Module, ngsp:outputPattern, BNode),
+    RDF::rdf(BNode, ngsp:pattern, BList),
+    RDF::rdf(BList, ngsp:patternString, literal(Pattern)),
+    RDF::rdf(BList, dc:identifier, literal(Identifier)).
+
 :- public(description/1).
 description(Description):-
     ::ngs(RDF),

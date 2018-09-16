@@ -667,6 +667,9 @@ render(String):-
 renderitem(input_parameter(Name), String):-!,
     root::iswritef(String, 'private InputPort %wInPort = getInputPorts().createPort("%w");',
                    [Name,Name]).
+renderitem(output_parameter(Name), String):-!,
+    root::iswritef(String, 'private OutputPort %wOutPort = getOutputPorts().createPort("%w");',
+                   [Name,Name]).
 renderitem(A,B):-
     ^^renderitem(A,B).
 
@@ -679,6 +682,11 @@ renderitem(A,B):-
 input_parameter(Name):-
     ::item(attributes(A)),
     A::append(input_parameter(Name)).
+
+:- public(output_parameter/1).
+output_parameter(Name):-
+    ::item(attributes(A)),
+    A::append(output_parameter(Name)).
 
 :- public(preamble/0).
 preamble:-
