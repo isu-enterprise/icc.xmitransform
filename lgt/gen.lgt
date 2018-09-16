@@ -216,8 +216,8 @@ list_separator(Separator):-
                  item/1,
                  items/1
              ]).
-:- dynamic([item_/1]).
-:- private([item_/1]).
+:- dynamic([item_/1, block_/1]).
+:- private([item_/1, block_/1]).
 :- protected([renderitem/2, render_to/2]).
 
 item(Item):-
@@ -235,8 +235,17 @@ prepend(Item):-
 remove(Item):-
     ::retract(item_(Item)).
 
+:- public(set_block/1).
+set_block(Structure):-
+    ::assertz(block_(Structure)).
+
+:- public(block/1).
+block(Structure):-
+    ::block_(Structure).
+
 clear:-
-    ::retractall(item_(_)).
+    ::retractall(item_(_)),
+    ::retractall(block_(_)).
 
 render(_):-
     writef::writef("ERROR: Implement render/1 by a subclass!\n"),
@@ -578,10 +587,55 @@ add_imports(Object):-
 imports(Object):-
     ::item(imports(Object)).
 
+:- public(preamble/0).
+preamble. % Do nothing
+
 :- end_object.
 
 :- object(java_class,
-          specializes(code_block)).
+          specializes(code_block),
+          imports(named)).
+
+:- public(render/1).
+render([CD,A,M,"}"]):-
+    ::render_class_def(CD),
+    root::indent,
+    ::render_attributes(A),
+    ::render_methods(M),
+    root::unindent.
+
+:- public(render_class_def/1).
+render_class_def(String):-
+    ::item(name(Name)),
+    ::renderitem(name(Name), NameString),!,
+    (
+        ::item(extends(ParentClass)) -> ::renderitem(extends(ParentClass), ParentClassString);
+        ParentClassString=""
+    ),
+    % FIXME: render throws
+    ThrowsString="",
+    root::iswritef(String, 'class %w%w%w {', [NameString, ParentClassString, ThrowsString]).
+
+render_class_def("// FATAL: cannot render class definition, (no name set)").
+
+:- public(render_attributes/1).
+render_attributes(String):-
+    root::iswritef(String, '// Attributes', []).
+
+:- public(render_methods/1).
+render_methods(String):-
+    root::iswritef(String, '// Methods', []).
+
+:- protected(renderitem/2).
+renderitem(extends(Class), Result):-!,
+    root::iswritef(Result, ' extends %w', [Class]).
+renderitem(Item, Result):-
+    ^^renderitem(Item, Result).
+
+:- public(extends/1).
+extends(ClassName):-
+    ::append(extends(ClassName)).
+
 :- end_object.
 
 
@@ -589,19 +643,29 @@ imports(Object):-
 
 % -------------------- Mothur Operator Java class Generator ---------------------
 
+:- object(mothur_class,
+          specializes(java_class)).
+:- end_object.
 
 :- object(mothur_module,
           specializes(java_module)).
 
+
 :- public(preamble/0).
 preamble:-
+    ^^preamble,
     ::set_package('com.rapidminer.ngs.operator'),
     ::add_skip(1),
     create_object(Imports, [instantiates(java_import)],[],[]),
+    ::set_block(imports(Imports)),
     ::append(Imports),
     ::add_skip(1),
+    create_object(ClassDef, [instantiates(mothur_class)],[],[]),
+    ::set_block(class(ClassDef)),
+    ::append(ClassDef),
     Imports::add('com.rapidminer.operator.OperatorDescription'),
     Imports::add('com.rapidminer.operator.ports.InputPort'),
-    Imports::add('com.rapidminer.operator.ports.OutputPort').
+    Imports::add('com.rapidminer.operator.ports.OutputPort'),
+    ClassDef::extends('MothurGeneratedOperator').
 
 :- end_object.

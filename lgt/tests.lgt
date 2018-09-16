@@ -151,6 +151,9 @@ succeeds(test_request_modules_1):-
     lists::length(Answer, N),
     N>10.
 
+succeeds(test_set_etup):-
+    root::setup(setup).
+
 succeeds(test_query_module_by_name):-
     queryngs(mothur)::module(_, 'chimera.ccode',_).
 
@@ -196,6 +199,18 @@ succeeds(test_query_module_output_pattern_list):-
 succeeds(test_default_mothur_module_render):-
     create_object(M, [instantiates(mothur_module)],[],[]),
     M::preamble,
+    M::block(class(ClassDef)),
+    ClassDef::name('MothurTestingOperator'),
     M::render_to(_).
+
+succeeds(test_mothur_psm_synthesis_all_classes):-
+    Tr=mothurpsm(mothur),
+    findall(Res,
+            (Tr::class(Res),
+             writef::writef("Module: %w\n", [Res])),
+            Classes),
+    lists::length(Classes, N),
+    N>10.
+
 
 :- end_object.
