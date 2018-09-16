@@ -270,7 +270,7 @@ render_to(X,Stream):-
      Stream\=nil),
     !,
     write(X),nl.
-render_to(X,nil).
+render_to(_,nil).
 
 :- public(add_skip/1).
 add_skip(NumberLines):-
