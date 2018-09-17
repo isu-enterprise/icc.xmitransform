@@ -629,7 +629,8 @@ render_attributes(String):-
 
 :- public(render_methods/1).
 render_methods(String):-
-    root::iswritef(String, '// Methods', []).
+    (::item(methods(O)) -> O::render(String);
+    root::iswritef(String, '// Methods', [])).
 
 :- protected(renderitem/2).
 renderitem(extends(Class), Result):-!,
@@ -645,6 +646,11 @@ extends(ClassName):-
 attributes(Object):-
     ::append(attributes(Object)).
 
+:- public(method/1).
+method(Structure):-
+    ::item(methods(Methods)),
+    Methods::append(Structure).
+
 :- end_object.
 
 
@@ -656,6 +662,25 @@ render(String):-
     ::simple_render(String).
 
 :- end_object.
+
+:- object(java_methods,
+          specializes(code_block)).
+
+:- public(render/1).
+render(String):-
+    ::simple_render(String).
+
+:- end_object.
+
+:- object(java_method_body,
+          specializes(code_block)).
+
+:- public(render/1).
+render(String):-
+    ::simple_render(String).
+
+:- end_object.
+
 % -------------------- Java class generator for Rapid Miner ---------------------
 
 % -------------------- Mothur Operator Java class Generator ---------------------
@@ -672,6 +697,11 @@ renderitem(output_parameter(Name), String):-!,
                    [Name,Name]).
 renderitem(A,B):-
     ^^renderitem(A,B).
+
+:- end_object.
+
+:- object(mothur_methods,
+          specializes(java_methods)).
 
 :- end_object.
 
@@ -692,8 +722,17 @@ output_parameter(Name):-
 preamble:-
     create_object(Attributes, [instantiates(mothur_attributes)],[],[]),
     ::append(attributes(Attributes)),
-    ::set_block(attributes(Attributes)).
-% FIXME: methods
+    ::set_block(attributes(Attributes)),
+    create_object(Methods, [instantiates(mothur_methods)],[],[]),
+    ::append(methods(Methods)),
+    ::set_block(methods(Methods)),
+    default_mothur_constructor,
+    true.
+
+:- public(default_mothur_constructor/0).
+default_mothur_constructor:-
+    create_object(Constructor, [instantiates(method_body)],[],[]),
+    ::method(mothur_constructor(Constructor)).
 
 :- end_object.
 
