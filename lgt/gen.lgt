@@ -670,6 +670,14 @@ render(String):-
 render(String):-
     ::simple_render(String).
 
+:- protected(override/1).
+override(S):-
+    root::iswritef(S,'@Override',[]).
+
+:- protected(end_java_block/1).
+end_java_block(S):-
+    root::iswritef(S,'}',[]).
+
 :- end_object.
 
 :- object(java_method_body,
@@ -703,6 +711,43 @@ renderitem(A,B):-
 :- object(mothur_methods,
           specializes(java_methods)).
 
+:- public(renderitem/2).
+renderitem(mothur_constructor(Class),[S1,Super,Stodo,E]):-!,
+    Class::item(name(ClassName)),
+    root::iswritef(S1, 'public %w (OperatorDescription description) {',
+                   [ClassName]),
+    root::indent,
+    root::iswritef(Super,'super(description);'),
+    root::iswritef(Stodo,'// TODO Auto-generated constructor stub'),
+    root::unindent,
+    ::end_java_block(E).
+
+renderitem(mothur_do_work(Class),['',Override,Signature,Super,Stodo,E]):-!,
+    ::override(Override),
+    root::iswritef(Signature, 'public void doWork() throws OperatorException {',
+                   []),
+    root::indent,
+    root::iswritef(Super,'super();'),
+    root::iswritef(Stodo,'// TODO to be implemented'),
+    root::unindent,
+    ::end_java_block(E).
+
+renderitem(mothur_get_parameter_types(Class),['',Override,Signature,Super,
+                                              Ini,Stodo,E]):-!,
+    ::override(Override),
+    root::iswritef(Signature, 'public List<ParameterType> getParameterTypes() {',
+                   []),
+    root::indent,
+    root::iswritef(Super,'super();'),
+    root::iswritef(Stodo,'// TODO to be implemented'),
+    Class::item(attributes(Attributes)),
+    Attributes::render(Ini),
+    root::unindent,
+    ::end_java_block(E).
+
+renderitem(A,B):-
+    ^^renderitem(A,B).
+
 :- end_object.
 
 :- object(mothur_class,
@@ -726,13 +771,17 @@ preamble:-
     create_object(Methods, [instantiates(mothur_methods)],[],[]),
     ::append(methods(Methods)),
     ::set_block(methods(Methods)),
-    default_mothur_constructor,
+    default_mothur_method_set,
     true.
 
-:- public(default_mothur_constructor/0).
-default_mothur_constructor:-
-    create_object(Constructor, [instantiates(method_body)],[],[]),
-    ::method(mothur_constructor(Constructor)).
+:- public(default_mothur_method_set/0).
+default_mothur_method_set:-
+    self(Self),
+    ::method(mothur_constructor(Self)),
+    ::method(mothur_do_work(Self)),
+    ::method(mothur_get_parameter_types(Self)).
+    % create_object(Constructor, [instantiates(method_body)],[],[]),
+    % ::method(mothur_constructor(Constructor)).
 
 :- end_object.
 
