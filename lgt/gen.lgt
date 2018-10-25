@@ -732,8 +732,30 @@ renderitem(input_parameter(Name), String):-!,
 renderitem(output_parameter(Name), String):-!,
     root::iswritef(String, 'private OutputPort %wOutPort = getOutputPorts().createPort("%w");',
                    [Name,Name]).
+%% renderitem(property_parameter(Name, Query), String):-!,
+%%     root::iswritef(String, '// Parameter %w',
+%%                    [Name]).
+renderitem(property_parameter(Name, Query), String):-!,
+    property_prompt_constant(property_parameter(Name, Query), String).
+
 renderitem(A,B):-
     ^^renderitem(A,B).
+
+:- uses(user, [upcase_atom/2]).
+:- public(property_prompt_constant/2).
+property_prompt_constant(property_parameter(Name,Query), String):-
+    ::item(property_parameter(Name,Query)),
+    upcase_atom(Name,UNAME),
+    root::iswritef(String, 'private static final String %w_LABEL = "%w:";',[UNAME,Name]).
+
+:- public(property_param_type_add/2).
+property_param_type_add(property_parameter(Name,Query), [Start,String]):-
+    ::item(property_parameter(Name,Query)),
+    upcase_atom(Name,UNAME),
+    root::iswritef(Start,'parameterType.add('),
+    root::indent,
+    root::iswritef(String, 'new ParameterTypeXXXX(%w_LABEL, "Comment on %w", ...));',[UNAME,Name]),
+    root::unindent.
 
 :- end_object.
 
@@ -768,15 +790,20 @@ renderitem(mothur_do_work(Class),['',Override,Signature,Super,
     root::unindent,
     ::end_java_block(E).
 
-renderitem(mothur_get_parameter_types(Class),['',Override,Signature,Definition,Super,
-                                              Stodo,E]):-!,
+renderitem(mothur_get_parameter_types(Class),['',Override,Signature,Definition,
+                                              List,
+                                              Super,
+                                              E]):-!,
     ::override(Override),
     root::iswritef(Signature, 'public List<ParameterType> getParameterTypes() {',
                    []),
     root::indent,
-    root::iswritef(Definition,'List<ParameterType> types = super.getParameterTypes();'),
-    root::iswritef(Stodo,'// TODO to be implemented'),
-    root::iswritef(Super,'return type;'),
+    root::iswritef(Definition,'List<ParameterType> parameterTypes = super.getParameterTypes();'),
+    Class::item(attributes(Attributes)),
+    findall(Adding,
+            Attributes::property_param_type_add(property_parameter(_,_), Adding),
+            List),
+    root::iswritef(Super,'return parameterTypes;'),
     % Class::item(attributes(Attributes)),
     % Attributes::render(Ini),
     root::unindent,
@@ -829,13 +856,18 @@ process_inputs(Class, Result):-
 
 :- public(input_parameter/1).
 input_parameter(Name):-
-    ::item(attributes(A)),
+    ::item(attributes(A)), % Get list of class attributes
     A::append(input_parameter(Name)).
 
 :- public(output_parameter/1).
 output_parameter(Name):-
     ::item(attributes(A)),
     A::append(output_parameter(Name)).
+
+:- public(property_parameter/2).
+property_parameter(Name, ParameterQuery):-
+    ::item(attributes(A)),
+    A::append(property_parameter(Name, ParameterQuery)).
 
 :- public(preamble/0).
 preamble:-

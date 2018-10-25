@@ -55,6 +55,11 @@ attribute(Query, Class):-
     Query::output_pattern_types(_, Type),
     Class::output_parameter(Type).
 
+attribute(Query, Class):-
+    Query::parameter(_Parameter, Name, QP),
+    \+ QP::type(mothur:'InputTypes'),
+    Class::property_parameter(Name, QP).
+
 :- protected(method/2).
 method(Query, Class):-
     self(Self),
