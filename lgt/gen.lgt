@@ -1,5 +1,17 @@
 :- use_module(library(writef)).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%  This module is a set of structures generation routines, creating them out of blocks.
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%% Global setup object prototype %%%%%%%%%%%%%%%%%%%%5
 
 :- object(setup).
@@ -216,8 +228,8 @@ list_separator(Separator):-
                  item/1,
                  items/1
              ]).
-:- dynamic([item_/1, block_/1]).
-:- private([item_/1, block_/1]).
+:- dynamic([item_/1, block_/1, query_/1, reference_/1]).
+:- private([item_/1, block_/1, query_/1, reference_/1]).
 :- protected([renderitem/2, render_to/2]).
 
 item(Item):-
@@ -239,12 +251,29 @@ remove(Item):-
 set_block(Structure):-
     ::assertz(block_(Structure)).
 
-:- public(block/1).
-block(Structure):-
+:- public(current_block/1).
+current_block(Structure):-
     ::block_(Structure).
+
+:- public(set_query/1).
+set_query(Query):-
+    ::assertz(query_(Query)).
+
+:- public(current_query/1).
+current_query(Query):-
+    ::query_(Query).
+
+:- public(set_reference/1).
+set_reference(Reference):-
+    ::assertz(reference_(Reference)).
+
+:- public(current_reference/1).
+current_reference(Reference):-
+    ::reference_(Reference).
 
 clear:-
     ::retractall(item_(_)),
+    ::retractall(query_(_)),
     ::retractall(block_(_)).
 
 render(_):-
@@ -722,26 +751,30 @@ renderitem(mothur_constructor(Class),[S1,Super,Stodo,E]):-!,
     root::unindent,
     ::end_java_block(E).
 
-renderitem(mothur_do_work(Class),['',Override,Signature,Super,Stodo,E]):-!,
+renderitem(mothur_do_work(Class),['',Override,Signature,Super,
+                                  Deliver,
+                                  Stodo,E]):-!,
     ::override(Override),
     root::iswritef(Signature, 'public void doWork() throws OperatorException {',
                    []),
     root::indent,
-    root::iswritef(Super,'super();'),
+    root::iswritef(Super,'super.doWork();'),
+    ::deliver_out_ports(Class,Deliver),
     root::iswritef(Stodo,'// TODO to be implemented'),
     root::unindent,
     ::end_java_block(E).
 
-renderitem(mothur_get_parameter_types(Class),['',Override,Signature,Super,
-                                              Ini,Stodo,E]):-!,
+renderitem(mothur_get_parameter_types(Class),['',Override,Signature,Definition,Super,
+                                              Stodo,E]):-!,
     ::override(Override),
     root::iswritef(Signature, 'public List<ParameterType> getParameterTypes() {',
                    []),
     root::indent,
-    root::iswritef(Super,'super();'),
+    root::iswritef(Definition,'List<ParameterType> types = super.getParameterTypes();'),
     root::iswritef(Stodo,'// TODO to be implemented'),
-    Class::item(attributes(Attributes)),
-    Attributes::render(Ini),
+    root::iswritef(Super,'return type;'),
+    % Class::item(attributes(Attributes)),
+    % Attributes::render(Ini),
     root::unindent,
     ::end_java_block(E).
 
@@ -766,6 +799,12 @@ renderitem(mothur_get_output_pattern(Query,Class,PSM),
 
 renderitem(A,B):-
     ^^renderitem(A,B).
+
+:- public(deliver_out_ports/2).
+deliver_out_ports(Class, Result):-
+    Class::current_reference(module(Module)),
+    Module::current_query(Query),
+    root::iswritef(Result,'// TODO:Delivers', []).
 
 :- end_object.
 

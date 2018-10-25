@@ -199,20 +199,20 @@ succeeds(test_query_module_output_pattern_list):-
 succeeds(test_default_mothur_module_render):-
     create_object(M, [instantiates(mothur_module)],[],[]),
     M::preamble,
-    M::block(class(ClassDef)),
+    M::current_block(class(ClassDef)),
     ClassDef::name('MothurTestingOperator'),
     M::render_to(nil).
 
 succeeds(test__mothur_cc_module_render):-
     Tr=mothurpsm(mothur),
-    Tr::class(mothur:'chimera.ccode',Module),
+    Tr::module(mothur:'chimera.ccode',Module),
     Module::render_to(1).
 
 
 succeeds(test_mothur_psm_synthesis_all_classes):-
     Tr=mothurpsm(mothur),
     findall(Res,
-            Tr::class(Res,_Module),
+            Tr::module(Res,_Module),
             Classes),
     lists::length(Classes, N),
     N>10.

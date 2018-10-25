@@ -18,6 +18,9 @@ camel_case(Word,UWord):-
     string_concat(UChar,Rest,UWord).
 
 :- object(mothurpsm(_RDF)).
+:- info([
+         comment is 'Generator of PSM from RDF graph subscenario.'
+           ]).
 
 :- protected(rdf/1).
 rdf(RDF):-
@@ -27,14 +30,16 @@ rdf(RDF):-
 queryngs(queryngs(RDF)):-
     ::rdf(RDF).
 
-:- public(class/2).
-class(_Module,M):-
+:- public(module/2).
+module(_Module,M):-
     ::queryngs(Q),
     rdf_db::rdf_global_object(_Module,Module),
     Q::module(Module,Name,QM),
     create_object(M, [instantiates(mothur_module)],[],[]),
     M::preamble,
-    M::block(class(Class)),
+    M::set_query(Q),
+    M::current_block(class(Class)),
+    Class::set_reference(module(M)),
     ::mothur_class_name(Name,ModuleName),
     Class::name(ModuleName),
     forall(attribute(QM,Class),true),
