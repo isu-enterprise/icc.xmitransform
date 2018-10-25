@@ -752,6 +752,8 @@ renderitem(mothur_constructor(Class),[S1,Super,Stodo,E]):-!,
     ::end_java_block(E).
 
 renderitem(mothur_do_work(Class),['',Override,Signature,Super,
+                                  Getting,
+                                  Process,
                                   Deliver,
                                   Stodo,E]):-!,
     ::override(Override),
@@ -759,6 +761,8 @@ renderitem(mothur_do_work(Class),['',Override,Signature,Super,
                    []),
     root::indent,
     root::iswritef(Super,'super.doWork();'),
+    ::get_data_from_ports(Class,Getting),
+    ::process_inputs(Class,Process),
     ::deliver_out_ports(Class,Deliver),
     root::iswritef(Stodo,'// TODO to be implemented'),
     root::unindent,
@@ -805,6 +809,18 @@ deliver_out_ports(Class, Result):-
     Class::current_reference(module(Module)),
     Module::current_query(Query),
     root::iswritef(Result,'// TODO:Delivers', []).
+
+:- public(get_data_from_ports/2).
+get_data_from_ports(Class, Result):-
+    Class::current_reference(module(Module)),
+    Module::current_query(Query),
+    root::iswritef(Result,'// TODO:Getting', []).
+
+:- public(process_inputs/2).
+process_inputs(Class, Result):-
+    Class::current_reference(module(Module)),
+    Module::current_query(Query),
+    root::iswritef(Result,'// TODO:Process', []).
 
 :- end_object.
 
