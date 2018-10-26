@@ -63,12 +63,22 @@ name(Name) :-
     ::attr(dc:title, literal(Name)).
 
 :- public(options/1).
-options(Value):-
-    ::attr(options, Value).
+options(BNode):-
+    ::attr(options, BNode).
+
+:- public(options/2).
+options(BNode, Values):-
+    ::options(BNode),
+    ::ngs(RDF),
+    ::second(Parameter),
+    findall(Value,
+            (RDF::rdf(BNode, dc:identifier, literal(Value))),
+            Values
+           ).
 
 :- public(options_default/1).
 options_default(Value):-
-    ::attr(optionsDefault, Value).
+    ::attr(optionsDefault, literal(Value)).
 
 :- public(choose_only_one_group/1).
 choose_only_one_group(Value):-

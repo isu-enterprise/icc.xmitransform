@@ -203,11 +203,20 @@ succeeds(test_default_mothur_module_render):-
     ClassDef::name('MothurTestingOperator'),
     M::render_to(nil).
 
+succeeds(test__mothur_align_seqs_module_render):-
+    Tr=mothurpsm(mothur),
+    Tr::module(mothur:'align.seqs',Module),
+    Module::render_to(1).
+
 succeeds(test__mothur_cc_module_render):-
     Tr=mothurpsm(mothur),
     Tr::module(mothur:'chimera.ccode',Module),
     Module::render_to(1).
 
+%% succeeds(test__modules_render_all):-
+%%     Tr=mothurpsm(mothur),
+%%     forall(Tr::module(_ID,Module),
+%%            Module::render_to(1)).
 
 succeeds(test_mothur_psm_synthesis_all_classes):-
     Tr=mothurpsm(mothur),

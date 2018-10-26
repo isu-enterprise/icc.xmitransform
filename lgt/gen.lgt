@@ -743,19 +743,64 @@ renderitem(A,B):-
 
 :- uses(user, [upcase_atom/2]).
 :- public(property_prompt_constant/2).
-property_prompt_constant(property_parameter(Name,Query), String):-
+property_prompt_constant(property_parameter(Name,Query), [Preamble,String]):-
     ::item(property_parameter(Name,Query)),
+    (
+        Query::type(mothur:'Multiple')->
+        ::multiple_selection_choices(property_parameter(Name,Query), Preamble);
+        Preamble=[]
+    ),
     upcase_atom(Name,UNAME),
     root::iswritef(String, 'private static final String %w_LABEL = "%w:";',[UNAME,Name]).
 
-:- public(property_param_type_add/2).
-property_param_type_add(property_parameter(Name,Query), [Start,String]):-
-    ::item(property_parameter(Name,Query)),
+:- uses(user, [comma_separated_list_strings/2]).
+:- public(multiple_selection_choices/2).
+multiple_selection_choices(property_parameter(Name,Query), [String, Choice]):-
     upcase_atom(Name,UNAME),
+    Query::options(_, Options),
+    Query::options_default(Default),
+    lists::nth0(Index,Options,Default),
+    comma_separated_list_strings(Options, CSL),
+    root::iswritef(String, 'public static final String[] %w_CHOICES = { %w };', [UNAME,CSL]),
+    root::iswritef(Choice, 'public static final int %w_DEFAULT_CHOICE = %w;',[UNAME,Index]).
+
+:- public(property_param_type_add/2).
+property_param_type_add(property_parameter(Name,Query), [Preamble,Start,String]):-
+    ::item(property_parameter(Name,Query)),
     root::iswritef(Start,'parameterType.add('),
     root::indent,
-    root::iswritef(String, 'new ParameterTypeXXXX(%w_LABEL, "Comment on %w", ...));',[UNAME,Name]),
+    Query::type(Type),
+    (::mothur_type(Type, RType, _)->true; RType=Type),
+    Query::options_default(DefaultValue),
+    Description="TODO: Add description",
+    (Query::required -> Expert=false; Expert=true),
+    ::param_type_constructor(RType, Name, Description, DefaultValue,
+                             Expert, String, Preamble),
     root::unindent.
+
+:- public(mothur_type/3).
+mothur_type('http://icc.ru/ontologies/NGS/mothur/String', 'String', 'String').
+mothur_type('http://icc.ru/ontologies/NGS/mothur/Boolean', 'Boolean', boolean).
+mothur_type('http://icc.ru/ontologies/NGS/mothur/Number', 'Int', int).
+mothur_type('http://icc.ru/ontologies/NGS/mothur/Multiple', 'Category', 'String []').
+
+:- protected(param_type_constructor/7).
+param_type_constructor('Category', Name, Description, _, Expert, String, []):-!,
+    upcase_atom(Name,UNAME),
+    root::iswritef(String, 'new ParameterType%w(%w_LABEL, "%w", %w_CHOICES, %w_DEFAULT_CHOICE));',
+                   ['Category',UNAME,Description,UNAME,UNAME]).
+param_type_constructor(Type, Name, Description, DefaultValue, Expert, String, []):-
+    upcase_atom(Name,UNAME),
+    ::escape_default_value(DefaultValue, Type, Escaped),!,
+    root::iswritef(String, 'new ParameterType%w(%w_LABEL, "%w", %w, %w));',
+                   [Type,UNAME,Description,Escaped,Expert]).
+
+:- public(escape_default_value/3).
+escape_default_value(Value, 'String', String):-!,
+    writef::swritef(String, '"%w"',[Value]).
+escape_default_value('F', 'Boolean', false):-!.
+escape_default_value('T', 'Boolean', true):-!.
+escape_default_value(Value, _, Value).
 
 :- end_object.
 
@@ -914,3 +959,11 @@ preamble:-
     ClassDef::extends('MothurGeneratedOperator').
 
 :- end_object.
+
+
+comma_separated_list_strings([],""):-!.
+comma_separated_list_strings([X,Y],S):-!,
+    writef::swritef(S, '"%w", "%w"',[X,Y]).
+comma_separated_list_strings([X|T], S):-
+    comma_separated_list_strings(T, TS),
+    writef::swritef(S, '"%w", %w', [X, TS]).
