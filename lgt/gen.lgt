@@ -630,12 +630,13 @@ preamble. % Do nothing
           imports(named)).
 
 :- public(render/1).
-render([CD,"",A,"",M,"}"]):-
+render([CD,"",A,"",M, Closing]):-
     ::render_class_def(CD),
     root::indent,
     ::render_attributes(A),
     ::render_methods(M),
-    root::unindent.
+    root::unindent,
+    root::iswritef(Closing,'}').
 
 :- public(render_class_def/1).
 render_class_def(String):-
@@ -762,14 +763,11 @@ multiple_selection_choices(property_parameter(Name,Query), [String, Choice]):-
     root::iswritef(Choice, 'public static final int %w_DEFAULT_CHOICE = %w;',[UNAME,Index]).
 
 :- public(property_param_type_add/2).
-property_param_type_add(property_parameter(Name,Query), [Preamble,Start,String]):-
+property_param_type_add(property_parameter(Name,Query), [Preamble,String]):-
     ::item(property_parameter(Name,Query)),
-    root::iswritef(Start,'parameterType.add('),
-    root::indent,
     ::mothur_property_data(Query,Type,RType,_,DefaultValue,Description,Expert),
     ::param_type_constructor(RType, Name, Description, DefaultValue,
-                             Expert, String, Preamble),
-    root::unindent.
+                             Expert, String, Preamble).
 
 :- public(mothur_property_data/7).
 mothur_property_data(Query,Type,RType,JavaType,DefaultValue,Description,Expert):-
@@ -789,12 +787,12 @@ mothur_type('http://icc.ru/ontologies/NGS/mothur/Multiple', 'Category', 'String 
 :- protected(param_type_constructor/7).
 param_type_constructor('Category', Name, Description, _, Expert, String, []):-!,
     upcase_atom(Name,UNAME),
-    root::iswritef(String, 'new ParameterType%w(%w_LABEL, "%w", %w_CHOICES, %w_DEFAULT_CHOICE));',
+    root::iswritef(String, 'parameterType.add(new ParameterType%w(%w_LABEL, "%w", %w_CHOICES, %w_DEFAULT_CHOICE));',
                    ['Category',UNAME,Description,UNAME,UNAME]).
 param_type_constructor(Type, Name, Description, DefaultValue, Expert, String, []):-
     upcase_atom(Name,UNAME),
     ::escape_default_value(DefaultValue, Type, Escaped),!,
-    root::iswritef(String, 'new ParameterType%w(%w_LABEL, "%w", %w, %w));',
+    root::iswritef(String, 'parameterType.add(new ParameterType%w(%w_LABEL, "%w", %w, %w));',
                    [Type,UNAME,Description,Escaped,Expert]).
 
 :- public(escape_default_value/3).
@@ -824,7 +822,7 @@ renderitem(mothur_do_work(Class),['',Override,Signature,Super,
                                   Process,
                                   IssueCommand,
                                   Deliver,
-                                  Stodo,E]):-!,
+                                  E]):-!,
     ::override(Override),
     root::iswritef(Signature, 'public void doWork() throws OperatorException {',
                    []),
@@ -833,7 +831,6 @@ renderitem(mothur_do_work(Class),['',Override,Signature,Super,
     ::process_inputs(Class,Process),
     root::iswritef(IssueCommand,'executeMothurCommand();'),
     ::deliver_out_ports(Class,Deliver),
-    root::iswritef(Stodo,'// TODO to be implemented'),
     root::unindent,
     ::end_java_block(E).
 
@@ -851,8 +848,6 @@ renderitem(mothur_get_parameter_types(Class),['',Override,Signature,Definition,
             Attributes::property_param_type_add(property_parameter(_,_), Adding),
             List),
     root::iswritef(Super,'return parameterTypes;'),
-    % Class::item(attributes(Attributes)),
-    % Attributes::render(Ini),
     root::unindent,
     ::end_java_block(E).
 
@@ -879,15 +874,23 @@ renderitem(A,B):-
     ^^renderitem(A,B).
 
 :- public(deliver_out_ports/2).
-deliver_out_ports(Class, Result):-
+deliver_out_ports(Class, [Comment,Delivers]):-
     Class::current_reference(module(Module)),
     Module::current_query(Query),
-    root::iswritef(Result,'// TODO:Delivers', []).
+    Class::item(attributes(Attributes)),
+    root::iswritef(Comment, 'String fileName="<fileName>"; // TODO: Somehow figure out the fileName'),
+    findall(R,
+            (Attributes::item(output_parameter(Name)),
+            render_output_parameter(Name,R)),
+            Delivers).
+
+:- protected(render_output_parameter/2).
+render_output_parameter(Name,Result):-
+    root::iswritef(Result, '%wOutPort.deliver(fileName+".%w","%w");',[Name,Name,Name]).
 
 :- public(process_inputs/2).
 process_inputs(Class, [Clear,
-                       GetInputs,GetProperties,
-                       Result]):-
+                       GetInputs,GetProperties]):-
     Class::current_reference(module(Module)),
     Module::current_query(Query),
     Class::item(attributes(Attributes)),
@@ -918,9 +921,19 @@ render_get_property_paramenter(Name,Query, Attributes, [Load,Command]):-
                            DefaultValue,Description,Expert),
     upcase_atom(Name,UNAME),
     camel_case(JavaType, CCType),
-    root::iswritef(Load, '%w %wValue = getParameterAs%w(%w_LABEL);',
-                   [JavaType, Name, CCType, UNAME]),
+    ::render_get_property_paramenter0(JavaType, Name, RType, CCType, UNAME, Load),
     root::iswritef(Command, 'addArgument("%w",String.valueOf(%wValue));',[Name,Name]).
+
+:- protected(render_get_property_paramenter0/6).
+render_get_property_paramenter0(JavaType, Name, 'Category', CCType, UNAME, [Load,Select]):-!,
+    root::iswritef(Load, 'int %wIndex = getParameterAsInt(%w_LABEL);',
+                   [Name, UNAME]),
+    root::iswritef(Select, 'String %wValue = %w_CHOICES[%wIndex];',
+                   [Name, UNAME, Name]).
+
+render_get_property_paramenter0(JavaType, Name, RType, CCType, UNAME, Load):-
+    root::iswritef(Load, '%w %wValue = getParameterAs%w(%w_LABEL);',
+                   [JavaType, Name, CCType, UNAME]).
 
 
 :- end_object.
