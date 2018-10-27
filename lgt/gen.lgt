@@ -732,10 +732,7 @@ renderitem(input_parameter(Name), String):-!,
 renderitem(output_parameter(Name), String):-!,
     root::iswritef(String, 'private OutputPort %wOutPort = getOutputPorts().createPort("%w");',
                    [Name,Name]).
-%% renderitem(property_parameter(Name, Query), String):-!,
-%%     root::iswritef(String, '// Parameter %w',
-%%                    [Name]).
-renderitem(property_parameter(Name, Query), String):-!,
+ renderitem(property_parameter(Name, Query), String):-!,
     property_prompt_constant(property_parameter(Name, Query), String).
 
 renderitem(A,B):-
@@ -769,14 +766,19 @@ property_param_type_add(property_parameter(Name,Query), [Preamble,Start,String])
     ::item(property_parameter(Name,Query)),
     root::iswritef(Start,'parameterType.add('),
     root::indent,
-    Query::type(Type),
-    (::mothur_type(Type, RType, _)->true; RType=Type),
-    Query::options_default(DefaultValue),
-    Description="TODO: Add description",
-    (Query::required -> Expert=false; Expert=true),
+    ::mothur_property_data(Query,Type,RType,_,DefaultValue,Description,Expert),
     ::param_type_constructor(RType, Name, Description, DefaultValue,
                              Expert, String, Preamble),
     root::unindent.
+
+:- public(mothur_property_data/7).
+mothur_property_data(Query,Type,RType,JavaType,DefaultValue,Description,Expert):-
+    Query::type(Type),
+    (::mothur_type(Type, RType, JavaType)->true; RType=Type),
+    Query::options_default(DefaultValue),
+    Description="TODO: Add description",
+    (Query::required -> Expert=false; Expert=true).
+
 
 :- public(mothur_type/3).
 mothur_type('http://icc.ru/ontologies/NGS/mothur/String', 'String', 'String').
@@ -819,8 +821,8 @@ renderitem(mothur_constructor(Class),[S1,Super,Stodo,E]):-!,
     ::end_java_block(E).
 
 renderitem(mothur_do_work(Class),['',Override,Signature,Super,
-                                  Getting,
                                   Process,
+                                  IssueCommand,
                                   Deliver,
                                   Stodo,E]):-!,
     ::override(Override),
@@ -828,8 +830,8 @@ renderitem(mothur_do_work(Class),['',Override,Signature,Super,
                    []),
     root::indent,
     root::iswritef(Super,'super.doWork();'),
-    ::get_data_from_ports(Class,Getting),
     ::process_inputs(Class,Process),
+    root::iswritef(IssueCommand,'executeMothurCommand();'),
     ::deliver_out_ports(Class,Deliver),
     root::iswritef(Stodo,'// TODO to be implemented'),
     root::unindent,
@@ -882,17 +884,44 @@ deliver_out_ports(Class, Result):-
     Module::current_query(Query),
     root::iswritef(Result,'// TODO:Delivers', []).
 
-:- public(get_data_from_ports/2).
-get_data_from_ports(Class, Result):-
-    Class::current_reference(module(Module)),
-    Module::current_query(Query),
-    root::iswritef(Result,'// TODO:Getting', []).
-
 :- public(process_inputs/2).
-process_inputs(Class, Result):-
+process_inputs(Class, [Clear,
+                       GetInputs,GetProperties,
+                       Result]):-
     Class::current_reference(module(Module)),
     Module::current_query(Query),
-    root::iswritef(Result,'// TODO:Process', []).
+    Class::item(attributes(Attributes)),
+    root::iswritef(Clear,'clearArguments();'),
+    findall(R,
+            (
+                Attributes::item(input_parameter(Name)),
+                render_get_input(Name,R)
+            ),
+            GetInputs),
+    findall(R,
+            (
+                Attributes::item(property_parameter(Name,PQuery)),
+                render_get_property_paramenter(Name,PQuery,Attributes,R)
+            ),
+            GetProperties).
+
+:- protected(render_get_input/2).
+render_get_input(Name, [Load,Parameter]):-
+    root::iswritef(Load, 'FileNameObject %wFile = %wInPort.getData(FileNameObject.class);',[Name, Name]),
+    root::iswritef(Parameter, 'addArgument("%w",%wFile.getName());',[Name, Name]).
+
+:- uses(user, [camel_case/2]).
+:- protected(render_get_property_paramenter/4).
+render_get_property_paramenter(Name,Query, Attributes, [Load,Command]):-
+    Attributes::mothur_property_data(Query,
+                           Type,RType,JavaType,
+                           DefaultValue,Description,Expert),
+    upcase_atom(Name,UNAME),
+    camel_case(JavaType, CCType),
+    root::iswritef(Load, '%w %wValue = getParameterAs%w(%w_LABEL);',
+                   [JavaType, Name, CCType, UNAME]),
+    root::iswritef(Command, 'addArgument("%w",String.valueOf(%wValue));',[Name,Name]).
+
 
 :- end_object.
 
