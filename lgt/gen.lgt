@@ -1102,7 +1102,7 @@ render_body([Item|T],[String|RT]):-
 
 :- public(name/1).
 name(Name):-
-    ::retractall(name(_)),
+    ::removeall(name(_)),
     ::append(name(Name)).
 
 :- public(attributes/1).
@@ -1120,7 +1120,7 @@ attributes([Key=Value|T]):-!,
 attributes(Attributes):-
     nonvar(Attributes),
     current_object(Attributes),!,
-    ::retractall(attributes(_)),
+    ::removeall(attributes(_)),
     ::append(attributes(Attributes)).
 attributes(Attributes):-
     writef::writef('FATAL: Unknown structure for atttributes: %w',[Attributes]),
@@ -1161,7 +1161,7 @@ renderitem(element(E),Result):-!,
 renderitem(Item,Result):-
     ^^renderitem(Item,Result).
 
-:- protected(initialize_root/0).
+:- public(initialize_root/0).
 
 :- end_object.
 
