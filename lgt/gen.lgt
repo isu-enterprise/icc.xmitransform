@@ -225,6 +225,7 @@ list_separator(Separator):-
                  render/1,
                  render_to/1,
                  remove/1,
+                 removeall/1,
                  item/1,
                  items/1
              ]).
@@ -246,6 +247,9 @@ prepend(Item):-
 
 remove(Item):-
     ::retract(item_(Item)).
+
+removeall(Item):-
+    ::retractall(item_(Item)).
 
 :- public(set_block/1).
 set_block(Structure):-
@@ -981,7 +985,6 @@ default_mothur_method_set:-
 :- object(mothur_module,
           specializes(java_module)).
 
-
 :- public(preamble/0).
 preamble:-
     ^^preamble,
@@ -1002,6 +1005,129 @@ preamble:-
 
 :- end_object.
 
+
+%%%%%%%%%%%%%%%%%%%%%% XML Generators %%%%%%%%%%%%%%%%%%%%%%%%
+
+:- object(xml_attributes,
+          specializes(code_block)).
+:- public(attribute/2).
+attribute(Key, Value):-
+    attribute(Key-Value).
+
+:- public(attribute/1).
+attribute(Key=Value):-
+    ::removeall(attribute(Key=_)),
+    ::append(attribute(Key=Value)).
+attribute(Key-Value):-
+    ::attribute(Key=Value).
+
+:- protected(renderitem/2).
+
+renderitem(attribute(Pair), Pair).
+renderitem(Object):-
+    ^^renderitem(Object).
+
+render(Result):-
+    ::simple_render(Result).
+
+:- end_object.
+
+
+:- object(xml_block,
+          specializes(code_block)).
+
+:- public(render/1).
+render(element(Name, Attributes, Body)):-
+    (::item(name(Name))->true;
+     Name='UNKNOWN-TAG'),
+    (::item(attributes(AttributeBlock))->
+         AttributeBlock::render(Attributes);
+         Attributes=[]),
+    ::items(Items),
+    ::render_body(Items,Body).
+
+:- private(render_body/2).
+render_body([],[]):-!.
+render_body([name(_)|T],RT):-!,
+    render_body(T,RT).
+render_body([attributes(_)|T],RT):-!,
+    render_body(T,RT).
+render_body([Item|T],[String|RT]):-
+    renderitem(Item,String),
+    render_body(T,RT).
+
+:- public(name/1).
+name(Name):-
+    ::retractall(name(_)),
+    ::append(name(Name)).
+
+:- public(attributes/1).
+attributes(Attributes):-
+    var(Attributes),!,
+    create_object(Attributes,[instantiates(xml_attributes)],[],[]),
+    ::attributes(Attributes).
+attributes([]):-!.
+attributes([Key-Value|T]):-!,
+    ::attribute(Key=Value),
+    ::attributes(T).
+attributes([Key=Value|T]):-!,
+    ::attribute(Key=Value),
+    ::attributes(T).
+attributes(Attributes):-
+    nonvar(Attributes),
+    current_object(Attributes),!,
+    ::retractall(attributes(_)),
+    ::append(attributes(Attributes)).
+attributes(Attributes):-
+    writef::writef('FATAL: Unknown structure for atttributes: %w',[Attributes]),
+    fail.
+
+:- public(attribute/1).
+attribute(Key=Value):-
+    (::item(attributes(Attributes))->true;
+     ::attributes(Attributes)),
+    Attributes::attribute(Key=Value).
+attribute(Key-Value):-
+    ::attribute(Key=Value).
+
+:- public(attribute/2).
+attribute(Key,Value):-
+    ::attribute(Key-Value).
+
+:- public(text/1).
+text(Text):-
+    ::append(text(Text)).
+
+:- public(element/2).
+element(Name, Attributes):-
+    create_object(Element, [instantiates(xml_block)],[],[]),
+    ::element(Name, Attributes, Element).
+
+:- public(element/3).
+element(Name, Attributes, Body):-
+    ::append(element(Body)),
+    Body::name(Name),
+    Body::attributes(Attributes).
+
+:- protected(renderitem/2).
+
+renderitem(text(Text),Text):-!.
+renderitem(element(E),Result):-!,
+    E::render(Result).
+renderitem(Item,Result):-
+    ^^renderitem(Item,Result).
+
+:- end_object.
+
+:- object(mothur_xml_block,
+          specializes(xml_block)).
+
+:- end_object.
+
+:- object(mothur_operators_doc,
+          specializes(mothur_xml_block)).
+
+:- end_object.
 
 comma_separated_list_strings([],""):-!.
 comma_separated_list_strings([X,Y],S):-!,

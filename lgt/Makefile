@@ -1,4 +1,4 @@
-.PHONY: all tests st itests gt igt t i
+.PHONY: all tests st itests gt igt t i transform run
 
 all: tests
 
@@ -20,3 +20,8 @@ igt:
 
 st:
 	swipl -g "['tests.lgt']."
+
+run: transform
+
+transform:
+	swilgt -g "{ngs_mda_loader},halt."

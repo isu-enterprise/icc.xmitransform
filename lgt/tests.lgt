@@ -226,5 +226,13 @@ succeeds(test_mothur_psm_synthesis_all_classes):-
     lists::length(Classes, N),
     N>10.
 
+succeeds(test_simple_xml_renderer):-
+    create_object(xml_root,[instantiates(xml_block)],[],[]),
+    xml_root::name(root),
+    xml_root::attributes([a=b,c=2]),
+    xml_root::text('Hello World'),
+    xml_root::render(DOM),
+    DOM=element(root,[a=b,c=2],['Hello World']).
+
 
 :- end_object.
