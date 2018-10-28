@@ -1,4 +1,4 @@
-.PHONY: all tests st itests gt igt t i transform run
+.PHONY: all tests st itests gt igt t i transform run irun
 
 all: tests
 
@@ -25,3 +25,6 @@ run: transform
 
 transform:
 	swilgt -g "{ngs_mda_loader},halt."
+
+irun:
+	swilgt -g "{ngs_mda_loader},logtalk_load(tools(loader))."

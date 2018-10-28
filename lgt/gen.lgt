@@ -298,12 +298,18 @@ render_to(List, Stream):-
     lists::is_list(List),!,
     forall(lists::member(X,List), ::render_to(X, Stream)).
 
-render_to(X,Stream):-
-    (var(Stream);
-     Stream\=nil),
-    !,
+render_to(X,1):-!,
+    ::render_to(X,user_output).
+
+render_to(X,user_output):-!,
     write(X),nl.
-render_to(_,nil).
+
+render_to(_,nil):-!.
+
+:- uses(user, [current_stream/3]).
+render_to(X,Stream):-
+    current_stream(_FileName, _Mode, Stream),!,
+    write(Stream,X),nl(Stream).
 
 :- public(add_skip/1).
 add_skip(NumberLines):-
@@ -644,8 +650,7 @@ render([CD,"",A,"",M, Closing]):-
 
 :- public(render_class_def/1).
 render_class_def(String):-
-    ::item(name(Name)),
-    ::renderitem(name(Name), NameString),!,
+    ::class_name(NameString),
     (
         ::item(extends(ParentClass)) -> ::renderitem(extends(ParentClass), ParentClassString);
         ParentClassString=""
@@ -655,6 +660,11 @@ render_class_def(String):-
     root::iswritef(String, 'class %w%w%w {', [NameString, ParentClassString, ThrowsString]).
 
 render_class_def("// FATAL: cannot render class definition, (no name set)").
+
+:- public(class_name/1).
+class_name(Name):-
+    ::item(name(ClassName)),!,
+    ::renderitem(name(ClassName), Name),!.
 
 :- public(render_attributes/1).
 render_attributes(String):-
@@ -982,6 +992,8 @@ default_mothur_method_set:-
 
 :- end_object.
 
+%%%%%%% Mothur Module Generator %%%%%%%
+
 :- object(mothur_module,
           specializes(java_module)).
 
@@ -1002,6 +1014,37 @@ preamble:-
     Imports::add('com.rapidminer.operator.ports.InputPort'),
     Imports::add('com.rapidminer.operator.ports.OutputPort'),
     ClassDef::extends('MothurGeneratedOperator').
+
+:- public(module_class/2).
+module_class(Class, Name):-
+    ::current_block(class(Class)),
+    Class::class_name(Name).
+
+:- public(module_name/1).
+module_name(String):-
+    ::module_class(_,Name),
+    writef::swritef(String,'%w.java', [Name]).
+
+:- public(module_group/1).
+module_group(['NGS_group','mothur_group']).  % TODO: Stub.
+
+:- public(module_key_name/1).
+module_key_name(KeyName):-
+    ::module_class(Class,_),
+    Class::item(name(Name)),
+    writef::swritef(KeyName, 'mothur_%w_operator', [Name]).
+
+:- public(module_doc_class_name/1).
+module_doc_class_name(String):-
+    ::module_class(_,Name),
+    ::item(package(Package)),
+    writef::swritef(String, '%w.%w', [Package, Name]).
+
+:- public(module_icon_name/1).
+module_icon_name(String):-
+    ::module_class(Class,_),
+    Class::item(name(Name)),
+    writef::swritef(String, 'icon-operator-%w.png', [Name]).
 
 :- end_object.
 
@@ -1032,6 +1075,7 @@ render(Result):-
 
 :- end_object.
 
+%%%% XML Block %%%%
 
 :- object(xml_block,
           specializes(code_block)).
@@ -1117,15 +1161,35 @@ renderitem(element(E),Result):-!,
 renderitem(Item,Result):-
     ^^renderitem(Item,Result).
 
+:- protected(initialize_root/0).
+
 :- end_object.
+
+%%%% Mothur XML Block %%%%
 
 :- object(mothur_xml_block,
           specializes(xml_block)).
 
 :- end_object.
 
+
 :- object(mothur_operators_doc,
           specializes(mothur_xml_block)).
+
+initialize_root:-
+    ::name(operators),
+    ::attribute(name='new_generation_sequencing'),
+    ::attribute(version='6.0'),
+    ::attribute(docbundle='com/rapidminer/ngs/resources/i18n/OperatorsDocNewGenerationSequencing').
+
+:- end_object.
+
+:- object(mothur_operators,
+          specializes(mothur_xml_block)).
+
+initialize_root:-
+    ::name(operatorHelp),
+    ::attribute(lang='en_EN').
 
 :- end_object.
 

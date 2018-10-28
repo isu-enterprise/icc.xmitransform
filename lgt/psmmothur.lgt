@@ -54,11 +54,22 @@ module(_Module,M):-
 :- public(modules/0).
 modules:-
     java_modules::clear,  % TODO: better destroy all objects.
-    findall(Module,
-           (::module(_,Module),
-            java_modules::append(module(Module))
-           ),
-           ModuleListAsObjects).
+    forall(::module(_,Module),
+           java_modules::append(module(Module))).
+
+:- public(render_modules_to_dir/1).
+render_modules_to_dir(Directory):-
+    forall(::module(Module),
+           render_module_to_dir(Module,Directory)).
+
+:- private(render_module_to_dir/2).
+render_module_to_dir(Module, Directory):-
+    Module::module_name(Name),
+    absolute_file_name(Name, PathName,
+                       [relative_to(Directory), expand(true)]),
+    open(PathName,write,Stream,[]),
+    Module::render_to(Stream),
+    close(Stream).
 
 :- public(module/1).
 module(Module):-

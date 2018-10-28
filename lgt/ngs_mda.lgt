@@ -14,6 +14,7 @@ run:-
 :- protected(run/2).
 run(Name, Goal):-
     writef:writef('Running stage "%w"',[Name]),
+    flush_output(user_output),
     (call(Goal)->
          writef::writef(' succeeds\n',[Name]);
          writef::writef(' failed\n',[Name])
@@ -32,8 +33,6 @@ hello(X):-
     X='World',
     writef:writef('Hello "%w"!\n',[X]).
 
-
-:- public(stage/2).
 stage('Warning', ::warning).
 stage('Hello/0', ::hello).
 stage('Hello/1', ::hello(_)).
@@ -69,12 +68,20 @@ mda(java_modules):-
     lists::length(Modules, Length),
     writef::writef('\nGenerated %w PSMs of Java modules',[Length]).
 
+mda(save_modules):-
+    mothurpsm(mothur)::render_modules_to_dir('/var/tmp').
+
 
 :- protected(stage/2).
 stage('Initialize environment',    ::setup(initialize)).
 stage('Setup generation context',  ::setup(setup)).
 stage('Loading RDF (TTL) sources', ::loadttl).
 stage('Transforming to Java modules', ::mda(java_modules)).
+stage('Saving Java modules into .java files', ::mda(save_modules)).
+
+:- public(debug/0).
+debug:-
+    ::mda(save_modules).
 
 :- end_object.
 
