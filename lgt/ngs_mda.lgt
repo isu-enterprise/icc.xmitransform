@@ -69,7 +69,7 @@ mda(java_modules):-
     writef::writef('\nGenerated %w PSMs of Java modules',[Length]).
 
 mda(save_modules):-
-    mothurpsm(mothur)::render_modules_to_dir('/var/tmp').
+    mothurpsm(mothur)::render_modules_to_dir('/home/eugeneai/projects/code/NGS/rapidminer-extension/src/main/java/com/rapidminer/ngs/operator').
 
 mda(xml_operators).
 
@@ -82,7 +82,7 @@ stage('Initialize environment',    ::setup(initialize)).
 stage('Setup generation context',  ::setup(setup)).
 stage('Loading RDF (TTL) sources', ::loadttl).
 stage('Transforming to Java modules', ::mda(java_modules)).
-% stage('Saving Java modules into .java files', ::mda(save_modules)).
+stage('Saving Java modules into .java files', ::mda(save_modules)).
 stage('Initializing Mothur Operators PSMs', ::mda(xml_operators)).
 stage('Saving XMLs',                        ::mda(save_xmls)).
 

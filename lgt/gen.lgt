@@ -650,14 +650,14 @@ render([CD,"",A,"",M, Closing]):-
 
 :- public(render_class_def/1).
 render_class_def(String):-
-    ::class_name(NameString),
+    ::class_name(NameString),!,
     (
         ::item(extends(ParentClass)) -> ::renderitem(extends(ParentClass), ParentClassString);
         ParentClassString=""
     ),
     % FIXME: render throws
     ThrowsString="",
-    root::iswritef(String, 'class %w%w%w {', [NameString, ParentClassString, ThrowsString]).
+    root::iswritef(String, 'public class %w%w%w {', [NameString, ParentClassString, ThrowsString]).
 
 render_class_def("// FATAL: cannot render class definition, (no name set)").
 
@@ -801,12 +801,12 @@ mothur_type('http://icc.ru/ontologies/NGS/mothur/Multiple', 'Category', 'String 
 :- protected(param_type_constructor/7).
 param_type_constructor('Category', Name, Description, _, Expert, String, []):-!,
     upcase_atom(Name,UNAME),
-    root::iswritef(String, 'parameterType.add(new ParameterType%w(%w_LABEL, "%w", %w_CHOICES, %w_DEFAULT_CHOICE));',
+    root::iswritef(String, 'parameterTypes.add(new ParameterType%w(%w_LABEL, "%w", %w_CHOICES, %w_DEFAULT_CHOICE));',
                    ['Category',UNAME,Description,UNAME,UNAME]).
 param_type_constructor(Type, Name, Description, DefaultValue, Expert, String, []):-
     upcase_atom(Name,UNAME),
     ::escape_default_value(DefaultValue, Type, Escaped),!,
-    root::iswritef(String, 'parameterType.add(new ParameterType%w(%w_LABEL, "%w", %w, %w));',
+    root::iswritef(String, 'parameterTypes.add(new ParameterType%w(%w_LABEL, "%w", %w, %w));',
                    [Type,UNAME,Description,Escaped,Expert]).
 
 :- public(escape_default_value/3).
@@ -900,7 +900,7 @@ deliver_out_ports(Class, [Comment,Delivers]):-
 
 :- protected(render_output_parameter/2).
 render_output_parameter(Name,Result):-
-    root::iswritef(Result, '%wOutPort.deliver(fileName+".%w","%w");',[Name,Name,Name]).
+    root::iswritef(Result, '%wOutPort.deliver(new FileNameObject(fileName+".%w","%w"));',[Name,Name,Name]).
 
 :- public(process_inputs/2).
 process_inputs(Class, [Clear,
@@ -1010,9 +1010,12 @@ preamble:-
     ClassDef::preamble,
     ::set_block(class(ClassDef)),
     ::append(ClassDef),
+    Imports::add('java.util.List'),
     Imports::add('com.rapidminer.operator.OperatorDescription'),
     Imports::add('com.rapidminer.operator.ports.InputPort'),
     Imports::add('com.rapidminer.operator.ports.OutputPort'),
+    Imports::add('com.rapidminer.operator.OperatorException'),
+    Imports::add('com.rapidminer.parameter.*'),
     ClassDef::extends('MothurGeneratedOperator').
 
 :- public(module_class/2).
