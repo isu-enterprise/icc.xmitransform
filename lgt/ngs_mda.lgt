@@ -71,9 +71,11 @@ mda(java_modules):-
 mda(save_modules):-
     mothurpsm(mothur)::render_modules_to_dir('/var/tmp').
 
+mda(xml_operators).
 
-mda(xml_operators):-
-    mothur_operators_psm::initialize_root.
+mda(save_xmls):-
+    mothur_xml_psm(mothur_operators_psm)::render_to_dir('/var/tmp'),
+    mothur_xml_psm(mothur_operators_doc_psm)::render_to_dir('/var/tmp').
 
 :- protected(stage/2).
 stage('Initialize environment',    ::setup(initialize)).
@@ -81,15 +83,11 @@ stage('Setup generation context',  ::setup(setup)).
 stage('Loading RDF (TTL) sources', ::loadttl).
 stage('Transforming to Java modules', ::mda(java_modules)).
 % stage('Saving Java modules into .java files', ::mda(save_modules)).
-stage('Initializing Mothur Operators PSMs',   ::mda(xml_operators)).
+stage('Initializing Mothur Operators PSMs', ::mda(xml_operators)).
+stage('Saving XMLs',                        ::mda(save_xmls)).
 
 :- end_object.
 
 
 :- object(mothur, instantiates(mothurrdfclass)).
-:- end_object.
-
-
-:- object(mothur_operators_psm,
-          instantiates(mothur_operators)).
 :- end_object.

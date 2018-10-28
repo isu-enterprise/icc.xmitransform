@@ -17,13 +17,8 @@ camel_case(Word,UWord):-
     string_upper(Char,UChar),
     string_concat(UChar,Rest,UWord).
 
-%%%%%%%%%%%%%%%% Mothur Java module PSM generator %%%%%%%%%%%%%%%%%%%%%%%%%555
+:- object(psm(_RDF)).
 
-:- object(java_modules,
-          instantiates(code_block)).
-:- end_object.
-
-:- object(mothurpsm(_RDF)).
 :- info([
          comment is 'Generator of PSM from RDF graph subscenario.'
            ]).
@@ -31,6 +26,17 @@ camel_case(Word,UWord):-
 :- protected(rdf/1).
 rdf(RDF):-
     parameter(1,RDF).
+
+:- end_object.
+
+%%%%%%%%%%%%%%%% Mothur Java module PSM generator %%%%%%%%%%%%%%%%%%%%%%%%%555
+
+:- object(java_modules,
+          instantiates(code_block)).
+:- end_object.
+
+:- object(mothurpsm(_RDF),
+         extends(psm(_RDF))).
 
 :- public(queryngs/1).
 queryngs(queryngs(RDF)):-
@@ -108,5 +114,38 @@ camel_case_name(Name,UpcasedName):-
 :- public(type_pattern/3).
 type_pattern(Type,Pattern,QM):-
     QM::type_pattern(Type,Pattern).
+
+:- end_object.
+
+%%%% XML PSM %%%%
+
+:- object(mothur_operators_psm,
+          instantiates(mothur_operators)).
+:- initialization((::initialize_root)).
+:- end_object.
+
+:- object(mothur_operators_doc_psm,
+          instantiates(mothur_operators_doc)).
+:- initialization((::initialize_root)).
+:- end_object.
+
+%%%
+
+:- object(mothur_xml_psm(_XML_PSM)).
+
+:- public(dom/1).
+dom(PSM):-
+    parameter(1,PSM).
+
+:- public(render_to_dir/1).
+render_to_dir(Directory):-
+    ::dom(PSM),
+    PSM::render(DOM),
+    PSM::file_name(Name),
+    absolute_file_name(Name, PathName,
+                       [relative_to(Directory), expand(true)]),
+    open(PathName,write,Stream,[]),
+    sgml_write::xml_write(Stream,DOM,[]),
+    close(Stream).
 
 :- end_object.

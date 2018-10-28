@@ -1077,8 +1077,24 @@ render(Result):-
 
 %%%% XML Block %%%%
 
+:- use_module(library(sgml_write)).
+
 :- object(xml_block,
           specializes(code_block)).
+
+render_to(Stream):-
+    ::render(DOM),
+    ::render_to([DOM], Stream).
+
+render_to(DOM, 1):-
+    ::render_to(DOM,user_output).
+
+render_to(_,nil):-!.
+
+:- uses(user, [current_stream/3]).
+render_to(DOM,Stream):-
+    current_stream(_FileName, _Mode, Stream),!,
+    xml_write(Stream,DOM,[]).
 
 :- public(render/1).
 render(element(Name, Attributes, Body)):-
@@ -1163,12 +1179,16 @@ renderitem(Item,Result):-
 
 :- public(initialize_root/0).
 
+
+
 :- end_object.
 
 %%%% Mothur XML Block %%%%
 
 :- object(mothur_xml_block,
           specializes(xml_block)).
+
+:- public(file_name/1).
 
 :- end_object.
 
@@ -1182,6 +1202,8 @@ initialize_root:-
     ::attribute(version='6.0'),
     ::attribute(docbundle='com/rapidminer/ngs/resources/i18n/OperatorsDocNewGenerationSequencing').
 
+file_name('OperatorsDocNewGenerationSequencing.xml').
+
 :- end_object.
 
 :- object(mothur_operators,
@@ -1190,6 +1212,8 @@ initialize_root:-
 initialize_root:-
     ::name(operatorHelp),
     ::attribute(lang='en_EN').
+
+file_name('OperatorsNewGenerationSequencing.xml').
 
 :- end_object.
 
