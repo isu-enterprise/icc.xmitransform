@@ -17,6 +17,12 @@ camel_case(Word,UWord):-
     string_upper(Char,UChar),
     string_concat(UChar,Rest,UWord).
 
+%%%%%%%%%%%%%%%% Mothur Java module PSM generator %%%%%%%%%%%%%%%%%%%%%%%%%555
+
+:- object(java_modules,
+          instantiates(code_block)).
+:- end_object.
+
 :- object(mothurpsm(_RDF)).
 :- info([
          comment is 'Generator of PSM from RDF graph subscenario.'
@@ -44,6 +50,19 @@ module(_Module,M):-
     Class::name(ModuleName),
     forall(attribute(QM,Class),true),
     forall(method(QM,Class),true).
+
+:- public(modules/0).
+modules:-
+    java_modules::clear,  % TODO: better destroy all objects.
+    findall(Module,
+           (::module(_,Module),
+            java_modules::append(module(Module))
+           ),
+           ModuleListAsObjects).
+
+:- public(module/1).
+module(Module):-
+    java_modules::item(module(Module)).
 
 :- protected(attribute/2).
 attribute(Query, Class):-
