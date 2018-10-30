@@ -137,6 +137,10 @@ type_pattern(Type,Pattern,QM):-
 dom(PSM):-
     parameter(1,PSM).
 
+:- public(psm/1).
+psm(DOM):-
+    dom(DOM).
+
 :- public(render_to_dir/1).
 render_to_dir(Directory):-
     ::dom(PSM),
@@ -147,5 +151,72 @@ render_to_dir(Directory):-
     open(PathName,write,Stream,[]),
     sgml_write::xml_write(Stream,DOM,[]),
     close(Stream).
+
+:- public(generate_operators/1).
+generate_operators(Module):-
+    % format('\nGenerating xml for ~p',[Module]),
+    ::dom(DOM),
+    ::group(DOM, Block),
+    Block::element(operator, OP),
+    OP::element(key,Key),
+    Module::module_key_name(MKey),
+    Key::text(MKey),
+    OP::element(class,Class),
+    Module::module_xml_class_name(MClass),
+    Class::text(MClass),
+    OP::element(icon,Icon),
+    Module::module_icon_name(MIcon),  % Viva StarControl II !!!
+    Icon::text(MIcon).
+
+:- public(module_group/1).
+module_group([''-'','NGS_group'-'NGS','mothur_group'-'Mothur']).  % TODO: Stub.
+
+
+:- protected(group/2).
+group(DOM,Block):-
+    DOM::current_reference(group(Block)),!.
+group(DOM,Block):-
+    ::module_group(Groups),
+    ::groups0(DOM, Groups, Block),
+    DOM::set_reference(group(Block)).
+
+
+:- protected(group_doc/1).
+group_doc(DOM):-
+    DOM::current_reference(group_doc(_)),!.
+group_doc(DOM):-
+    ::module_group(Groups),
+    ::groups1(DOM, Groups),
+    format('------> Setting ref !!'),
+    DOM::set_reference(group_doc(DOM)).
+
+:- private(groups0/3).
+groups0(Block,[],Block):-!.
+groups0(Block,[Group-_ | T], B):-
+    Block::element(group,[key=Group], B1),
+    ::groups0(B1,T,B).
+
+
+:- private(groups1/2).
+groups1(DOM, Groups):-
+    forall(lists::member(Group-Name, Groups),
+            DOM::element(group,
+                         [key=Group, name=Name], _)).
+
+:- uses(user, [atomic_list_concat/3]).
+:- public(generate_doc_operators/1).
+generate_doc_operators(Module):-
+    ::dom(DOM),
+    ::group_doc(DOM),
+    Module::module_class(Class,ClassName),
+    DOM::element(operator, OP),
+    OP::element(key,Key),
+    Module::module_key_name(MKey),
+    Key::text(MKey),
+    OP::element(name,Name),
+    atomic_list_concat(['',Text],'Mothur',ClassName),
+    atomic_list_concat([DisplayName,''],'Operator',Text),
+    Name::text(DisplayName),
+    format('\nGenerating doc xml for ~p',[Module]).
 
 :- end_object.

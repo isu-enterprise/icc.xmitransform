@@ -1059,17 +1059,15 @@ module_name(String):-
     ::module_class(_,Name),
     writef::swritef(String,'%w.java', [Name]).
 
-:- public(module_group/1).
-module_group(['NGS_group','mothur_group']).  % TODO: Stub.
-
 :- public(module_key_name/1).
 module_key_name(KeyName):-
     ::module_class(Class,_),
     Class::item(name(Name)),
-    writef::swritef(KeyName, 'mothur_%w_operator', [Name]).
+    downcase_atom(Name, DName),
+    writef::swritef(KeyName, 'mothur_%w_operator', [DName]).
 
-:- public(module_doc_class_name/1).
-module_doc_class_name(String):-
+:- public(module_xml_class_name/1).
+module_xml_class_name(String):-
     ::module_class(_,Name),
     ::item(package(Package)),
     writef::swritef(String, '%w.%w', [Package, Name]).
@@ -1078,7 +1076,8 @@ module_doc_class_name(String):-
 module_icon_name(String):-
     ::module_class(Class,_),
     Class::item(name(Name)),
-    writef::swritef(String, 'icon-operator-%w.png', [Name]).
+    downcase_atom(Name, DName),
+    writef::swritef(String, 'icon-operator-%w.png', [DName]).
 
 :- end_object.
 
@@ -1192,16 +1191,21 @@ attribute(Key,Value):-
 text(Text):-
     ::append(text(Text)).
 
-:- public(element/2).
-element(Name, Attributes):-
+:- public(element/3).
+element(Name, Attributes, Element):-
+    var(Element),
     create_object(Element, [instantiates(xml_block)],[],[]),
     ::element(Name, Attributes, Element).
 
-:- public(element/3).
 element(Name, Attributes, Body):-
+    nonvar(Body),
     ::append(element(Body)),
     Body::name(Name),
     Body::attributes(Attributes).
+
+:- public(element/2).
+element(Name, Body):-
+    ::element(Name, [], Body).
 
 :- protected(renderitem/2).
 
@@ -1212,8 +1216,6 @@ renderitem(Item,Result):-
     ^^renderitem(Item,Result).
 
 :- public(initialize_root/0).
-
-
 
 :- end_object.
 
@@ -1231,10 +1233,8 @@ renderitem(Item,Result):-
           specializes(mothur_xml_block)).
 
 initialize_root:-
-    ::name(operators),
-    ::attribute(name='new_generation_sequencing'),
-    ::attribute(version='6.0'),
-    ::attribute(docbundle='com/rapidminer/ngs/resources/i18n/OperatorsDocNewGenerationSequencing').
+    ::name(operatorHelp),
+    ::attribute(lang='en_EN').
 
 file_name('OperatorsDocNewGenerationSequencing.xml').
 
@@ -1243,9 +1243,12 @@ file_name('OperatorsDocNewGenerationSequencing.xml').
 :- object(mothur_operators,
           specializes(mothur_xml_block)).
 
+
 initialize_root:-
-    ::name(operatorHelp),
-    ::attribute(lang='en_EN').
+    ::name(operators),
+    ::attribute(name='new_generation_sequencing'),
+    ::attribute(version='6.0'),
+    ::attribute(docbundle='com/rapidminer/ngs/resources/i18n/OperatorsDocNewGenerationSequencing').
 
 file_name('OperatorsNewGenerationSequencing.xml').
 

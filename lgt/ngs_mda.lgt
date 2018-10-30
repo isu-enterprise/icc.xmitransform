@@ -85,9 +85,6 @@ expand:-
 
 :- initialization(setup).
 
-:- public(debug/0).
-debug:-
-    expand.
 
 :- end_object.
 
@@ -113,12 +110,16 @@ loadttl:-
     ::current_option('ngs-rdf-input-dir'=Dir),
     mothur::load_file(Dir).
 
+:- private(psm_module/1).
+psm_module(Module):-
+    mothurpsm(mothur)::module(Module).
+
 :- protected(mda/1).
 mda(java_modules):-
     PSM=mothurpsm(mothur),
     PSM::modules,
     findall(Module,
-            PSM::module(Module),
+            ::psm_module(Module),
             Modules),
     lists::length(Modules, Length),
     writef::writef('\nGenerated %w PSMs of Java modules',[Length]).
@@ -127,7 +128,15 @@ mda(save_modules):-
     ::current_option('ngs-java-modules-dir'=JavaDir),
     mothurpsm(mothur)::render_modules_to_dir(JavaDir).
 
-mda(xml_operators).
+mda(xml_operators):-
+    forall(
+        ::psm_module(Module),
+        mothur_xml_psm(mothur_operators_psm)::generate_operators(Module)).
+
+mda(xml_doc_operators):-
+    forall(
+        ::psm_module(Module),
+        mothur_xml_psm(mothur_operators_doc_psm)::generate_doc_operators(Module)).
 
 mda(save_xmls):-
     ::current_option('ngs-resource-dir'=Resource),
@@ -140,9 +149,14 @@ stage('Initialize environment',    ::setup(initialize)).
 stage('Setup generation context',  ::setup(setup)).
 stage('Loading RDF (TTL) sources', ::loadttl).
 stage('Transforming to Java modules', ::mda(java_modules)).
-stage('Saving Java modules into .java files', ::mda(save_modules)).
-stage('Initializing Mothur Operators PSMs', ::mda(xml_operators)).
+% stage('Saving Java modules into .java files', ::mda(save_modules)).
+stage('Generating Mothur Operators PSMs', ::mda(xml_operators)).
+stage('Generating Mothur DOC Operators PSMs', ::mda(xml_doc_operators)).
 stage('Saving XMLs',                        ::mda(save_xmls)).
+
+:- public(debug/0).
+debug:-
+    ::mda(xml_doc_operators).
 
 :- end_object.
 
