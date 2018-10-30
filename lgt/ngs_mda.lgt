@@ -1,6 +1,14 @@
 :- use_module([library(semweb/rdf_prefixes)]).
 
-:- object(mda_scenario).
+absolute_file_name0(File, RelativeDir, Result):-
+    atomic_list_concat([RelativeDir, File], '/', String),
+    (
+        %absolute_file_name(String,Result,[]) -> true;
+        %format('WARNING: FIle Object ~p semms not to exist.\n',[String]),
+        Result=String
+    ).
+
+:- object(mda_scenario, imports(current_option)).
 
 :- public(run/0).
 run:-
@@ -13,7 +21,7 @@ run:-
 
 :- protected(run/2).
 run(Name, Goal):-
-    writef:writef('Running stage "%w"',[Name]),
+    writef:writef('%w',[Name]),
     flush_output(user_output),
     (call(Goal)->
          writef::writef(' succeeds\n',[Name]);
@@ -41,9 +49,56 @@ stage('Hello/1', ::hello(_)).
 :- end_object.
 
 
+%%%% NGS MDA Setup %%%%
+
+:- object(ngs_setup,
+          extends(setup)).
+
+:- protected(setup/0).
+setup:-
+    ^^setup,
+    ::set('ngs-project-dir'='/home/eugeneai/projects/code/NGS/rapidminer-extension'),
+    ::set('ngs-java-modules-subdir'='src/main/java/com/rapidminer/ngs/operator'),
+    ::set('ngs-resource-subdir'='src/main/resources/com/rapidminer/ngs/resources'),
+    ::set('ngs-rdf-input-dir'='../tests/input/result.ttl'),
+    expand,
+    format('Set up the directories.\n'),
+    true.
+
+:- uses(user, [absolute_file_name0/3]).
+:- private(expand/0).
+expand:-
+    ::current_option('ngs-project-dir'=ProjectDir),
+    format('Project DIR: ~p\n', [ProjectDir]),
+    ::current_option('ngs-java-modules-subdir'=Java),
+    ::current_option('ngs-resource-subdir'=Resource),
+    absolute_file_name0(Java, ProjectDir, AJava),
+    absolute_file_name0(Resource, ProjectDir, AResource),
+    ::set('ngs-java-modules-dir'=AJava),
+    format('Project Java DIR: ~p\n', [AJava]),
+    ::set('ngs-resource-dir'=AResource),
+    format('Project Resource DIR: ~p\n', [AResource]),
+    absolute_file_name0('i18n', AResource, ADoc),
+    ::set('ngs-resource-doc-dir'=ADoc),
+    format('Project Resource doc DIR: ~p\n', [ADoc]).
+
+
+:- initialization(setup).
+
+:- public(debug/0).
+debug:-
+    expand.
+
+:- end_object.
+
+%%%% NGS MDA Scenraio %%%%
 
 :- object(ngs_mda,
           extends(mda_scenario)).
+
+:- protected(current_setup/1).
+current_setup(Setup):-
+    root::current_setup(Setup).
 
 :- protected(setup/1).
 setup(initialize):-
@@ -51,12 +106,12 @@ setup(initialize):-
     mothur::register_prefixes.
 
 setup(setup):-
-    root::setup(setup).
-
+    root::setup(ngs_setup).
 
 :- protected(loadttl/0).
 loadttl:-
-    mothur::load_file('../tests/input/result.ttl').
+    ::current_option('ngs-rdf-input-dir'=Dir),
+    mothur::load_file(Dir).
 
 :- protected(mda/1).
 mda(java_modules):-
@@ -69,13 +124,16 @@ mda(java_modules):-
     writef::writef('\nGenerated %w PSMs of Java modules',[Length]).
 
 mda(save_modules):-
-    mothurpsm(mothur)::render_modules_to_dir('/home/eugeneai/projects/code/NGS/rapidminer-extension/src/main/java/com/rapidminer/ngs/operator').
+    ::current_option('ngs-java-modules-dir'=JavaDir),
+    mothurpsm(mothur)::render_modules_to_dir(JavaDir).
 
 mda(xml_operators).
 
 mda(save_xmls):-
-    mothur_xml_psm(mothur_operators_psm)::render_to_dir('/var/tmp'),
-    mothur_xml_psm(mothur_operators_doc_psm)::render_to_dir('/var/tmp').
+    ::current_option('ngs-resource-dir'=Resource),
+    mothur_xml_psm(mothur_operators_psm)::render_to_dir(Resource),
+    ::current_option('ngs-resource-doc-dir'=ResourceDoc),
+    mothur_xml_psm(mothur_operators_doc_psm)::render_to_dir(ResourceDoc).
 
 :- protected(stage/2).
 stage('Initialize environment',    ::setup(initialize)).

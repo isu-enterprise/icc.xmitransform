@@ -78,11 +78,41 @@ option(Option):-
 options(List):-
     findall(O, ::option_(O), List).
 
+:- public(current_option/1).
+current_option(Option=Value):-
+    ::option_(Option=Value).
+
+:- public(current_option/2).
+current_option(Option, Value):-
+    ::current_option(Option=Value).
+
+:- protected(setup/0).
+setup.
+
+:- initialization(setup).
+
 :- end_object.
+
+%%%% Category Current Option %%%%
+:- category(current_option).
+
+:- public(current_option/1).
+current_option(Option=Value):-
+    ::current_setup(Setup),
+    Setup::current_option(Option=Value).
+
+:- public(current_option/2).
+current_option(Option,Value):-
+    ::current_option(Option=Value).
+
+:- end_category.
 
 %%%%%%%%%%%%%%%%%%%% A class hierarchy of code blocks %%%%%%%%%%%%%%%%%%%%5
 
-:- object(genmetaclass, instantiates(genmetaclass)).
+:- object(genmetaclass,
+          instantiates(genmetaclass),
+          imports(current_option)
+         ).
 :- public([setup/1,
            indent/1,
            indent/2,
@@ -93,12 +123,13 @@ options(List):-
            iswritef/2,
            option/2,
            option/3,
+           current_setup/1,
            clear_indent/0
           ]).
 :- private([indent_/1,
             indent_str/2,
             indent_str_/2]).
-:- protected([current_setup/1,
+:- protected([
               indentstr/1,
               set_indent/1
              ]).
