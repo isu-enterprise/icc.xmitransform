@@ -187,7 +187,6 @@ group_doc(DOM):-
 group_doc(DOM):-
     ::module_group(Groups),
     ::groups1(DOM, Groups),
-    format('------> Setting ref !!'),
     DOM::set_reference(group_doc(DOM)).
 
 :- private(groups0/3).
@@ -216,7 +215,5 @@ generate_doc_operators(Module):-
     OP::element(name,Name),
     atomic_list_concat(['',Text],'Mothur',ClassName),
     atomic_list_concat([DisplayName,''],'Operator',Text),
-    Name::text(DisplayName),
-    format('\nGenerating doc xml for ~p',[Module]).
-
+    Name::text(DisplayName).
 :- end_object.
