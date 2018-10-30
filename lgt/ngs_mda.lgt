@@ -149,7 +149,7 @@ stage('Initialize environment',    ::setup(initialize)).
 stage('Setup generation context',  ::setup(setup)).
 stage('Loading RDF (TTL) sources', ::loadttl).
 stage('Transforming to Java modules', ::mda(java_modules)).
-stage('Saving Java modules into .java files', ::mda(save_modules)).
+stage('Generating sources of Java modules into .java files', ::mda(save_modules)).
 stage('Generating Mothur Operators PSMs', ::mda(xml_operators)).
 stage('Generating Mothur DOC Operators PSMs', ::mda(xml_doc_operators)).
 stage('Saving XMLs',                        ::mda(save_xmls)).

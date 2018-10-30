@@ -766,18 +766,24 @@ render(String):-
 
 % -------------------- Java class generator for Rapid Miner ---------------------
 
+snake_case_dash(Atom,Result):-
+    atomic_list_concat(L,'-',Atom),
+    atomic_list_concat(L,'_',Result).
+
 % -------------------- Mothur Operator Java class Generator ---------------------
 
 :- object(mothur_attributes,
           specializes(java_attributes)).
 
+:- uses(user, [snake_case_dash/2]).
 :- protected(renderitem/2).
 renderitem(input_parameter(Name), String):-!,
     root::iswritef(String, 'private InputPort %wInPort = getInputPorts().createPort("%w");',
                    [Name,Name]).
 renderitem(output_parameter(Name), String):-!,
+    snake_case_dash(Name, SnakeName),
     root::iswritef(String, 'private OutputPort %wOutPort = getOutputPorts().createPort("%w");',
-                   [Name,Name]).
+                   [SnakeName,Name]).
  renderitem(property_parameter(Name, Query), String):-!,
     property_prompt_constant(property_parameter(Name, Query), String).
 
@@ -802,7 +808,8 @@ multiple_selection_choices(property_parameter(Name,Query), [String, Choice]):-
     upcase_atom(Name,UNAME),
     Query::options(_, Options),
     Query::options_default(Default),
-    lists::nth0(Index,Options,Default),
+    (lists::nth0(Index,Options,Default) -> true;
+     Index=0),   % TODO Process multiple choices.
     comma_separated_list_strings(Options, CSL),
     root::iswritef(String, 'public static final String[] %w_CHOICES = { %w };', [UNAME,CSL]),
     root::iswritef(Choice, 'public static final int %w_DEFAULT_CHOICE = %w;',[UNAME,Index]).
@@ -832,22 +839,35 @@ mothur_type('http://icc.ru/ontologies/NGS/mothur/Multiple', 'Category', 'String 
 :- protected(param_type_constructor/7).
 param_type_constructor('Category', Name, Description, _, Expert, String, []):-!,
     upcase_atom(Name,UNAME),
-    root::iswritef(String, 'parameterTypes.add(new ParameterType%w(%w_LABEL, "%w", %w_CHOICES, %w_DEFAULT_CHOICE));',
-                   ['Category',UNAME,Description,UNAME,UNAME]).
-param_type_constructor(Type, Name, Description, DefaultValue, Expert, String, []):-
+    root::iswritef(String, 'parameterTypes.add(new ParameterType%w(%w_LABEL, "%w", %w_CHOICES, %w_DEFAULT_CHOICE));',['Category',UNAME,Description,UNAME,UNAME]).
+param_type_constructor('Int', Name, Description, DefaultValue, Expert, String, []):-!,
     upcase_atom(Name,UNAME),
-    ::escape_default_value(DefaultValue, Type, Escaped),!,
+    ::escape_default_value(DefaultValue, 'Int', Escaped, PrecType),!,
+    root::iswritef(String, 'parameterTypes.add(new ParameterType%w(%w_LABEL, "%w", -100000000, 100000000, %w, %w));',[PrecType,UNAME,Description,Escaped,Expert]).
+param_type_constructor(Type, Name, Description, DefaultValue, Expert, String, []):-!,
+    upcase_atom(Name,UNAME),
+    ::escape_default_value(DefaultValue, Type, Escaped, PrecType),!,
     root::iswritef(String, 'parameterTypes.add(new ParameterType%w(%w_LABEL, "%w", %w, %w));',
-                   [Type,UNAME,Description,Escaped,Expert]).
+                   [PrecType,UNAME,Description,Escaped,Expert]).
+param_type_constructor(Type, _Name, _Description, _DefaultValue, _Expert, String, []):-!,
+    root::iswritef(String, '// parameterTypes.add(new ParameterType<Unknown>(...)); // Unknown type %w', [Type]).
 
-:- public(escape_default_value/3).
-escape_default_value(Value, 'String', String):-!,
+
+:- public(escape_default_value/4).
+escape_default_value(Value, 'String', String, 'String'):-!,
     writef::swritef(String, '"%w"',[Value]).
-escape_default_value('F', 'Boolean', false):-!.
-escape_default_value('T', 'Boolean', true):-!.
-escape_default_value(Value, _, Value).
+escape_default_value('', 'Boolean', false, 'Boolean'):-!. % FIXME: Found some errors in Mothur sources.
+escape_default_value('f', 'Boolean', false, 'Boolean'):-!.
+escape_default_value('F', 'Boolean', false, 'Boolean'):-!.
+escape_default_value('t', 'Boolean', true, 'Boolean'):-!.
+escape_default_value('T', 'Boolean', true, 'Boolean'):-!.
+escape_default_value(Value, 'Int', Value, 'Double'):-
+    atomic_list_concat([_,_|_],'.',Value),!.
+escape_default_value(Value, Type, Value, Type).
 
 :- end_object.
+
+%%%% Mothur methods representation with code_block %%%%
 
 :- object(mothur_methods,
           specializes(java_methods)).
@@ -929,9 +949,11 @@ deliver_out_ports(Class, [Comment,Delivers]):-
             render_output_parameter(Name,R)),
             Delivers).
 
+:- uses(user, [snake_case_dash/2]).
 :- protected(render_output_parameter/2).
 render_output_parameter(Name,Result):-
-    root::iswritef(Result, '%wOutPort.deliver(new FileNameObject(fileName+".%w","%w"));',[Name,Name,Name]).
+    snake_case_dash(Name,SnakeName),
+    root::iswritef(Result, '%wOutPort.deliver(new FileNameObject(fileName+".%w","%w"));',[SnakeName,Name,Name]).
 
 :- public(process_inputs/2).
 process_inputs(Class, [Clear,

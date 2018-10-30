@@ -213,6 +213,11 @@ succeeds(test__mothur_cc_module_render):-
     Tr::module(mothur:'chimera.ccode',Module),
     Module::render_to(1).
 
+succeeds(test__mothur_collsingle_module_render):-
+    Tr=mothurpsm(mothur),
+    Tr::module(mothur:'collect.single',Module),
+    Module::render_to(1).
+
 %% succeeds(test__modules_render_all):-
 %%     Tr=mothurpsm(mothur),
 %%     forall(Tr::module(_ID,Module),
