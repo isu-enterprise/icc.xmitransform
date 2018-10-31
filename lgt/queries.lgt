@@ -31,7 +31,7 @@ method(Name, ClassID, ID):-
 :- end_object.
 
 
-% Querying NGS RDF Graphs for modules.
+%%%%%%%%% Querying NGS RDF Graphs for modules. %%%%%%%%%%%%
 
 :- object(ngsquerybase).
 
@@ -67,14 +67,19 @@ options(BNode):-
     ::attr(options, BNode).
 
 :- public(options/2).
+%% options(BNode, Values):-
+%%     ::options(BNode),
+%%     ::ngs(RDF),
+%%     ::second(Parameter),
+%%     findall(Value,
+%%             (RDF::rdf(BNode, dc:identifier, literal(Value))),
+%%             Values
+%%            ).
+
 options(BNode, Values):-
-    ::options(BNode),
-    ::ngs(RDF),
-    ::second(Parameter),
-    findall(Value,
-            (RDF::rdf(BNode, dc:identifier, literal(Value))),
-            Values
-           ).
+    ::options(BNode), % NOTE: Here it is irrelevant, but let it be
+    ::attr(optionsOrig, literal(String)),!,
+    atomic_list_concat(Values,'-',String).
 
 :- public(options_default/1).
 options_default(Value):-
@@ -136,6 +141,9 @@ bool_attr(Name):-
     fail.
 
 :- end_object.
+
+
+%%%% Query Module %%%%
 
 :- object(querymodule(_RDF,_Module),
           extends(ngsquerybase)).

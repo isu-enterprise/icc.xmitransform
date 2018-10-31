@@ -54,7 +54,12 @@ module(_Module,M):-
     Class::set_reference(module(M)),
     ::mothur_class_name(Name,ModuleName),
     Class::name(ModuleName),
-    forall(attribute(QM,Class),true),
+    forall(attribute(QM,Class,Name,input),
+           Class::input_parameter(Name)),
+    forall(attribute(QM,Class,Type,output),
+           Class::output_parameter(Type)),
+    forall(attribute(QM,Class,Name-QP,property),
+           Class::property_parameter(Name, QP)),
     forall(method(QM,Class),true).
 
 :- public(modules/0).
@@ -82,19 +87,16 @@ module(Module):-
     java_modules::item(module(Module)).
 
 :- protected(attribute/2).
-attribute(Query, Class):-
+attribute(Query, Class, Name, input):-
     Query::parameter(_Parameter, Name, QP),
-    QP::type(mothur:'InputTypes'),
-    Class::input_parameter(Name).
+    QP::type(mothur:'InputTypes').
 
-attribute(Query, Class):-
-    Query::output_pattern_types(_, Type),
-    Class::output_parameter(Type).
-
-attribute(Query, Class):-
+attribute(Query, Class, Name-QP, property):-
     Query::parameter(_Parameter, Name, QP),
-    \+ QP::type(mothur:'InputTypes'),
-    Class::property_parameter(Name, QP).
+    \+ QP::type(mothur:'InputTypes').
+
+attribute(Query, Class, Type, output):-
+    Query::output_pattern_types(_, Type).
 
 :- protected(method/2).
 method(Query, Class):-
