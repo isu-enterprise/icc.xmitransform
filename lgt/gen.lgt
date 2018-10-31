@@ -879,7 +879,7 @@ renderitem(mothur_constructor(Class),[S1,Super,Stodo,E]):-!,
                    [ClassName]),
     root::indent,
     root::iswritef(Super,'super(description);'),
-    root::iswritef(Stodo,'// TODO Auto-generated constructor stub'),
+    root::iswritef(Stodo,'// NOTE: Auto-generated constructor stub'),
     root::unindent,
     ::end_java_block(E).
 
@@ -917,20 +917,18 @@ renderitem(mothur_get_parameter_types(Class),['',Override,Signature,Definition,
     ::end_java_block(E).
 
 renderitem(mothur_get_output_pattern(Query,Class,PSM),
-           ['',Override,Signature,Stodo,
-            Ifs,Stodo2,Super,E]):-!,
+           ['',Override,Signature,
+            Ifs,Super,E]):-!,
     ::override(Override),
     root::iswritef(Signature, 'public String getOutputPattern(String type) {',
                    []),
     root::indent,
-    root::iswritef(Stodo,'// TODO Use a dictionary to reflect type to pattern'),
     findall(
         IfString,
         (PSM::type_pattern(Type,Pattern,Query),
-         root::iswritef(IfString,'if (type=="%w") return "%w";',
+         root::iswritef(IfString,'if (type.equals("%w")) return "%w";',
                        [Type,Pattern])),
         Ifs),
-    root::iswritef(Stodo2,'// TODO if nil then '),
     root::iswritef(Super,'return super.getOutputPattern(type);'),
     root::unindent,
     ::end_java_block(E).
