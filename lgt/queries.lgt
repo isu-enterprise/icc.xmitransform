@@ -42,6 +42,8 @@ ngs(RDF):-
 :- end_object.
 
 
+%%%% Query Parameter parameters (features) %%%%
+
 :- object(queryparam(_RDF,_Parameter),
           extends(ngsquerybase)).
 
@@ -112,6 +114,11 @@ required:-
 :- public(important/0).
 important:-
     ::bool_attr(important).
+
+:- public(sku/1).
+sku(Number):-
+    ::attr(schema:sku, literal(type(_,String))),
+    atom_number(String,Number).
 
 :- protected(attr/2).
 attr(NS:Name, Value):-

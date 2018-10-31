@@ -54,12 +54,25 @@ module(_Module,M):-
     Class::set_reference(module(M)),
     ::mothur_class_name(Name,ModuleName),
     Class::name(ModuleName),
-    forall(attribute(QM,Class,Name,input),
-           Class::input_parameter(Name)),
-    forall(attribute(QM,Class,Type,output),
+    %
+    findall(Number-AName,
+            (attribute(QM,Class,AName,QP,input),
+             QP::sku(Number)),
+            Inputs),
+    lists::keysort(Inputs,SInputs),
+    forall(lists::member(_-AName, SInputs),
+           Class::input_parameter(AName)),
+    %
+    forall(attribute(QM,Class,Type,QP,output),
            Class::output_parameter(Type)),
-    forall(attribute(QM,Class,Name-QP,property),
-           Class::property_parameter(Name, QP)),
+    %
+    findall(Number-s(AName,QP),
+            (attribute(QM,Class,AName,QP,property),
+             QP::sku(Number)),
+            Properties),
+    lists::keysort(Properties,SProperties),
+    forall(lists::member(_-s(AName,QP), SProperties),
+           Class::property_parameter(AName, QP)),
     forall(method(QM,Class),true).
 
 :- public(modules/0).
@@ -86,16 +99,16 @@ render_module_to_dir(Module, Directory):-
 module(Module):-
     java_modules::item(module(Module)).
 
-:- protected(attribute/2).
-attribute(Query, Class, Name, input):-
+:- protected(attribute/5).
+attribute(Query, Class, Name, QP, input):-
     Query::parameter(_Parameter, Name, QP),
     QP::type(mothur:'InputTypes').
 
-attribute(Query, Class, Name-QP, property):-
+attribute(Query, Class, Name, QP, property):-
     Query::parameter(_Parameter, Name, QP),
     \+ QP::type(mothur:'InputTypes').
 
-attribute(Query, Class, Type, output):-
+attribute(Query, Class, Type, _, output):-
     Query::output_pattern_types(_, Type).
 
 :- protected(method/2).

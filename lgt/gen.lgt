@@ -811,8 +811,8 @@ multiple_selection_choices(property_parameter(Name,Query), [String, Choice]):-
     (lists::nth0(Index,Options,Default) -> true;
      Index=0),   % TODO Process multiple choices.
     comma_separated_list_strings(Options, CSL),
-    root::iswritef(String, 'public static final String[] %w_CHOICES = { %w };', [UNAME,CSL]),
-    root::iswritef(Choice, 'public static final int %w_DEFAULT_CHOICE = %w;',[UNAME,Index]).
+    root::iswritef(String, 'private static final String[] %w_CHOICES = { %w };', [UNAME,CSL]),
+    root::iswritef(Choice, 'private static final int %w_DEFAULT_CHOICE = %w;',[UNAME,Index]).
 
 :- public(property_param_type_add/2).
 property_param_type_add(property_parameter(Name,Query), [Preamble,String]):-
