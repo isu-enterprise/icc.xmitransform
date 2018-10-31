@@ -63,7 +63,11 @@ module(_Module,M):-
     forall(lists::member(_-AName, SInputs),
            Class::input_parameter(AName)),
     %
-    forall(attribute(QM,Class,Type,QP,output),
+    findall(Type,
+            attribute(QM,Class,Type,QP,output),
+            Outputs),
+    sort(Outputs,SOutputs),
+    forall(lists::member(Type,SOutputs),
            Class::output_parameter(Type)),
     %
     findall(Number-s(AName,QP),
