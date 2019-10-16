@@ -93,11 +93,16 @@ render_modules_to_dir(Directory):-
 :- private(render_module_to_dir/2).
 render_module_to_dir(Module, Directory):-
     Module::module_name(Name),
+    writef::writef('render_module_to_dir-START %w\n', [Name]),
     absolute_file_name(Name, PathName,
                        [relative_to(Directory), expand(true)]),
     open(PathName,write,Stream,[]),
+    writef::writef('render_module_to_dir-B-RENDER %w %w %w\n', [Name, Stream, Module]),
     Module::render_to(Stream),
-    close(Stream).
+    writef::writef('render_module_to_dir-BCLOSE %w %w\n', [Name, Stream]),
+    close(Stream),
+    writef::writef('render_module_to_dir-CLOSED %w %w\n', [Name, Stream]),
+    true.
 
 :- public(module/1).
 module(Module):-
