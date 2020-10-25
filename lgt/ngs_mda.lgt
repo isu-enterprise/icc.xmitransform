@@ -1,5 +1,7 @@
 :- use_module([library(semweb/rdf_prefixes)]).
 
+% :- initialization(logtalk_load(config)).
+
 absolute_file_name0(File, RelativeDir, Result):-
     atomic_list_concat([RelativeDir, File], '/', String),
     (
@@ -7,6 +9,9 @@ absolute_file_name0(File, RelativeDir, Result):-
         %format('WARNING: FIle Object ~p semms not to exist.\n',[String]),
         Result=String
     ).
+
+:- object(mothur, instantiates(mothurrdfclass)).
+:- end_object.
 
 :- object(mda_scenario).
 
@@ -56,8 +61,8 @@ absolute_file_name0(File, RelativeDir, Result):-
 
 %%%% NGS MDA Setup %%%%
 
-:- object(ngs_setup,
-          extends(setup)).
+:- object(ngs_config,
+          extends(config)).
 
     :- protected(setup/0).
     setup:-
@@ -97,21 +102,21 @@ absolute_file_name0(File, RelativeDir, Result):-
 :- object(ngs_mda,
           extends(mda_scenario)).
 
-    :- protected(current_setup/1).
-    current_setup(Setup):-
-        root::current_setup(Setup).
+    :- protected(current_config/1).
+    current_config(Setup):-
+        root::current_config(Setup).
 
     :- protected(setup/1).
     setup(initialize):-
         mothur::set_graph(mothur),
         mothur::register_prefixes.
 
-    setup(setup):-
-        root::setup(ngs_setup).
+    setup(config):-
+        root::config(ngs_config).
 
     :- protected(loadttl/0).
     loadttl:-
-        ::current_option('ngs-rdf-input-dir'=Dir),
+        ngs_config::current_option('ngs-rdf-input-dir'=Dir),
         mothur::load_file(Dir).
 
     :- private(psm_module/1).
@@ -165,8 +170,4 @@ absolute_file_name0(File, RelativeDir, Result):-
     debug:-
         ::mda(xml_doc_operators).
 
-:- end_object.
-
-
-:- object(mothur, instantiates(mothurrdfclass)).
 :- end_object.

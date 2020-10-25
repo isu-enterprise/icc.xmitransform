@@ -25,7 +25,7 @@
                iswritef/2,
                option/2,
                option/3,
-               current_setup/1,
+               current_config/1,
                clear_indent/0
               ]).
     :- private([indent_/1,
@@ -35,19 +35,19 @@
                   indentstr/1,
                   set_indent/1
                  ]).
-    :- dynamic([indent_/1, current_setup/1]).
+    :- dynamic([indent_/1, current_config/1]).
     :- initialization(::clear_indent).
 
-    setup(Setup):-
-        ::retractall(current_setup(_)),
-        ::assertz(current_setup(Setup)).
+    config(Config):-
+        ::retractall(current_config(_)),
+        ::assertz(current_config(Config)).
 
     option(Name, Value, Default):-
-        ::current_setup(Setup),
+        ::current_config(Setup),
         Setup::option(Name, Value, Default).
 
     option(Name, Value):-
-        ::current_setup(Setup),
+        ::current_config(Setup),
         Setup::option(Name, Value).
 
     set_indent(Number):-
