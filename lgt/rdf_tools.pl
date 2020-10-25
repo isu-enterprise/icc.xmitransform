@@ -3,6 +3,7 @@
             expand_object/2,            % :Alias, ?URI
             atom_prefix_split/3,
             rdf_global_id_/2,
+            rdf_global_object_/2,
             rdf_save_turtle_/2,
             rdf_register_prefix_/3,
             load_xml_/3,
@@ -16,6 +17,8 @@
 
 rdf_global_id_(NS:Term,Global):-
     rdf_global_id(NS:Term,Global).
+rdf_global_object_(NS:Term,Global):-
+    rdf_global_object(NS:Term,Global).
 
 rdf_save_(A,B):-rdf_save(A,B).
 rdf_save_turtle_(A,B):-rdf_save_turtle(A,B).

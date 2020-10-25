@@ -2,7 +2,7 @@
 % Model module
 % Load queries
 
-:- logtalk_load(queries).
+:- initialization(logtalk_load(queries)).
 
 :- object(profiles(_LocalProfile, _CodeProfile)).
 :- end_object.
