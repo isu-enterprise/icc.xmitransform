@@ -29,15 +29,11 @@ camel_case(Word,UWord):-
     string_upper(Char,UChar),
     string_concat(UChar,Rest,UWord).
 
-:- object(psm(_RDF)).
+:- object(psm(_RDF_)).
 
     :- info([
              comment is 'Generator of PSM from RDF graph subscenario.'
-               ]).
-
-    :- protected(rdf/1).
-    rdf(RDF):-
-        parameter(1,RDF).
+            ]).
 
 :- end_object.
 
@@ -47,12 +43,11 @@ camel_case(Word,UWord):-
           instantiates(code_block)).
 :- end_object.
 
-:- object(mothurpsm(_RDF),
-         extends(psm(_RDF))).
+:- object(mothurpsm(_RDF_),
+         extends(psm(_RDF_))).
 
     :- public(queryngs/1).
-    queryngs(queryngs(RDF)):-
-        ::rdf(RDF).
+    queryngs(queryngs(_RDF_)).
 
     :- use_module(rdf_tools, [proc_ent/3,rdf_save_/2,
                               rdf_register_prefix_/3,
@@ -118,13 +113,8 @@ camel_case(Word,UWord):-
         absolute_file_name(Name, PathName,
                            [relative_to(Directory), expand(true)]),
         open(PathName,write,Stream,[]),
-        % writef::writef('render_module_to_dir-B-RENDER %w %w %w\n', [Name, Stream, Module]),
-        % (Module == o418 -> debugger::trace; true),
         Module::render_to(Stream),
-        % writef::writef('render_module_to_dir-BCLOSE %w %w\n', [Name, Stream]),
-        close(Stream),
-        % writef::writef('render_module_to_dir-CLOSED %w %w\n', [Name, Stream]),
-        true.
+        close(Stream).
 
     :- public(module/1).
     module(Module):-
@@ -174,11 +164,11 @@ camel_case(Word,UWord):-
     :- object(mothur_operators_doc_psm,
               instantiates(mothur_operators_doc)).
     :- initialization((::initialize_root)).
-    :- end_object.
+:- end_object.
 
-    %%%
+%%%
 
-    :- object(mothur_xml_psm(_XML_PSM)).
+:- object(mothur_xml_psm(_PSM_)).
 
     :- public(dom/1).
     dom(PSM):-
@@ -192,9 +182,8 @@ camel_case(Word,UWord):-
 
     :- public(render_to_dir/1).
     render_to_dir(Directory):-
-        ::dom(PSM),
-        PSM::render(DOM),
-        PSM::file_name(Name),
+        _PSM_::render(DOM),
+        _PSM_::file_name(Name),
         absolute_file_name(Name, PathName,
                            [relative_to(Directory), expand(true)]),
         open(PathName,write,Stream,[]),
@@ -204,8 +193,7 @@ camel_case(Word,UWord):-
     :- public(generate_operators/1).
     generate_operators(Module):-
         % format('\nGenerating xml for ~p',[Module]),
-        ::dom(DOM),
-        ::group(DOM, Block),
+        ::group(_PSM_, Block),
         Block::element(operator, OP),
         OP::element(key,Key),
         Module::module_key_name(MKey),
@@ -255,10 +243,9 @@ camel_case(Word,UWord):-
     :- uses(user, [atomic_list_concat/3]).
     :- public(generate_doc_operators/1).
     generate_doc_operators(Module):-
-        ::dom(DOM),
-        ::group_doc(DOM),
+        ::group_doc(_PSM_),
         Module::module_class(_Class,ClassName),
-        DOM::element(operator, OP),
+        _PSM_::element(operator, OP),
         OP::element(key,Key),
         Module::module_key_name(MKey),
         Key::text(MKey),
