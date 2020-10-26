@@ -19,7 +19,7 @@ absolute_file_name0(File, RelativeDir, Result):-
     run:-
         self(Self),
         this(This),
-        writef:writef('Running transformation %w as instance of %w\n',[Self, This]),
+        format('Running transformation ~w as instance of ~w\n',[Self, This]),
         forall(::stage(Name, Goal),
                ::run(Name, Goal)).
 
@@ -49,7 +49,7 @@ absolute_file_name0(File, RelativeDir, Result):-
     :- protected(hello/1).
     hello(X):-
         X='World',
-        writef('Hello "%w"!\n',[X]).
+        format('Hello "~w"!\n',[X]).
 
     stage('Warning', ::warning).
     stage('Hello/0', ::hello).
@@ -128,6 +128,7 @@ absolute_file_name0(File, RelativeDir, Result):-
 
     :- protected(mda/1).
     mda(java_modules):-
+        debugger::debug,
         PSM=mothurpsm(mothur),
         PSM::modules,
         findall(Module,
@@ -158,7 +159,7 @@ absolute_file_name0(File, RelativeDir, Result):-
 
     :- protected(stage/2).
     stage('Initialize environment',    ::setup(initialize)).
-    stage('Setup generation context',  ::setup(setup)).
+    stage('Setup generation context',  ::setup(config)).
     stage('Loading RDF (TTL) sources', ::loadttl).
     stage('Transforming to Java modules', ::mda(java_modules)).
     stage('Generating sources of Java modules into .java files', ::mda(save_modules)).

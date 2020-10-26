@@ -15,6 +15,13 @@
 :- object(genmetaclass,
           instantiates(genmetaclass)).
 
+:- end_object.
+
+:- object(rootclass, instantiates(genmetaclass)).
+:- end_object.
+
+
+:- object(root).
     :- public([setup/1,
                indent/1,
                indent/2,
@@ -26,6 +33,7 @@
                option/2,
                option/3,
                current_config/1,
+               config/1,
                clear_indent/0
               ]).
     :- private([indent_/1,
@@ -107,9 +115,6 @@
 
 :- end_object.
 
-:- object(root, instantiates(genmetaclass)).
-:- end_object.
-
 :- category(listrenderable).
 
     :- protected([
@@ -153,7 +158,7 @@
 :- end_category.
 
 
-:- object(code_block, specializes(root)).
+:- object(code_block, specializes(rootclass)).
 
     :- public([
                      append/1,
