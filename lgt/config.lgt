@@ -21,6 +21,12 @@
 	option(Option=Value):-
 		option(Option,Value).
 
+	option(Option/Value):-
+		option(Option,Value).
+
+	option(Option-Value):-
+		option(Option,Value).
+
     remove(Option):-
         ::retractall(option_(Option=_)).
 

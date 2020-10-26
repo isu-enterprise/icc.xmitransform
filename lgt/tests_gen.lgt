@@ -12,9 +12,9 @@
 
 :- object(tests, extends(lgtunit)).
 :- info([
-               version is 0.1,
+               version is 0:2:0,
                author is 'Evgeny Cherkashin',
-               date is 2017/01/22,
+               date is 2017-01-22,
                comment is 'Unit test for a Python code generator.'
            ]).
 
@@ -24,72 +24,67 @@
 :- private([attr/1]).
 :- dynamic([attr/1]).
 
-succeeds(setup_add_option_1):-
-    setup::option(option1=value1).
+succeeds(config_add_option_1):-
+    config::option(option1=value1).
 
-succeeds(setup_add_option_2):-
-    setup::option(option2,value2).
+succeeds(config_add_option_2):-
+    config::option(option2,value2).
 
-succeeds(setup_add_option_3):-
-    setup::option(option3-value3).
+succeeds(config_add_option_3):-
+    config::option(option3-value3).
 
-succeeds(setup_add_option_4):-
-    setup::option(option4/value4).
+succeeds(config_add_option_4):-
+    config::option(option4/value4).
 
-succeeds(setup_get_option_1):-
-    setup::current_option(option4,value4).
+succeeds(config_get_option_1):-
+    config::current_option(option4,value4).
 
-succeeds(setup_get_options):-
-    setup::current_options(List),
-    List=[option1=value1,option2=value2,
-          option3=value3,option4=value4].
-
-succeeds(setup_get_nonexistent_option_as_default):-
-    setup::current_option(option_none, Value, default),
+succeeds(config_get_nonexistent_option_as_default):-
+    config::current_option(option_none, Value, default),
     Value=default.
 
-succeeds(setup_clear):-
-    setup::clear.
+succeeds(config_clear):-
+    config::clear.
 
-succeeds(setup_add_option_tab_size):-
-    setup::option(tab_size, 4).
+succeeds(config_add_option_tab_size):-
+    config::option(tab_size, 4).
 
-succeeds(setup_setup_globally):-
-    root::setup(setup).
+succeeds(config_config_globally):-
+    root::config(config).
 
-succeeds(setup_check_indent_1):-
+succeeds(config_check_indent_1):-
     root::indent("").
 
-succeeds(setup_check_indent_2):-
+succeeds(config_check_indent_2):-
     root::indent,
     root::indent("\t").
 
-succeeds(setup_check_indent_3):-
+succeeds(config_check_indent_3):-
     root::indent,
     root::indent("\t\t").
 
-succeeds(setup_check_indent_4):-
+succeeds(config_check_indent_4):-
     root::unindent,
     root::indent("\t").
 
-succeeds(setup_check_indent_5):-
+succeeds(config_check_indent_5):-
     root::unindent,
     root::indent("").
 
-succeeds(setup_change_way_of_indent):-
-    setup::option(use_tabs, false).
+succeeds(config_change_way_of_indent):-
+    config::option(use_tabs, false).
 
-succeeds(setup_check_way_of_indent):-
-    setup::option(use_tabs, false).
+succeeds(config_check_way_of_indent):-
+    config::option(use_tabs, false).
 
-succeeds(setup_check_indent_6):-
+succeeds(config_check_indent_6):-
     root::indent("").
 
-succeeds(setup_check_indent_7):-
+succeeds(config_check_indent_7):-
     root::indent,
     root::indent("    ").
 
-succeeds(setup_check_indent_8):-
+succeeds(config_check_indent_8):-
     root::indent,
     root::indent("        "),
     root::unindent,
@@ -119,11 +114,11 @@ succeeds(block_list_2):-
 fails(test_render):-
     tinst::render(_).
 
-succeeds(setup_bad_option_set):-
-    setup::option(tab_size, -100).
+succeeds(config_bad_option_set):-
+    config::option(tab_size, -100).
 
-succeeds(setup_restore_option_tab_size):-
-    setup::option(tab_size, 4).
+succeeds(config_restore_option_tab_size):-
+    config::option(tab_size, 4).
 
 fails(render_again):-
     tinst::render(_).
@@ -131,7 +126,7 @@ fails(render_again):-
 succeeds(create_param_1):-
     create_object(aparam, [instantiates(param)],[],[]).
 
-succeeds(setup_param_1):-
+succeeds(config_param_1):-
     aparam::name(name),
     aparam::type('String'),
     aparam::default("Default").
@@ -191,7 +186,8 @@ succeeds(render_method_1):-
     methodadd::params(params1),
     methodadd::body(methodbody),
     methodadd::render(Result),
-    Result = ["def add(name:String=\"\", id:int) -> bool:","    pass"].
+    %format("-----------> ~q", [Result]),!,
+    Result = ["def add(self, name:String=\"\", id:int) -> bool:","    pass"].
 
 succeeds(render_method_body_indent_check):-
     methodbody::render(["pass"]).
@@ -216,8 +212,8 @@ succeeds(create_class):-
     aclass::methods(amethodlist).
 
 succeeds(render_class_1):-
-    aclass::render(L),
-    writef::writef('CLASS:\n%w\n',[L]).
+    aclass::render(_).
+    %writef::writef('CLASS:\n%w\n',[L]).
 
 succeeds(dotted_name_create):-
     create_object(ospath, [instantiates(dottedname)],[],[]),

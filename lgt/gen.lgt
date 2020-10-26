@@ -1,5 +1,7 @@
 :- use_module(library(writef)).
 :- use_module(library(sgml_write)).
+:- use_module(library(lists)).
+:- use_module(library(sgml)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -153,7 +155,7 @@
 
     list_separator(Separator):-
         ::separator_option(Name, Default),!,
-        root::current_option(Name, Separator, Default).
+        config::current_option(Name, Separator, Default).
 
 :- end_category.
 
@@ -330,7 +332,7 @@
 
     list_separator(Separator):-
         ::separator_option(Name, Default),!,
-        root::current_option(Name, Separator, Default).
+        config::current_option(Name, Separator, Default).
 
 :- end_category.
 
