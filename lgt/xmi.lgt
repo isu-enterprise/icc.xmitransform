@@ -298,7 +298,7 @@
         ::process(element(A,B,C), Relation, OId),
         ::check_rdf_assert(SId, Relation, OId),
         process_elements(T, SId).
-    process_elements([X|T], SId):-
+    process_elements([_|T], SId):-
         % format("Text?:~w",[X]),
         process_elements(T, SId).
 
