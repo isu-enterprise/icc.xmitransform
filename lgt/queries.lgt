@@ -25,15 +25,13 @@
 
     attribute(Name, ClassID, ID):-
         ::xmi(XMI),
-        XMI::graph(G),
-        XMI::rdf(ClassID, G:ownedAttribute, ID),
+        XMI::rdf(ClassID, uml:ownedAttribute, ID),
         % XMI::rdf(ID, rdf:type, uml,'Property'), % this can be a type
         XMI::rdf(ID, rdfs:label, literal(Name)).
 
     method(Name, ClassID, ID):-
         ::xmi(XMI),
-        XMI::graph(G),
-        XMI::rdf(ClassID, G:ownedOperation, ID),
+        XMI::rdf(ClassID, uml:ownedOperation, ID),
         XMI::rdf(ID, rdfs:label, literal(Name)).
 
 :- end_object.
