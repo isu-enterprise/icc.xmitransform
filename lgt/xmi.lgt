@@ -299,20 +299,20 @@
         ::check_rdf_assert(SId, Relation, OId),
         process_elements(T, SId).
     process_elements([X|T], SId):-
-        format("Text?:~w",[X]),
+        % format("Text?:~w",[X]),
         process_elements(T, SId).
 
     process_atom('xmi:XMI',_,'XMIFileID','__ignore__'):-!.
 
     process_atom(Atom, Attrs, Id, Atom):-
-        format("TRY:ATOM ~w ", [Atom]),
+        % format("TRY:ATOM ~w ", [Atom]),
         atom_prefix_split(Atom, _P,_S),!,
-        format("GOOD:ATOM ~w ", [Atom]),
+        % format("GOOD:ATOM ~w ", [Atom]),
         ::process_attrs_def(Attrs, Id, Atom, RestAttrs), !, % NOTE: Atom=Type is defined here.
         ::process_attrs_rest(Id, RestAttrs).
 
     process_atom(UML, Attrs, Id, uml:UML):- % Unprefixed tags implied to be uml:<tag>
-        format("UML ~w ", [UML]),
+        %format("UML ~w ", [UML]),
         % (UML=='defaultValue'->debugger::trace;true),
         ::process_attrs_def(Attrs, Id, _Type, RestAttrs), !,
         ::process_attrs_rest(Id, RestAttrs).
@@ -346,14 +346,17 @@
 
     process_attrs_def(Attrs, Id, Type, RestAttrs):-
         ::find_attr_(id, Attrs, Id, R1),
-        format("DEF:Attrs:~w, for id ~w", [Attrs, Id]),
+        % format("DEF:Attrs:~w, for id ~w", [Attrs, Id]),
         ::process_attr_(type, Id, R1, Type, R2, 'rdf:type'),
         ::process_attr_(name, Id, R2, _Name, RestAttrs, 'rdfs:label').
 
     process_attrs_rest(_,[]).
     process_attrs_rest(Id, [A=B|T]):-
         Id\=nil,!,
-        ::check_rdf_assert(Id, A, B),
+        (atom_prefix_split(A,_P,_S)->
+         ::check_rdf_assert(Id, A, B);
+         ::check_rdf_assert(Id, uml:A, B)
+        ),
         process_attrs_rest(Id, T).
 
     :- use_module(swi_option, [select_option/3,option/2 as swi_get_option/2]).
