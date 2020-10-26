@@ -2,9 +2,7 @@
 % Query module
 
 :- use_module(rdf_tools,
-                [ expand_uri/2,               % :Alias, +URI
-                  expand_object/2,            % :Alias, ?URI
-                  atom_prefix_split/3,
+                [ atom_prefix_split/3,
                   proc_ent/3,
                   rdf_save_turtle_/2,
                   rdf_register_prefix_/3,

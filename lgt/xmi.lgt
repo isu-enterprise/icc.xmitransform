@@ -9,9 +9,10 @@
 :- use_module(library(semweb/turtle)).
 
 :- use_module(rdf_tools,
-                [ expand_uri/2,               % :Alias, +URI
-                  expand_object/2,            % :Alias, ?URI
+                [ expand_uri/3,               % :Alias, +URI
+                  expand_object/3,            % :Alias, ?URI
                   atom_prefix_split/3,
+                  atom_prefix_split/4,
                   proc_ent/3,
                   rdf_save_turtle_/2,
                   rdf_register_prefix_/3,
@@ -57,20 +58,21 @@
     :- protected([
            rdf_assert/3, %!
            check_rdf_assert/3, %!
-           expand_object/2, %!
-           expand_uri/2, %!
            uri_good_last_char/1, %!
            href_normalize/2, %!
            atom_starts_with/3, %!
-           atom_last_char/2, %!
-           atom_prefix_split/3, %!
-           atom_prefix_split/4 %!
+           atom_last_char/2 %!
        ]).
 
     :- use_module(lists, [member/2]).
     :- use_module(rdf_tools, [proc_ent/3,rdf_save_/2,
                             rdf_register_prefix_/3,
-                            rdf_save_turtle_/2, rdf_/4]).
+                            rdf_save_turtle_/2, rdf_/4,
+                            atom_prefix_split/4,
+                            expand_uri/3,
+                            expand_object/3,
+                            atom_prefix_split/3
+                            ]).
     :- use_module(rdf_db, [rdf_assert/4]).
 
     clear:-
@@ -87,14 +89,17 @@
         ::graph_(X).
 
 
+    check_rdf_assert(_,'__ignore__',_):-!.
     check_rdf_assert(Subject, Predicate, Object):-
-        ::expand_uri(Subject, ESubject),
-        ::expand_uri(Predicate, EPredicate),
-        ::expand_object(Object, EObject),
+        ::graph(Graph),
+        expand_uri(Subject, ESubject, Graph),
+        % format("\n PRED: ~w", [Predicate]),
+        expand_uri(Predicate, EPredicate, Graph),
+        expand_object(Object, EObject, Graph),
         !,
         ::rdf_assert(ESubject, EPredicate, EObject).
     check_rdf_assert(Subject, Predicate, Object):-
-        ::debugf(assert, "BAD ASSERT: <%w,%w,%w>", [Subject, Predicate, Object]).
+        format("\nBAD ASSERT: <~w,~w,~w>", [Subject, Predicate, Object]).
 
     rdf_assert(Subject, Predicate, Object):-
         ::graph(Graph),
@@ -111,7 +116,7 @@
         rdf(Subject, Predicate, ETerm).
 
     href_normalize(_Id, Id):-
-        ::atom_prefix_split(_Id, Prefix, "#", Suffix),
+        atom_prefix_split(_Id, Prefix, "#", Suffix),
         atom_concat(Prefix, "#", _Prefix),
         ::location(URI, _Prefix),
         ::namespace(NS, URI), !,
@@ -242,7 +247,13 @@
     load_file(FileName):-
         ::load_file(FileName, []).
 
-    :- use_module(rdf_tools, [load_xml_/3]).
+    :- use_module(rdf_tools, [proc_ent/3,rdf_save_/2,
+                            rdf_register_prefix_/3,
+                            rdf_save_turtle_/2, rdf_/4,
+                            atom_prefix_split/4,
+                            load_xml_/3,
+                            atom_prefix_split/3
+                            ]).
     :- use_module(xpath, [xpath/3 as xpath_xpath/3]).
 
     load_file(FileName, Options):-
@@ -278,7 +289,7 @@
         ::process(Root, _Relation, _OId).
 
     process(element(Atom, Attrs, Elements), Relation, OId):-
-        ::debugf(elements, "ELEMENT: %w<%w>", [Atom, Attrs]),
+        % format("ELEMENT: ~w<~w>", [Atom, Attrs]),
         ::process_atom(Atom, Attrs, OId, Relation),
         ::process_elements(Elements, OId).
 
@@ -288,20 +299,26 @@
         ::check_rdf_assert(SId, Relation, OId),
         process_elements(T, SId).
     process_elements([X|T], SId):-
-        ::debugf(text,"Text?:",[X]),
+        format("Text?:~w",[X]),
         process_elements(T, SId).
 
+    process_atom('xmi:XMI',_,'XMIFileID','__ignore__'):-!.
+
     process_atom(Atom, Attrs, Id, Atom):-
-        ::atom_prefix_split(Atom, _P,_S),
+        format("TRY:ATOM ~w ", [Atom]),
+        atom_prefix_split(Atom, _P,_S),!,
+        format("GOOD:ATOM ~w ", [Atom]),
         ::process_attrs_def(Attrs, Id, Atom, RestAttrs), !, % NOTE: Atom=Type is defined here.
         ::process_attrs_rest(Id, RestAttrs).
 
-    process_atom(XMIRelation, Attrs, Id, XMIRelation):- % 'schema:hasPart'):-!,
-        ::process_attrs_def(Attrs, Id, _Type, RestAttrs),
+    process_atom(UML, Attrs, Id, uml:UML):- % Unprefixed tags implied to be uml:<tag>
+        format("UML ~w ", [UML]),
+        % (UML=='defaultValue'->debugger::trace;true),
+        ::process_attrs_def(Attrs, Id, _Type, RestAttrs), !,
         ::process_attrs_rest(Id, RestAttrs).
 
     process_atom(Atom, Attrs, nil, nil):-
-        ::debugf(elements,'FAILED PROCESS: %w(%w)',[Atom, Attrs]).
+        format('FAILED PROCESS: ~w(~w)',[Atom, Attrs]).
 
 
 
@@ -329,7 +346,7 @@
 
     process_attrs_def(Attrs, Id, Type, RestAttrs):-
         ::find_attr_(id, Attrs, Id, R1),
-        ::debugf(attrs,"DEF:Attrs:%w, for id %w", [Attrs, Id]),
+        format("DEF:Attrs:~w, for id ~w", [Attrs, Id]),
         ::process_attr_(type, Id, R1, Type, R2, 'rdf:type'),
         ::process_attr_(name, Id, R2, _Name, RestAttrs, 'rdfs:label').
 
@@ -342,7 +359,7 @@
     :- use_module(swi_option, [select_option/3,option/2 as swi_get_option/2]).
 
     process_attr(Attrs, Struct, RestAttrs):-
-        select_option(Attrs, Struct, RestAttrs).
+        select_option(Struct, Attrs, RestAttrs).
 
     % ----------------- END OF Main processing recursion ----------------------------
 
@@ -360,11 +377,11 @@
         ::p_ns(Attrs).
 
     p_ns(Key=_Val):-
-        ::debugf(xmlns,"%w -> %w\n",[Key, _Val]),
+        % format("XMLNS: ~w -> ~w\n",[Key, _Val]),
         ::xmlns(Key, NS),!,
         ::uri_normalize(_Val, Val),
         ::add_namespace(NS, Val),
-        ::debugf(xmlns, "Added %w=%w",[NS, Val]).
+        format("Added xmlns ~w=~w\n",[NS, Val]).
     p_ns(_=_).
     p_ns([X]):-
         p_ns(X).
@@ -380,12 +397,12 @@
     process_ns_locations.
 
     p_locs(Val):-
-        ::debugf(xml_locations, "Loc:%w", [Val]),
+        % format("Loc:~w", [Val]),
         split_string(Val, ' ',' ', L),
         ::p2_locs(L).
 
     p2_locs_(Location, _Location):-
-        ::atom_prefix_split(Location, Prefix, '.xmi#', _Suffix),!,
+        atom_prefix_split(Location, Prefix, '.xmi#', _Suffix),!,
         atom_concat(Prefix,'.xmi#', _Location).
     p2_locs_(Location, Location).
 
@@ -411,7 +428,7 @@
         ::base_uri(URI).
 
     xmlns(Key, NS):-
-        ::atom_prefix_split(Key, 'xmlns', NS).
+        atom_prefix_split(Key, 'xmlns', NS).
 
     top_name_to_graph.
 
@@ -445,7 +462,7 @@
         ::top_xmi_element(TopElement),
         % ::xpath(//'xmi:XMI'/TopElement, element(_,Attrs,_)),
         ::xpath(//TopElement, element(_,Attrs,_)),
-        ::debugf(xmi_headers, "Mdel--> %w",[Attrs]),
+        format("Mdel--> ~w",[Attrs]),
         swi_get_option(name(Name), Attrs),!,
         ::set_graph(Name).
     top_name_to_graph:-
@@ -464,7 +481,7 @@
     top_name_to_graph:-
         ::top_xmi_element(TopElement),
         ::xpath(//TopElement, element(_,Attrs,_)),
-        ::debugf(xmi_headers, "Mdel--> %w",[Attrs]),
+        format("Mdel--> ~w",[Attrs]),
         swi_get_option(name(Name), Attrs),!,
         ::set_graph(Name).
 :- end_object.

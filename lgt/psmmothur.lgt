@@ -1,9 +1,7 @@
 :- use_module(library(pcre)).
 
 :- use_module(rdf_tools,
-                [ expand_uri/2,               % :Alias, +URI
-                  expand_object/2,            % :Alias, ?URI
-                  atom_prefix_split/3,
+                [ atom_prefix_split/3,
                   proc_ent/3,
                   rdf_save_turtle_/2,
                   rdf_register_prefix_/3,
@@ -65,7 +63,7 @@ camel_case(Word,UWord):-
     :- public(module/2).
     module(_Module,M):-
         ::queryngs(Q),
-        format('\n +++ ~w \n', [_Module]),
+        % format('\n +++ ~w \n', [_Module]),
         proc_ent(n,_Module,Module),
         Q::module(Module,Name,QM),
         create_object(M, [instantiates(mothur_module)],[],[]),

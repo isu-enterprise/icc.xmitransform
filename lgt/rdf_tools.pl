@@ -1,10 +1,12 @@
 :- module(rdf_tools,
-          [ expand_uri/2,               % :Alias, +URI
-            expand_object/2,            % :Alias, ?URI
+          [ expand_uri/3,               % :Alias, +URI
+            expand_object/3,            % :Alias, ?URI
             atom_prefix_split/3,
+            atom_prefix_split/4,
             rdf_global_id_/2,
             rdf_global_object_/2,
             rdf_save_turtle_/2,
+            rdf_current_prefix_/2,
             rdf_register_prefix_/3,
             load_xml_/3,
             rdf_/4,
@@ -55,42 +57,53 @@ rdf_save_turtle_(A,B):-rdf_save_turtle(A,B).
 rdf_register_prefix_(NS, URI, Opts):-
     rdf_register_prefix(NS, URI, Opts).
 
+rdf_current_prefix_(Prefix, IRI):-
+    rdf_current_prefix(Prefix, IRI).
+
 load_xml_(A,B,C):-
     load_xml(A,B,C).
 
-    atom_prefix_split(Atom, Prefix, Suffix):-
-        atom_prefix_split(Atom, Prefix, ':', Suffix).
+atom_prefix_split(Prefix:Suffix, Prefix, Suffix):-!.
 
-    atom_prefix_split(Atom, Prefix, Divider, Suffix):-
-        atom_length(Divider, DividerLength),
-        sub_atom(Atom, B, DividerLength, A, Divider),
-        sub_atom(Atom, 0, B, _, Prefix),
-        B1 is B+DividerLength,
-        sub_atom(Atom, B1,A, 0, Suffix).
+atom_prefix_split(Atom, Prefix, Suffix):-!,
+    atom_prefix_split(Atom, Prefix, ':', Suffix).
 
-    expand_uri(nil, _):-!, fail.
+atom_prefix_split(Prefix:Suffix, Prefix, ':', Suffix):-!.
 
-    expand_uri(href(URI), URI):-!.
+atom_prefix_split(Atom, Prefix, Divider, Suffix):-
+    atom_length(Divider, DividerLength),
+    sub_atom(Atom, B, DividerLength, A, Divider),
+    sub_atom(Atom, 0, B, _, Prefix),
+    B1 is B+DividerLength,
+    sub_atom(Atom, B1,A, 0, Suffix).
 
-    expand_uri(URI, URI):-
-        atom_prefix_split(URI, Protocol, "://",_Id),
-        member(Protocol, ['http','https','ftp','file']),!.
+expand_uri(nil, _, _Graph):-!, fail.
 
-    expand_uri(Object, EObject):-
-        atom_prefix_split(Object, NS, O),
-        rdf_current_prefix(NS,_URI), !,
-        rdf_global_id(NS:O, EObject).
-    expand_uri(Object, EObject):-
-        graph(NS),
-        rdf_global_id(NS:Object, EObject).
+expand_uri(href(URI), URI, _Graph):-!.
 
-    expand_object(href(A), A):-!.
-    expand_object(Object, URI):-
-        atom_prefix_split(Object, '','_',_Rest),!,
-        expand_uri(Object, URI).
-    expand_object(Object, URI):-
-        atom_prefix_split(Object, _Prefix,":",_Suffix),!,
-        expand_uri(Object, URI).
-    expand_object(Atom, literal(Atom)).
-    %% expand_object(Object, EObject):-
-    %%     ::expand_uri(Object, EObject).
+expand_uri(NS:O, EObject, _Graph):-!,
+    rdf_current_prefix(NS,_URI), !,
+    rdf_global_id(NS:O, EObject).
+
+expand_uri(URI, URI, _Graph):-
+    atom_prefix_split(URI, Protocol, "://",_Id),
+    member(Protocol, ['http','https','ftp','file']),!.
+
+expand_uri(Object, EObject, _Graph):-
+    atom_prefix_split(Object, NS, O),
+    rdf_current_prefix(NS,_URI), !,
+    rdf_global_id(NS:O, EObject).
+
+expand_uri(Object, EObject, Graph):-
+    rdf_global_id(Graph:Object, EObject).
+
+expand_object(href(A), A, _Graph):-!.
+expand_object(Object, URI, Graph):-
+    atom_prefix_split(Object, '','_',_Rest),!,
+    expand_uri(Object, URI, Graph).
+expand_object(Object, URI, Graph):-
+    atom_prefix_split(Object, _Prefix,":",_Suffix),!,
+    expand_uri(Object, URI, Graph).
+expand_object(Atom, literal(Atom), _Graph).
+%% expand_object(Object, EObject):-
+%%     ::expand_uri(Object, EObject).
