@@ -25,37 +25,34 @@
 :- dynamic([attr/1]).
 
 succeeds(setup_add_option_1):-
-    setup::set(option1=value1).
+    setup::option(option1=value1).
 
 succeeds(setup_add_option_2):-
-    setup::set(option2,value2).
+    setup::option(option2,value2).
 
 succeeds(setup_add_option_3):-
-    setup::set(option3-value3).
+    setup::option(option3-value3).
 
 succeeds(setup_add_option_4):-
-    setup::set(option4/value4).
+    setup::option(option4/value4).
 
 succeeds(setup_get_option_1):-
-    setup::option(option4,value4).
+    setup::current_option(option4,value4).
 
 succeeds(setup_get_options):-
-    setup::options(List),
+    setup::current_options(List),
     List=[option1=value1,option2=value2,
           option3=value3,option4=value4].
 
 succeeds(setup_get_nonexistent_option_as_default):-
-    setup::option(option_none, Value, default),
+    setup::current_option(option_none, Value, default),
     Value=default.
 
 succeeds(setup_clear):-
     setup::clear.
 
-succeeds(setup_get_options_empty):-
-    setup::options([]).
-
 succeeds(setup_add_option_tab_size):-
-    setup::set(tab_size, 4).
+    setup::option(tab_size, 4).
 
 succeeds(setup_setup_globally):-
     root::setup(setup).
@@ -80,7 +77,7 @@ succeeds(setup_check_indent_5):-
     root::indent("").
 
 succeeds(setup_change_way_of_indent):-
-    setup::set(use_tabs, false).
+    setup::option(use_tabs, false).
 
 succeeds(setup_check_way_of_indent):-
     setup::option(use_tabs, false).
@@ -123,10 +120,10 @@ fails(test_render):-
     tinst::render(_).
 
 succeeds(setup_bad_option_set):-
-    setup::set(tab_size, -100).
+    setup::option(tab_size, -100).
 
 succeeds(setup_restore_option_tab_size):-
-    setup::set(tab_size, 4).
+    setup::option(tab_size, 4).
 
 fails(render_again):-
     tinst::render(_).

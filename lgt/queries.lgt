@@ -5,7 +5,7 @@
                 [ expand_uri/2,               % :Alias, +URI
                   expand_object/2,            % :Alias, ?URI
                   atom_prefix_split/3,
-                  rdf_global_id_/2,
+                  proc_ent/3,
                   rdf_save_turtle_/2,
                   rdf_register_prefix_/3,
                   load_xml_/3,
@@ -130,7 +130,7 @@
         ::attr(schema:sku, literal(type(_,String))),
         atom_number(String,Number).
 
-    :- use_module(rdf_tools, [rdf_global_id_/2,rdf_global_object_/2,
+    :- use_module(rdf_tools, [proc_ent/3,
                               rdf_register_prefix_/3,
                               rdf_save_turtle_/2]).
 
@@ -140,7 +140,7 @@
     attr(NS:Name, Value):-
         ::ngs(RDF),
         ::second(Parameter),
-        rdf_global_object_(Value, V),
+        proc_ent(o,Value, V),
         RDF::rdf(Parameter, NS:Name, V).
 
 
@@ -148,7 +148,7 @@
         Name \= _:_,!,
         ::ngs(RDF),
         ::second(Parameter),
-        rdf_global_id_(Value, V),
+        proc_ent(n,Value, V),
         RDF::rdf(Parameter, ngsp:Name, V).
 
     :- protected(bool_attr/1).

@@ -39,7 +39,7 @@
     current_option(Option, Value, Default):-
         var(Value),
         (
-            ::option(Option, Value) ->
+            current_option(Option, Value) ->
             true;
             Value = Default
         ),!.
@@ -47,7 +47,7 @@
     current_option(Option, Value, Default):-
         nonvar(Value),
         (
-            ::option(Option, _Value) ->
+            current_option(Option, _Value) ->
             (
                 Value = _Value ->
                 true;

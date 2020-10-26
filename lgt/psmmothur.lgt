@@ -4,7 +4,7 @@
                 [ expand_uri/2,               % :Alias, +URI
                   expand_object/2,            % :Alias, ?URI
                   atom_prefix_split/3,
-                  rdf_global_id_/2,
+                  proc_ent/3,
                   rdf_save_turtle_/2,
                   rdf_register_prefix_/3,
                   load_xml_/3,
@@ -56,7 +56,7 @@ camel_case(Word,UWord):-
     queryngs(queryngs(RDF)):-
         ::rdf(RDF).
 
-    :- use_module(rdf_tools, [rdf_global_object_/2,rdf_save_/2,
+    :- use_module(rdf_tools, [proc_ent/3,rdf_save_/2,
                               rdf_register_prefix_/3,
                               rdf_save_turtle_/2]).
 
@@ -65,7 +65,8 @@ camel_case(Word,UWord):-
     :- public(module/2).
     module(_Module,M):-
         ::queryngs(Q),
-        rdf_global_object_(_Module,Module),
+        format('\n +++ ~w \n', [_Module]),
+        proc_ent(n,_Module,Module),
         Q::module(Module,Name,QM),
         create_object(M, [instantiates(mothur_module)],[],[]),
         M::preamble,
@@ -115,7 +116,7 @@ camel_case(Word,UWord):-
     :- private(render_module_to_dir/2).
     render_module_to_dir(Module, Directory):-
         Module::module_name(Name),
-        writef('Creating module %w\n', [Name]),
+        format('\nCreating module ~w', [Name]),
         absolute_file_name(Name, PathName,
                            [relative_to(Directory), expand(true)]),
         open(PathName,write,Stream,[]),

@@ -84,6 +84,7 @@ absolute_file_name0(File, RelativeDir, Result):-
         ::current_option('ngs-resource-subdir'=Resource),
         absolute_file_name0(Java, ProjectDir, AJava),
         absolute_file_name0(Resource, ProjectDir, AResource),
+        % Set absolute paths for module and resources.
         ::option('ngs-java-modules-dir'=AJava),
         format('Project Java DIR: ~p\n', [AJava]),
         ::option('ngs-resource-dir'=AResource),
@@ -128,7 +129,6 @@ absolute_file_name0(File, RelativeDir, Result):-
 
     :- protected(mda/1).
     mda(java_modules):-
-        debugger::debug,
         PSM=mothurpsm(mothur),
         PSM::modules,
         findall(Module,
@@ -138,7 +138,7 @@ absolute_file_name0(File, RelativeDir, Result):-
         writef('\nGenerated %w PSMs of Java modules',[Length]).
 
     mda(save_modules):-
-        ::current_option('ngs-java-modules-dir'=JavaDir),
+        ngs_config::current_option('ngs-java-modules-dir'=JavaDir),
         mothurpsm(mothur)::render_modules_to_dir(JavaDir).
 
     mda(xml_operators):-
@@ -152,9 +152,9 @@ absolute_file_name0(File, RelativeDir, Result):-
             mothur_xml_psm(mothur_operators_doc_psm)::generate_doc_operators(Module)).
 
     mda(save_xmls):-
-        ::current_option('ngs-resource-dir'=Resource),
+        ngs_config::current_option('ngs-resource-dir'=Resource),
         mothur_xml_psm(mothur_operators_psm)::render_to_dir(Resource),
-        ::current_option('ngs-resource-doc-dir'=ResourceDoc),
+        ngs_config::current_option('ngs-resource-doc-dir'=ResourceDoc),
         mothur_xml_psm(mothur_operators_doc_psm)::render_to_dir(ResourceDoc).
 
     :- protected(stage/2).

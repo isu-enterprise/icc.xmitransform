@@ -1,4 +1,4 @@
-:- module(rdf_exp,
+:- module(rdf_tools,
           [ expand_uri/2,               % :Alias, +URI
             expand_object/2,            % :Alias, ?URI
             atom_prefix_split/3,
@@ -7,6 +7,8 @@
             rdf_save_turtle_/2,
             rdf_register_prefix_/3,
             load_xml_/3,
+            rdf_/4,
+            proc_ent/3,
             rdf_save_/2
           ]).
 
@@ -19,6 +21,34 @@ rdf_global_id_(NS:Term,Global):-
     rdf_global_id(NS:Term,Global).
 rdf_global_object_(NS:Term,Global):-
     rdf_global_object(NS:Term,Global).
+rdf_(Subject,Predicate,Object,Graph):-
+    % format("\nS>~w P>~w O>~w\n",[Subject,Predicate,Object]),
+    proc_ent(n,Subject,Subject1),
+    proc_ent(n,Predicate,Predicate1),
+    proc_ent(o,Object,Object1),
+    % format("\nS1>~w P1>~w O1>~w\n",[Subject1,Predicate1,Object1]),
+    rdf(Subject1,Predicate1,Object1,Graph).
+    % format("\nSR>~w PR>~w OR>~w\n",[Subject1,Predicate1,Object1]).
+
+proc_ent(_,E,E):-
+    var(E),!.
+proc_ent(_,E,E):-
+    atomic(E),!.
+proc_ent(n,A:B,E):-
+    nonvar(A),
+    nonvar(B),
+    rdf_global_id(A:B,E),!.
+proc_ent(o,A:B,E):-
+    nonvar(A),
+    nonvar(B),
+    rdf_global_object(A:B,E),!.
+proc_ent(_,literal(V),literal(V)):-!.
+proc_ent(_,A:B,_):-
+    (var(A)->throw(variable(A,'Free variable as NS'));true),
+    (var(B)->throw(variable(A,'Free variable as resource part'));true).
+proc_ent(_,A,A):-
+    format('\n proc_ent ? ~w\n',[A]).
+
 
 rdf_save_(A,B):-rdf_save(A,B).
 rdf_save_turtle_(A,B):-rdf_save_turtle(A,B).

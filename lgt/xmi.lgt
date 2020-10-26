@@ -12,10 +12,11 @@
                 [ expand_uri/2,               % :Alias, +URI
                   expand_object/2,            % :Alias, ?URI
                   atom_prefix_split/3,
-                  rdf_global_id_/2,
+                  proc_ent/3,
                   rdf_save_turtle_/2,
                   rdf_register_prefix_/3,
                   load_xml_/3,
+                  rdf_/4,
                   rdf_save_/2
                 ]).
 
@@ -67,10 +68,10 @@
        ]).
 
     :- use_module(lists, [member/2]).
-    :- use_module(rdf_tools, [rdf_global_id_/2,rdf_save_/2,
+    :- use_module(rdf_tools, [proc_ent/3,rdf_save_/2,
                             rdf_register_prefix_/3,
-                            rdf_save_turtle_/2]).
-    :- use_module(rdf_db, [rdf_assert/4, rdf/4 as sem_rdf/4]).
+                            rdf_save_turtle_/2, rdf_/4]).
+    :- use_module(rdf_db, [rdf_assert/4]).
 
     clear:-
         ::retractall(location_(_,_)),
@@ -101,10 +102,12 @@
 
     rdf(Subject, Predicate, Object):-
         ::graph(Graph),
-        sem_rdf(Subject, Predicate, Object, Graph).
+        %format("\n-RDF\n"),
+        rdf_(Subject, Predicate, Object, Graph).
+        %format("\n+RDF\n")
 
     rdf(Subject, Predicate, NS, Term):-
-        rdf_global_id_(NS:Term, ETerm),
+        proc_ent(o,NS:Term, ETerm),
         rdf(Subject, Predicate, ETerm).
 
     href_normalize(_Id, Id):-

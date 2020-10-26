@@ -50,13 +50,13 @@
         ::retractall(current_config(_)),
         ::assertz(current_config(Config)).
 
-    option(Name, Value, Default):-
+    current_option(Name, Value, Default):-
         ::current_config(Setup),
-        Setup::option(Name, Value, Default).
+        Setup::current_option(Name, Value, Default).
 
-    option(Name, Value):-
+    current_option(Name, Value):-
         ::current_config(Setup),
-        Setup::option(Name, Value).
+        Setup::current_option(Name, Value).
 
     set_indent(Number):-
         ::retractall(indent_(_)),
@@ -87,17 +87,17 @@
         iswritef(String, Pattern, []).
 
     indent_str("\t"):-
-        ::option(use_tabs,true,true),
+        config::current_option(use_tabs,true,true),
         !.
     indent_str(S):-
-        ::option(use_tabs,false,true),!,
-        ::option(tab_size,Size,8),!,
+        config::current_option(use_tabs,false,true),!,
+        config::current_option(tab_size,Size,8),!,
         indent_str_(Size, S).
 
     indent_str_(0, "").
     indent_str_(N, String):-
         N>0,
-        ::option(indent_char, C, " "),
+        config::current_option(indent_char, C, " "),
         N1 is N - 1,
         indent_str_(N1, _1),
         string_concat(C, _1, String).
@@ -153,7 +153,7 @@
 
     list_separator(Separator):-
         ::separator_option(Name, Default),!,
-        root::option(Name, Separator, Default).
+        root::current_option(Name, Separator, Default).
 
 :- end_category.
 
@@ -330,7 +330,7 @@
 
     list_separator(Separator):-
         ::separator_option(Name, Default),!,
-        root::option(Name, Separator, Default).
+        root::current_option(Name, Separator, Default).
 
 :- end_category.
 
